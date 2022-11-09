@@ -1,16 +1,38 @@
 /* */
-:- dynamic(player1same/1).
-:- dynamic(player2same/1).
+:- dynamic(playerDouble/2).
 
-player1same(0).
-player2same(0).
+/* playerDouble(ID, state), state times double */
+playerDouble(1,0).
+playerDouble(2,0).
 
-rand(X) :- random(1,6,X).
+/* random number from 1 to 6 */
+rand(X) :- random(1,7,X).
+
+/* increment player double, check if need to go to jail */
+incPlayerDouble(Player) :-
+    playerName(Player,PlayerName),
+    playerDouble(Player, NDouble),
+    IncPlayerDouble is NDouble + 1,
+    retractall(playerDouble(Player,_)),
+    asserta(playerDouble(Player, IncPlayerDouble)),
+    (
+        (
+            IncPlayerDouble==3,
+            retractall(inJail(Player,_)),
+            asserta(inJail(Player,1)),
+            write('Welcome to jail '),
+            write(PlayerName),nl,
+            retractall(playerDouble(Player,_)),
+            asserta(playerDouble(Player,0))
+        ); !
+    ).
+  
 
 throwDice :-
-    currentPlayer(X),
+    currentPlayer(Player),
+    playerName(Player, PlayerName),
     write('It\'s '),
-    write(X), 
+    write(PlayerName), 
     write(' turns'), nl,
 
     rand(A),
@@ -25,61 +47,24 @@ throwDice :-
         (
             A == B, 
             write('Double!'), nl,
-            playerId(IdDouble),
-            (
-                (
-                    (IdDouble == 1), 
-                    player1same(NPlayer1), 
-                    IncNPlayer1 is NPlayer1 + 1,
-                    retractall(player1same(NPlayer1)),
-                    asserta(player1same(IncNPlayer1)),
-                    (
-                        (
-                            (IncNPlayer1 == 3),
-                            retractall(isOneInJail(_)),
-                            asserta(isOneInJail(1)),
-                            write('Welcome to jail '),
-                            write(X),nl,
-                            retractall(player1same(_)),
-                            asserta(player1same(0))
-                        );!
-                    )
-                );
-                (
-                    (IdDouble == 2),
-                    player2same(NPlayer2), 
-                    IncNPlayer2 is NPlayer2+1, 
-                    retractall(player2same(NPlayer2)),
-                    asserta(player2same(IncNPlayer2)),
-                    (
-                        (
-                            (IncNPlayer2 == 3),
-                            retractall(isTwoInJail(_)),
-                            asserta(isTwoInJail(1)),
-                            write('Welcome to jail '),
-                            write(X),nl,
-                            retractall(player2same(_)),
-                            asserta(player2same(0)),
-                            !
-                        );!
-                    )
-                )
-            )
+            
+            incPlayerDouble(Player)
+
         );
 
         (
             A \== B, 
             switchPlayer,
             Forward is A+B,
-            write(X),
+            write(PlayerName),
             write(' moved '),
             write(Forward),
             write(' steps'), nl,
            
-            retractall(player1same(_)),
-            asserta(player1same(0)),
-            retractall(player2same(_)),
-            asserta(player2same(0))
+            retractall(playerDouble(1,_)),
+            asserta(player1same(1,0)),
+            retractall(playerDouble(2,_)),
+            asserta(playerDouble(2,_))
         )
     ).
     

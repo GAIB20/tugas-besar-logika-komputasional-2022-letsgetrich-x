@@ -8,29 +8,10 @@ playerDouble(2,0).
 /* random number from 1 to 6 */
 rand(X) :- random(1,7,X).
 
-/* increment player double, check if need to go to jail */
-incPlayerDouble(Player) :-
-    playerName(Player,PlayerName),
-    playerDouble(Player, NDouble),
-    IncPlayerDouble is NDouble + 1,
-    retractall(playerDouble(Player,_)),
-    asserta(playerDouble(Player, IncPlayerDouble)),
-    (
-        (
-            IncPlayerDouble==3,
-            retractall(inJail(Player,_)),
-            asserta(inJail(Player,1)),
-            write('Welcome to jail '), 
-            write(PlayerName),nl, 
-            retractall(playerDouble(Player,_)),
-            asserta(playerDouble(Player,0))
-        ); !
-    ).
-  
-
+/* throwDice */
 throwDice :-
     currentPlayer(Player),
-     playerName(Player, PlayerName), 
+    playerName(Player, PlayerName), 
     write('It\'s '),
     write(PlayerName), 
     write(' turns'), nl,
@@ -48,7 +29,8 @@ throwDice :-
             A == B, 
             write('Double!'), nl,
             
-            incPlayerDouble(Player)
+            incPlayerDouble,
+            !
 
         );
 
@@ -62,13 +44,34 @@ throwDice :-
             write(' steps'), nl,
            
             retractall(playerDouble(1,_)),
-            asserta(player1same(1,0)),
+            asserta(playerDouble(1,0)),
             retractall(playerDouble(2,_)),
-            asserta(playerDouble(2,_))
+            asserta(playerDouble(2,0))
         )
     ).
     
 
+/* increment player double, check if need to go to jail */
+incPlayerDouble :-
+    currentPlayer(PlayerDouble),
+    playerName(PlayerDouble,PlayerDoubleName),
+    playerDouble(PlayerDouble,DoubleNow),
+    NewPlayerDouble is DoubleNow + 1,
+    retractall(playerDouble(PlayerDouble,DoubleNow)),
+    asserta(playerDouble(PlayerDouble, NewPlayerDouble)),
+    (
+        (
+            NewPlayerDouble==3,
+            retractall(inJail(PlayerDouble,_)),
+            asserta(inJail(PlayerDouble,1)),
+            write('Welcome to jail '), 
+            write(PlayerDoubleName),nl, 
+            retractall(playerDouble(PlayerDouble,_)),
+            asserta(playerDouble(PlayerDouble,0))
+        ); !
+    ),
+    !.
+  
 
 
 

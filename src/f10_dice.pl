@@ -20,8 +20,8 @@ incPlayerDouble(Player) :-
             IncPlayerDouble==3,
             retractall(inJail(Player,_)),
             asserta(inJail(Player,1)),
-            write('Welcome to jail '),
-            write(PlayerName),nl,
+            write('Welcome to jail '), 
+            write(PlayerName),nl, 
             retractall(playerDouble(Player,_)),
             asserta(playerDouble(Player,0))
         ); !
@@ -30,7 +30,7 @@ incPlayerDouble(Player) :-
 
 throwDice :-
     currentPlayer(Player),
-    playerName(Player, PlayerName),
+     playerName(Player, PlayerName), 
     write('It\'s '),
     write(PlayerName), 
     write(' turns'), nl,

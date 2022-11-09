@@ -22,22 +22,13 @@ switchPlayer :-
     asserta(currentPlayer(1)),
     !.    
 
-startGame :-
-    /* Start Game */
-    write('Welcome to Let\'s Get Rich'), nl,
-    write('Enter player 1 name : '),
-    read(Player1),
-    write('Enter player 2 name : '),
-    read(Player2),
+/* manually assign player name */
+playerName(1, 'Rachel').
+playerName(2, 'Livia').
 
-    /* Assigning player name to ID */
-    
-    playerName(1, Player1),
-    playerName(2, Player2),
-    
-    random(1,3,StartPlayer),
-    currentPlayer(StartPlayer).
+/* choose start player */
+currentPlayer(1).
 
-    /* Random player that starts first */
 
- 
+
+

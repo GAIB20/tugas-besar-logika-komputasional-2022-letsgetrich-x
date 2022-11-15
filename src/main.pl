@@ -1,12 +1,17 @@
+:- include('f01_board.pl').
+:- include('f02_location.pl').
+:- include('f03_property.pl').
+:- include('f04_chance.pl').
+:- include('f05_tax.pl').
+:- include('f06_jail.pl').
+:- include('f07_freeparking.pl').
+:- include('f08_worldtour.pl').
+:- include('f09_player.pl').
 :- include('f10_dice.pl').
 
-:- dynamic(currentPlayer/1).
-:- dynamic(playerName/2).
-:- dynamic(inJail/2).
 
-/* inJail(ID, state), state : 0 false, 1 true */
-inJail(1,0).
-inJail(2,0).
+:- dynamic(playerName/2).
+:- dynamic(menu_status/1).
 
 /* manually assign player name */
 playerName(1, 'Rachel').
@@ -14,6 +19,10 @@ playerName(2, 'Livia').
 
 /* choose start player */
 currentPlayer(1).
+
+startGame:-
+    initPlayer.
+    initJail.
 
 
 

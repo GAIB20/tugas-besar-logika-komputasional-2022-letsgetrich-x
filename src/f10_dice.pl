@@ -59,17 +59,6 @@ incPlayerDouble :-
     NewPlayerDouble is DoubleNow + 1,
     retractall(playerDouble(PlayerDouble,DoubleNow)),
     asserta(playerDouble(PlayerDouble, NewPlayerDouble)),
-    (
-        (
-            NewPlayerDouble==3,
-            retractall(inJail(PlayerDouble,_)),
-            asserta(inJail(PlayerDouble,1)),
-            write('Welcome to jail '), 
-            write(PlayerDoubleName),nl, 
-            retractall(playerDouble(PlayerDouble,_)),
-            asserta(playerDouble(PlayerDouble,0))
-        ); !
-    ),
     !.
   
 /* switch player */

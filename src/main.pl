@@ -9,23 +9,8 @@
 :- include('f09_player.pl').
 :- include('f10_dice.pl').
 
-
 :- dynamic(playerName/2).
 :- dynamic(menu_status/1).
-
-/* switch player */
-switchPlayer :-
-    currentPlayer(X),
-    (X == 1),
-    retractall(currentPlayer(X)),
-    asserta(currentPlayer(2)),
-    !.
-switchPlayer :-
-    currentPlayer(X),
-    (X == 2),
-    retractall(currentPlayer(X)),
-    asserta(currentPlayer(1)),
-    !.    
 
 /* manually assign player name */
 playerName(1, 'Rachel').

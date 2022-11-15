@@ -54,4 +54,113 @@ hargaBeli(c3, bg2, 2500).
 hargaBeli(c3, bg3, 3600).
 hargaBeli(c3, lm, 4000).
 
+hargaBeli(d1, tanah, 450).
+hargaBeli(d1, bg1, 1600).
+hargaBeli(d1, bg2, 2600).
+hargaBeli(d1, bg3, 3000).
+hargaBeli(d1, lm, 3600).
+hargaBeli(d2, tanah, 500).
+hargaBeli(d2, bg1, 1650).
+hargaBeli(d2, bg2, 2200).
+hargaBeli(d2, bg3, 3000).
+hargaBeli(d2, lm, 3700).
+hargaBeli(d3, tanah, 400).
+hargaBeli(d3, bg1, 1600).
+hargaBeli(d3, bg2, 2400).
+hargaBeli(d3, bg3, 3800).
+hargaBeli(d3, lm, 4000).
 
+hargaBeli(e1, tanah, 450).
+hargaBeli(e1, bg1, 1650).
+hargaBeli(e1, bg2, 2700).
+hargaBeli(e1, bg3, 3400).
+hargaBeli(e1, lm, 4000).
+hargaBeli(e2, tanah, 500).
+hargaBeli(e2, bg1, 1700).
+hargaBeli(e2, bg2, 2600).
+hargaBeli(e2, bg3, 3000).
+hargaBeli(e2, lm, 3700).
+hargaBeli(e3, tanah, 450).
+hargaBeli(e3, bg1, 1800).
+hargaBeli(e3, bg2, 2500).
+hargaBeli(e3, bg3, 4000).
+hargaBeli(e3, lm, 4200).
+
+hargaBeli(f1, tanah, 550).
+hargaBeli(f1, bg1, 2000).
+hargaBeli(f1, bg2, 2900).
+hargaBeli(f1, bg3, 3700).
+hargaBeli(f1, lm, 4000).
+hargaBeli(f2, tanah, 550).
+hargaBeli(f2, bg1, 1900).
+hargaBeli(f2, bg2, 2100).
+hargaBeli(f2, bg3, 3300).
+hargaBeli(f2, lm, 4500).
+hargaBeli(f3, tanah, 450).
+hargaBeli(f3, bg1, 1400).
+hargaBeli(f3, bg2, 2500).
+hargaBeli(f3, bg3, 3600).
+hargaBeli(f3, lm, 4000).
+
+hargaBeli(g1, tanah, 700).
+hargaBeli(g1, bg1, 2100).
+hargaBeli(g1, bg2, 2700).
+hargaBeli(g1, bg3, 4000).
+hargaBeli(g1, lm, 5000).
+hargaBeli(g2, tanah, 750).
+hargaBeli(g2, bg1, 2000).
+hargaBeli(g2, bg2, 2300).
+hargaBeli(g2, bg3, 3800).
+hargaBeli(g2, lm, 4500).
+hargaBeli(g3, tanah, 750).
+hargaBeli(g3, bg1, 2400).
+hargaBeli(g3, bg2, 2500).
+hargaBeli(g3, bg3, 3600).
+hargaBeli(g3, lm, 4000).
+
+hargaBeli(h1, tanah, 800).
+hargaBeli(h1, bg1, 3000).
+hargaBeli(h1, bg2, 3500).
+hargaBeli(h1, bg3, 4000).
+hargaBeli(h1, lm, 5500).
+hargaBeli(h2, tanah, 800).
+hargaBeli(h2, bg1, 2900).
+hargaBeli(h2, bg2, 3600).
+hargaBeli(h2, bg3, 3900).
+hargaBeli(h2, lm, 4500).
+hargaBeli(h3, tanah, 850).
+hargaBeli(h3, bg1, 3000).
+hargaBeli(h3, bg2, 3500).
+hargaBeli(h3, bg3, 4600).
+hargaBeli(h3, lm, 6000).
+
+/*Status Kepemilikan*/
+/*status(loc, kepemilikan)*/
+
+/*Harga akuisisi/ambil alih = harga total beli*/
+/*hargaAmbil(loc, jenis, harga)*/
+hargaAmbil(_Loc, _Jenis, Harga):- 
+    _Jenis = tanah,
+    hargaBeli(_Loc, _Jenis, X),
+    Harga is X.
+hargaAmbil(_Loc, _Jenis, Harga):- 
+    _Jenis = bg1,
+    hargaBeli(_Loc, tanah, X),
+    hargaBeli(_Loc, bg1, X1),
+    Harga is X+X1.
+hargaAmbil(_Loc, _Jenis, Harga):- 
+    _Jenis = bg2,
+    hargaBeli(_Loc, tanah, X),
+    hargaBeli(_Loc, bg1, X1),
+    hargaBeli(_Loc, bg2, X2),
+    Harga is X+X1+X2.
+hargaAmbil(_Loc, _Jenis, Harga):- 
+    _Jenis = bg3,
+    hargaBeli(_Loc, tanah, X),
+    hargaBeli(_Loc, bg1, X1),
+    hargaBeli(_Loc, bg2, X2),
+    hargaBeli(_Loc, _Jenis, X3),
+    Harga is X+X1+X2+X3.
+
+
+    

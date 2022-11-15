@@ -187,5 +187,12 @@ hargaAmbil(_Loc, _Status, Harga):-
     Harga is X+X1+X2+X3.
 
 
-
-    
+/*checkPropertyDetail(Loc)*/
+checkPropertyDetail(X):-
+    nama_lokasi(X, Name),!,
+    write('Nama Lokasi          : '),
+    write(Name), nl,
+    write('Deskripsi            : '),
+    desc_lokasi(X, Desc),
+    write(Desc), nl,
+    a

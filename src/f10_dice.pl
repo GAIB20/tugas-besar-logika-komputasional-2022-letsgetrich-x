@@ -30,8 +30,8 @@ throwDice :-
             A == B, 
             write('Double!'), nl,
             Forward is A+B,
-            move(Player, Forward),
             incPlayerDouble,
+            move(Player, Forward),
             !
 
         );
@@ -41,12 +41,6 @@ throwDice :-
             Forward is A+B,
             move(Player, Forward),
             switchPlayer,
-            asserta(playerDouble(2,0))
-            write(PlayerName),
-            write(' moved '),
-            write(Forward),
-            write(' steps'), nl,
-           
             retractall(playerDouble(Player,_)),
             asserta(playerDouble(Player,0))
         )

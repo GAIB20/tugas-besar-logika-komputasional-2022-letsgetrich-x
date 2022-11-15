@@ -1,12 +1,16 @@
 /* File player.pl */
-:- dynamic(locPlayer/2).
-:- dynamic(cashPlayer/2)
-:- dynamic(propPlayer/2)
-:- dynamic(cardPlayer/2)
-/* locPlayer(no player, location) */
+:- dynamic(currentPlayer/1).
+:- dynamic(namePlayer/2).
+:- dynamic(locPlayer/3).
+:- dynamic(cashPlayer/2).
+:- dynamic(listLocPlayer/2).
+:- dynamic(cardPlayer/2).
+/* currentPlayer(no player) */
+/* namePlayer(no player, name) */
+/* locPlayer(no player, titik X, titik Y) */
 /* moneyPlayer(no player, cash) */
-/* locPlayer(no player, location) */
-/* locPlayer(no player, location) */
+/* listLocPlayer(no player, list location yang dimiliki) */
+/* cardPlayer(no player, list card yang dimiliki) */
 
 /* is Player */
 is_player(1).
@@ -16,24 +20,30 @@ is_player(2).
 initPlayer :-
     P1 is 1,
     P2 is 2,
+    write('Masukkan nama Player 1: '), read(Name1),nl,
+    write('Masukkan nama Player 2: '), read(Name2),nl,
+    assertz(namePlayer(1, Name1)),
+    assertz(namePlayer(2, Name2)),
+    /* Set pemain pertama */
+    currentPlayer(1),
     /* Set lokasi awal */
-    assertz(locPlayer(P1, go)),
-    assertz(locPlayer(P2, go)),
+    assertz(locPlayer(P1, 0, 0)),
+    assertz(locPlayer(P2, 0, 0)),
     /* Set uang awal, nilai properti */ 
     assertz(cashPlayer(P1, 50000)),
     assertz(cashPlayer(P2, 50000)),
-    /* Set daftar properti */ 
-    assertz(propPlayer(P1, [])),
-    assertz(propPlayer(P2, [])),
+    /* Set daftar lokasi yang dimiliki */ 
+    assertz(listLocPlayer(P1, [])),
+    assertz(listLocPlayer(P2, [])),
     /* Set daftar card */ 
     assertz(cardPlayer(P1, [])),
     assertz(cardPlayer(P2, [])).
 
+/* Rule menambah cash setiap melewati go */
+addCashGO(X) :-
+
 /* Rule membuat list daftar properti */
 daftarProp(X) :-
-
-/* Rule membuat list daftar card */
-daftarCard(X) :-
 
 /* Rule hitung nilai properti */
 countProp(X, Y) :-

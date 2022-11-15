@@ -72,6 +72,19 @@ incPlayerDouble :-
     ),
     !.
   
+/* switch player */
+switchPlayer :-
+    currentPlayer(X),
+    (X == 1),
+    retractall(currentPlayer(X)),
+    asserta(currentPlayer(2)),
+    !.
+switchPlayer :-
+    currentPlayer(X),
+    (X == 2),
+    retractall(currentPlayer(X)),
+    asserta(currentPlayer(1)),
+    !.    
 
 
 

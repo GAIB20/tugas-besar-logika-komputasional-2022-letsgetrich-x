@@ -134,33 +134,58 @@ hargaBeli(h3, bg2, 3500).
 hargaBeli(h3, bg3, 4600).
 hargaBeli(h3, lm, 6000).
 
+/*hargaSewa(loc, status lokasi)*/
+hargaSewa(_Loc, _Status, Harga):- 
+    _Status = tanah,
+    hargaBeli(_Loc, _Status, X),
+    Harga is X/2.
+hargaSewa(_Loc, _Status, Harga):- 
+    _Status = bg1,
+    hargaBeli(_Loc, tanah, X),
+    hargaBeli(_Loc, bg1, X1),
+    Harga is (X+X1)/2.
+hargaSewa(_Loc, _Status, Harga):- 
+    _Status = bg2,
+    hargaBeli(_Loc, tanah, X),
+    hargaBeli(_Loc, bg1, X1),
+    hargaBeli(_Loc, bg2, X2),
+    Harga is (X+X1+X2)/2.
+hargaSewa(_Loc, _Status, Harga):- 
+    _Status = bg3,
+    hargaBeli(_Loc, tanah, X),
+    hargaBeli(_Loc, bg1, X1),
+    hargaBeli(_Loc, bg2, X2),
+    hargaBeli(_Loc, _Status, X3),
+    Harga is (X+X1+X2+X3)/2.
+
 /*Status Kepemilikan*/
 /*status(loc, kepemilikan)*/
 
 /*Harga akuisisi/ambil alih = harga total beli*/
-/*hargaAmbil(loc, jenis, harga)*/
-hargaAmbil(_Loc, _Jenis, Harga):- 
-    _Jenis = tanah,
-    hargaBeli(_Loc, _Jenis, X),
+/*hargaAmbil(loc, status lokasi, harga)*/
+hargaAmbil(_Loc, _Status, Harga):- 
+    _Status = tanah,
+    hargaBeli(_Loc, _Status, X),
     Harga is X.
-hargaAmbil(_Loc, _Jenis, Harga):- 
-    _Jenis = bg1,
+hargaAmbil(_Loc, _Status, Harga):- 
+    _Status = bg1,
     hargaBeli(_Loc, tanah, X),
     hargaBeli(_Loc, bg1, X1),
     Harga is X+X1.
-hargaAmbil(_Loc, _Jenis, Harga):- 
-    _Jenis = bg2,
+hargaAmbil(_Loc, _Status, Harga):- 
+    _Status = bg2,
     hargaBeli(_Loc, tanah, X),
     hargaBeli(_Loc, bg1, X1),
     hargaBeli(_Loc, bg2, X2),
     Harga is X+X1+X2.
-hargaAmbil(_Loc, _Jenis, Harga):- 
-    _Jenis = bg3,
+hargaAmbil(_Loc, _Status, Harga):- 
+    _Status = bg3,
     hargaBeli(_Loc, tanah, X),
     hargaBeli(_Loc, bg1, X1),
     hargaBeli(_Loc, bg2, X2),
-    hargaBeli(_Loc, _Jenis, X3),
+    hargaBeli(_Loc, _Status, X3),
     Harga is X+X1+X2+X3.
+
 
 
     

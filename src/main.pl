@@ -9,7 +9,6 @@
 :- include('f09_player.pl').
 :- include('f10_dice.pl').
 
-
 :- dynamic(playerName/2).
 :- dynamic(menu_status/1).
 

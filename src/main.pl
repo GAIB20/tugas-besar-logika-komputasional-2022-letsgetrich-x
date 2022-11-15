@@ -8,8 +8,6 @@
 inJail(1,0).
 inJail(2,0).
 
-
-
 /* manually assign player name */
 playerName(1, 'Rachel').
 playerName(2, 'Livia').

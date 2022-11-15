@@ -1,4 +1,4 @@
-/* */
+/* dynamic variables */
 :- dynamic(playerDouble/2).
 
 /* playerDouble(ID, state), state times double */
@@ -28,7 +28,6 @@ throwDice :-
         (
             A == B, 
             write('Double!'), nl,
-            
             incPlayerDouble,
             !
 

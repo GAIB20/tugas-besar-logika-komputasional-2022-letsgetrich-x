@@ -42,10 +42,8 @@ throwDice :-
             write(Forward),
             write(' steps'), nl,
            
-            retractall(playerDouble(1,_)),
-            asserta(playerDouble(1,0)),
-            retractall(playerDouble(2,_)),
-            asserta(playerDouble(2,0))
+            retractall(playerDouble(Player,_)),
+            asserta(playerDouble(Player,0))
         )
     ).
     

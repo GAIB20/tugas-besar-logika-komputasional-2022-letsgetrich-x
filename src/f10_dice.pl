@@ -1,4 +1,4 @@
-/* */
+/* dynamic variables */
 :- dynamic(playerDouble/2).
 
 /* playerDouble(ID, state), state times double */
@@ -28,7 +28,6 @@ throwDice :-
         (
             A == B, 
             write('Double!'), nl,
-            
             incPlayerDouble,
             !
 
@@ -61,6 +60,19 @@ incPlayerDouble :-
     asserta(playerDouble(PlayerDouble, NewPlayerDouble)),
     !.
   
+/* switch player */
+switchPlayer :-
+    currentPlayer(X),
+    (X == 1),
+    retractall(currentPlayer(X)),
+    asserta(currentPlayer(2)),
+    !.
+switchPlayer :-
+    currentPlayer(X),
+    (X == 2),
+    retractall(currentPlayer(X)),
+    asserta(currentPlayer(1)),
+    !.    
 
 
 

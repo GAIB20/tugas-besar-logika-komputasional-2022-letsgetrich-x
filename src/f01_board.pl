@@ -4,38 +4,38 @@
 /* posisi pemain 1 dan pemain 2, default position == 0 (GO) */
 
 /* map tile index, 0 is 'GO', 31 is 'H2'*/
-tile(0, 'GO').
-tile(1, 'A1').
-tile(2, 'A2').
-tile(3, 'A3').
-tile(4, 'CC').
-tile(5, 'B1').
-tile(6, 'B2').
-tile(7, 'B3').
-tile(8, 'JL').
-tile(9, 'C1').
-tile(10, 'C2').
-tile(11, 'C3').
-tile(12, 'TX').
-tile(13, 'D1').
-tile(14, 'D2').
-tile(15, 'D3').
-tile(16, 'FP').
-tile(17, 'E1').
-tile(18, 'E2').
-tile(19, 'E3').
-tile(20, 'CC').
-tile(21, 'F1').
-tile(22, 'F2').
-tile(23, 'F3').
-tile(24, 'WT').
-tile(25, 'G1').
-tile(26, 'G2').
-tile(27, 'G3').
-tile(28, 'TX').
-tile(29, 'CC').
-tile(30, 'H1').
-tile(31, 'H2').
+tile(0, go).
+tile(1, a1).
+tile(2, a2).
+tile(3, a3).
+tile(4, cc).
+tile(5, b1).
+tile(6, b2).
+tile(7, b3).
+tile(8, jl).
+tile(9, c1).
+tile(10, c2).
+tile(11, c3).
+tile(12, tx).
+tile(13, d1).
+tile(14, d2).
+tile(15, d3).
+tile(16, fp).
+tile(17, e1).
+tile(18, e2).
+tile(19, e3).
+tile(20, cc).
+tile(21, f1).
+tile(22, f2).
+tile(23, f3).
+tile(24, f4).
+tile(25, g1).
+tile(26, g2).
+tile(27, g3).
+tile(28, tx).
+tile(29, cc).
+tile(30, h1).
+tile(31, h2).
 
 /* map grids row x, col y */
 /* grid[1-9][1-9] are constants */
@@ -238,10 +238,5 @@ map :-
 
 /* move player and build property demo */
 /* chore: link player movement and property ownership */
-move(Player, Steps) :-
-    locPlayer(P, Loc), P=:=Player,
-    Loc1 is (Loc+Steps) mod 32,
-    retract(locPlayer(P, Loc)),
-    asserta(locPlayer(P, Loc1)), !.
 buy :- retract(grid(0,3,_Info)), asserta(grid(0,3,'10')), !.
 sell :- retract(grid(0,3,_Info)), asserta(grid(0,3,'  ')), !.

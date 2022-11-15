@@ -20,7 +20,7 @@ playerName(2, 'Livia').
 currentPlayer(1).
 
 startGame:-
-    initPlayer.
+    initPlayer,
     initJail.
 
 

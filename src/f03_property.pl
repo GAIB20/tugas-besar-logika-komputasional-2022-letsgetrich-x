@@ -1,3 +1,5 @@
+
+
 /* hargaBeliProp(loc, jenis, hargaBeli)*/
 /*
     tanah = tanah
@@ -195,4 +197,6 @@ checkPropertyDetail(X):-
     write('Deskripsi            : '),
     desc_lokasi(X, Desc),
     write(Desc), nl,
-    a
+    !.
+propertyMechanism :-
+    write('test').

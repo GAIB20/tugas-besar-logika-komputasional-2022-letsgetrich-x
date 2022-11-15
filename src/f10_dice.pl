@@ -1,3 +1,4 @@
+:- include('move.pl').
 /* dynamic variables */
 :- dynamic(playerDouble/2).
 
@@ -28,6 +29,8 @@ throwDice :-
         (
             A == B, 
             write('Double!'), nl,
+            Forward is A+B,
+            move(Player, Forward),
             incPlayerDouble,
             !
 
@@ -35,8 +38,10 @@ throwDice :-
 
         (
             A \== B, 
-            switchPlayer,
             Forward is A+B,
+            move(Player, Forward),
+            switchPlayer,
+            asserta(playerDouble(2,0))
             write(PlayerName),
             write(' moved '),
             write(Forward),

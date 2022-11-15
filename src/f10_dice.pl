@@ -1,3 +1,5 @@
+:- include('move.pl').
+
 /* */
 :- dynamic(playerDouble/2).
 
@@ -28,7 +30,8 @@ throwDice :-
         (
             A == B, 
             write('Double!'), nl,
-            
+            Forward is A+B,
+            move(Player, Forward),
             incPlayerDouble,
             !
 
@@ -36,16 +39,9 @@ throwDice :-
 
         (
             A \== B, 
-            switchPlayer,
             Forward is A+B,
-            write(PlayerName),
-            write(' moved '),
-            write(Forward),
-            write(' steps'), nl,
-           
-            retractall(playerDouble(1,_)),
-            asserta(playerDouble(1,0)),
-            retractall(playerDouble(2,_)),
+            move(Player, Forward),
+            switchPlayer,
             asserta(playerDouble(2,0))
         )
     ).

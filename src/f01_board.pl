@@ -1,9 +1,7 @@
-:- dynamic(player_pos/2).
+:- include('f09_player.pl').
 :- dynamic(grid/3).
 
 /* posisi pemain 1 dan pemain 2, default position == 0 (GO) */
-player_pos(1, 0).
-player_pos(2, 0).
 
 /* map tile index, 0 is 'GO', 31 is 'H2'*/
 tile(0, 'GO').
@@ -211,7 +209,7 @@ write_cols(Row, StartCol) :-
     NextCol is StartCol+1, write_cols(Row, NextCol).
     
 write_playerinfo :-
-    player_pos(1, Pos1), player_pos(2, Pos2), 
+    locPlayer(1, Pos1), locPlayer(2, Pos2), 
     tile(Pos1, P1), tile(Pos2, P2),
     write('    Posisi pemain:'), nl,
     write('    1 = '), write(P1), nl,
@@ -241,10 +239,9 @@ map :-
 /* move player and build property demo */
 /* chore: link player movement and property ownership */
 move(Player, Steps) :-
-    Steps>=1, Steps=<6,
-    player_pos(P, Loc), P=:=Player,
+    locPlayer(P, Loc), P=:=Player,
     Loc1 is (Loc+Steps) mod 32,
-    retract(player_pos(P, Loc)),
-    asserta(player_pos(P, Loc1)), !.
+    retract(locPlayer(P, Loc)),
+    asserta(locPlayer(P, Loc1)), !.
 buy :- retract(grid(0,3,_Info)), asserta(grid(0,3,'10')), !.
 sell :- retract(grid(0,3,_Info)), asserta(grid(0,3,'  ')), !.

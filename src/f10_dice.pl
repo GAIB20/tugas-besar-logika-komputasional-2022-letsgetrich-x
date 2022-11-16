@@ -1,4 +1,5 @@
-/* */
+:- include('move.pl').
+/* dynamic variables */
 :- dynamic(playerDouble/2).
 
 /* playerDouble(ID, state), state times double */
@@ -28,25 +29,20 @@ throwDice :-
         (
             A == B, 
             write('Double!'), nl,
-            
+            Forward is A+B,
             incPlayerDouble,
+            move(Player, Forward),
             !
 
         );
 
         (
             A \== B, 
-            switchPlayer,
             Forward is A+B,
-            write(PlayerName),
-            write(' moved '),
-            write(Forward),
-            write(' steps'), nl,
-           
-            retractall(playerDouble(1,_)),
-            asserta(playerDouble(1,0)),
-            retractall(playerDouble(2,_)),
-            asserta(playerDouble(2,0))
+            move(Player, Forward),
+            switchPlayer,
+            retractall(playerDouble(Player,_)),
+            asserta(playerDouble(Player,0))
         )
     ).
     
@@ -59,19 +55,21 @@ incPlayerDouble :-
     NewPlayerDouble is DoubleNow + 1,
     retractall(playerDouble(PlayerDouble,DoubleNow)),
     asserta(playerDouble(PlayerDouble, NewPlayerDouble)),
-    (
-        (
-            NewPlayerDouble==3,
-            retractall(inJail(PlayerDouble,_)),
-            asserta(inJail(PlayerDouble,1)),
-            write('Welcome to jail '), 
-            write(PlayerDoubleName),nl, 
-            retractall(playerDouble(PlayerDouble,_)),
-            asserta(playerDouble(PlayerDouble,0))
-        ); !
-    ),
     !.
   
+/* switch player */
+switchPlayer :-
+    currentPlayer(X),
+    (X == 1),
+    retractall(currentPlayer(X)),
+    asserta(currentPlayer(2)),
+    !.
+switchPlayer :-
+    currentPlayer(X),
+    (X == 2),
+    retractall(currentPlayer(X)),
+    asserta(currentPlayer(1)),
+    !.    
 
 
 

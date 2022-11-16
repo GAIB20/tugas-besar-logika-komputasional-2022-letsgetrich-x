@@ -44,15 +44,19 @@ addCashGO(X) :-
 
 /* Rule membuat list daftar properti */
 daftarProp(X) :-
-
+    !.
+/* Rule membuat list daftar card */
+daftarCard(X) :-
+    !.
 /* Rule hitung nilai properti */
 countProp(X, Y) :-
-
+    !.
 /* Rule menampilkan daftar properti */
 displayProp(X) :-
-
+    !.
 /* Rule menampilkan daftar card */
 displayCard(X) :-
+    !.
 
 /* Rule cek detail player */
 checkPlayerDetail(X) :-
@@ -71,6 +75,6 @@ checkPlayerDetail(X) :-
                         displayProp(X),nl,
 
                         write('Daftar Kepemilikan Card      : '), nl,
-                        displayCard(X),nl,
+                        displayCard(X),nl,!
     ),
     !.

@@ -3,13 +3,13 @@
 :- dynamic(namePlayer/2).
 :- dynamic(locPlayer/3).
 :- dynamic(cashPlayer/2).
-:- dynamic(listLocPlayer/2).
+:- dynamic(listPropPlayer/2).
 :- dynamic(cardPlayer/2).
 /* currentPlayer(no player) */
 /* namePlayer(no player, name) */
 /* locPlayer(no player, titik X, titik Y) */
 /* moneyPlayer(no player, cash) */
-/* listLocPlayer(no player, list location yang dimiliki) */
+/* listPropPlayer(no player, list location yang dimiliki) */
 /* cardPlayer(no player, list card yang dimiliki) */
 
 /* is Player */
@@ -33,30 +33,26 @@ initPlayer :-
     assertz(cashPlayer(P1, 50000)),
     assertz(cashPlayer(P2, 50000)),
     /* Set daftar lokasi yang dimiliki */ 
-    assertz(listLocPlayer(P1, [])),
-    assertz(listLocPlayer(P2, [])),
+    assertz(listPropPlayer(P1, [])),
+    assertz(listPropPlayer(P2, [])),
     /* Set daftar card */ 
     assertz(cardPlayer(P1, [])),
     assertz(cardPlayer(P2, [])).
 
-/* Rule menambah cash setiap melewati go */
-addCashGO(X) :-
-
 /* Rule membuat list daftar properti */
-daftarProp(X) :-
-    !.
-/* Rule membuat list daftar card */
-daftarCard(X) :-
-    !.
+daftarProp(X) :- !.
+
 /* Rule hitung nilai properti */
-countProp(X, Y) :-
-    !.
+countProp(X, Y) :- !.
+
+/* Rule menambah cash setiap melewati go */
+addCashGO(X) :- !.
+
 /* Rule menampilkan daftar properti */
-displayProp(X) :-
-    !.
+displayProp(X) :- !.
+
 /* Rule menampilkan daftar card */
-displayCard(X) :-
-    !.
+displayCard(X) :- !.
 
 /* Rule cek detail player */
 checkPlayerDetail(X) :-
@@ -78,3 +74,16 @@ checkPlayerDetail(X) :-
                         displayCard(X),nl,!
     ),
     !.
+
+/* incrementCash currentPlayer by X */
+incCash(X) :- !.
+
+/* decrementCash currentPlayer by X */
+decCash(X) :- !.
+
+/* totalAssets currentPlayer is X */
+totalAssets(X) :- !.
+
+/* Rule membuat list daftar card, sementara ga di pake karena card yang disimpan hanya free from jail */
+/* daftarCard(X) :- !. */
+

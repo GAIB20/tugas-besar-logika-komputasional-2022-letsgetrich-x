@@ -5,6 +5,8 @@
 :- dynamic(cashPlayer/2).
 :- dynamic(listPropPlayer/2).
 :- dynamic(cardPlayer/2).
+:- dynamic(tempIndeks/1).
+:- dynamic(tempList/1).
 /* currentPlayer(no player) */
 /* namePlayer(no player, name) */
 /* locPlayer(no player, titik X, titik Y) */
@@ -15,6 +17,10 @@
 /* is Player */
 is_player(1).
 is_player(2).
+
+/* initialize temp predicate */
+tempIndeks(-1).
+tempList([]).
 
 /* Rule inisiasi player */
 initPlayer :-
@@ -49,7 +55,42 @@ countProp(X, Y) :- !.
 addCashGO(X) :- !.
 
 /* Rule menampilkan daftar properti */
-displayProp(X) :- !.
+displayProp :- 
+    currentPlayer(Player),
+    listPropPlayer(Player,ListProp),
+
+    /* reset index */
+    retractall(tempIndeks(_)),
+    asserta(tempIndeks(1)),
+
+    /* move ListProp to tempList */
+    retractall(tempList(_)),
+    asserta(tempList(ListProp)),
+    
+    repeat,
+        /* ambil nilai indeks */
+        tempIndeks(Idx),
+
+        /* ambil nilai Head */
+        tempList([Head|Tail]),
+
+        /* ambil nilai jenis tanah dan harga beli */
+        hargaBeli(Head,Type,Price),
+
+        /* print details */
+        write(Idx),
+        write('. '),
+        write(Head),
+        write(' - '),
+        write(Type),
+        write(' - '),
+        write(Price),nl,
+        NewIdx is Idx + 1,
+        retractall(tempIndeks(_)),
+        asserta(tempIndeks(NewIdx)),
+        retractall(tempList(_)),
+        asserta(tempList(Tail)),
+    Tail == [],!.
 
 /* Rule menampilkan daftar card */
 displayCard(X) :- !.

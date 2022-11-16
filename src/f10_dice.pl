@@ -74,7 +74,13 @@ switchPlayer :-
 
 
 
+/**
 
+Tambahin line 33
+
+if sin jail , switch player
+
+**/
 
 
 

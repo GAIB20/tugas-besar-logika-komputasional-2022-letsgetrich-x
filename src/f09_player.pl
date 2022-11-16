@@ -1,13 +1,13 @@
 /* File player.pl */
 :- dynamic(locPlayer/2).
 :- dynamic(cashPlayer/2).
-:- dynamic(propPlayer/2).
+:- dynamic(listPropPlayer/2).
 :- dynamic(cardPlayer/2).
 :- dynamic(currentPlayer/1).
 /* locPlayer(no player, location) */
 /* moneyPlayer(no player, cash) */
-/* locPlayer(no player, location) */
-/* locPlayer(no player, location) */
+/* listPropPlayer(no player, list location yang dimiliki) */
+/* cardPlayer(no player, list card yang dimiliki) */
 
 /* is Player */
 is_player(1).
@@ -26,6 +26,9 @@ initPlayer :-
     /* Set daftar properti */ 
     assertz(propPlayer(P1, [])),
     assertz(propPlayer(P2, [])),
+    /* Set daftar lokasi yang dimiliki */ 
+    assertz(listPropPlayer(P1, [])),
+    assertz(listPropPlayer(P2, [])),
     /* Set daftar card */ 
     assertz(cardPlayer(P1, [])),
     assertz(cardPlayer(P2, [])).
@@ -38,7 +41,10 @@ daftarCard(X) :-
     !.
 /* Rule hitung nilai properti */
 countProp(X, Y) :-
-    !.
+
+/* Rule menambah cash setiap melewati go */
+addCashGO(X) :-
+
 /* Rule menampilkan daftar properti */
 displayProp(X) :-
     !.
@@ -66,3 +72,13 @@ checkPlayerDetail(X) :-
                         displayCard(X),nl,!
     ),
     !.
+
+/* incCash(X), increment currentPlayer cash by X */
+incCash(X) :-
+
+/* decCash(X), increment currentPlayer cash by X */
+decCash(X) :-
+
+/* totalAssets(X), X adalah total aset currentPlayer */
+totalAssets(X) :-
+

@@ -116,20 +116,20 @@ kepemilikan(h2, 0).
 
 checkLocationDetail(X):-
     nama_lokasi(X, Name),!,
-    write('Nama Lokasi          : '),
+    write('Location Name        : '),
     write(Name), nl,
-    write('Deskripsi            : '),
+    write('Description          : '),
     desc_lokasi(X, Desc),
     write(Desc), nl,
-    (
-        is_property(X) -> write('Kepemilikan          : '),
+    (                     write('Description          : '),
+        is_property(X) -> write('Ownership            : '),
                           kepemilikan(X, Milik),
                           write(Milik), nl,
                           /* nunggu properti jadi ?*/
-                          write('Biaya sewa saat ini  : \n'),
-                          write('Biaya Akuisisi       : \n'),
-                          write('Tingkatan Properti   : \n'), !;
-        X = cc -> write('Anda berhak memilih salah satu dari kartu berikut: \n'), !;
+                          write('Current rent price   : \n'),
+                          write('Acquisition price    : \n'),
+                          write('Property Level       : \n'), !;
+        X = cc -> write('You can choose one of these cards   : \n'), !;
         !
         /* nunggu chance card */
     ),
@@ -137,5 +137,5 @@ checkLocationDetail(X):-
 
 checkLocationDetail(X):-
     write(X),
-    write(' bukan lokasi yang valid! Silahkan masukkan lokasi yang valid.').
+    write(' is not a valid location, sorry! :(\n').
 

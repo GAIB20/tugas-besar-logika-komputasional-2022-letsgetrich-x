@@ -1,4 +1,4 @@
-
+:-include('f02_location.pl').
 
 /* hargaBeliProp(loc, jenis, hargaBeli)*/
 /*
@@ -136,29 +136,37 @@ hargaBeli(h3, bg2, 3500).
 hargaBeli(h3, bg3, 4600).
 hargaBeli(h3, lm, 6000).
 
-/*hargaSewa(loc, status lokasi)*/
+/*hargaSewa(loc, status lokasi, harga)*/
 hargaSewa(_Loc, _Status, Harga):- 
     _Status = tanah,
     hargaBeli(_Loc, _Status, X),
-    Harga is X/2.
+    Harga is X//2.
 hargaSewa(_Loc, _Status, Harga):- 
     _Status = bg1,
     hargaBeli(_Loc, tanah, X),
     hargaBeli(_Loc, bg1, X1),
-    Harga is (X+X1)/2.
+    Harga is (X+X1)//2.
 hargaSewa(_Loc, _Status, Harga):- 
     _Status = bg2,
     hargaBeli(_Loc, tanah, X),
     hargaBeli(_Loc, bg1, X1),
     hargaBeli(_Loc, bg2, X2),
-    Harga is (X+X1+X2)/2.
+    Harga is (X+X1+X2)//2.
 hargaSewa(_Loc, _Status, Harga):- 
     _Status = bg3,
     hargaBeli(_Loc, tanah, X),
     hargaBeli(_Loc, bg1, X1),
     hargaBeli(_Loc, bg2, X2),
     hargaBeli(_Loc, _Status, X3),
-    Harga is (X+X1+X2+X3)/2.
+    Harga is (X+X1+X2+X3)//2.
+hargaSewa(_Loc, _Status, Harga):- 
+    _Status = lm,
+    hargaBeli(_Loc, tanah, X),
+    hargaBeli(_Loc, bg1, X1),
+    hargaBeli(_Loc, bg2, X2),
+    hargaBeli(_Loc, bg3, X3),
+    hargaBeli(_Loc, _Status, X4),
+    Harga is (X+X1+X2+X3+X4)//2.
 
 /*Status Kepemilikan*/
 /*status(loc, kepemilikan)*/
@@ -197,6 +205,27 @@ checkPropertyDetail(X):-
     write('Deskripsi            : '),
     desc_lokasi(X, Desc),
     write(Desc), nl,
+    (
+        is_property(X) -> hargaBeli(X, tanah, HargaTanah), 
+                          hargaBeli(X, bg1, HargaBg1),
+                          hargaBeli(X, bg2, HargaBg2),
+                          hargaBeli(X, bg3, HargaBg3),
+                          hargaBeli(X, lm, HargaLm),
+                          write('Harga Tanah               : '), write(HargaTanah),nl,
+                          write('Harga Bangunan 1          : '), write(HargaBg1),nl,
+                          write('Harga Bangunan 2          : '), write(HargaBg2),nl,
+                          write('Harga Bangunan 3          : '), write(HargaBg3),nl,
+                          write('Harga Landmark            : '), write(HargaLm),nl,
+                          nl,
+                          hargaSewa(X, tanah, HargaTanah1),
+                          hargaSewa(X, bg1, HargaBg11),
+                          hargaSewa(X, bg2, HargaBg21),
+                          hargaSewa(X, bg3, HargaBg31),
+                          hargaSewa(X, lm, HargaLm1),
+                          write('Biaya Sewa Tanah          : '), write(HargaTanah1),nl,
+                          write('Biaya Sewa Bangunan 1     : '), write(HargaBg11),nl,
+                          write('Biaya Sewa Bangunan 2     : '), write(HargaBg21),nl,
+                          write('Biaya Sewa Bangunan 3     : '), write(HargaBg31),nl,
+                          write('Biaya Sewa Landmark       : '), write(HargaLm1),nl
+    ),
     !.
-propertyMechanism :-
-    write('aaaa').

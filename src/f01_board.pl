@@ -1,4 +1,4 @@
-:- include('f09_player.pl').
+
 :- dynamic(grid/3).
 
 /* posisi pemain 1 dan pemain 2, default position == 0 (GO) */

@@ -199,4 +199,4 @@ checkPropertyDetail(X):-
     write(Desc), nl,
     !.
 propertyMechanism :-
-    write('test').
+    write('aaaa').

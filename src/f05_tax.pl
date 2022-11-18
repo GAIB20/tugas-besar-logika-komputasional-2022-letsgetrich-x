@@ -1,5 +1,4 @@
-:- include('f09_player.pl').
-:- include('f11_bankrupt.pl').
+
 
 /* pay tax, which is 10% of total asset value */
 payTax(P) :-
@@ -10,7 +9,7 @@ payTax(P) :-
     write('Total Asset Value: '), write(PAsset), nl,
     write('Tax (10%): '), write(Tax), nl,
 
-    bankruptMechanism(Tax)!,
+    bankruptMechanism(Tax),!,
 
     decCash(Tax),
     write(Tax), write(' has been withdrawn from your account.'), nl, !.

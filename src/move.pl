@@ -19,8 +19,10 @@ move(Player, Steps) :-
                               (
                                 Currloc =  fp -> parkirGratisMechanism;
                                 Currloc = jl -> visitJail;
-                                is_property(currLoc) -> propertyMechanism, !
-                              ),!
+                                is_property(currLoc) -> propertyMechanism, !;
+                                !
+                              ),!;
+        in_jail(Player) -> !
     ),
     !.
 

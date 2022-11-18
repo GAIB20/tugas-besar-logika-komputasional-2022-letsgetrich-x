@@ -4,6 +4,7 @@
 :- dynamic(propPlayer/2).
 :- dynamic(cardPlayer/2).
 :- dynamic(currentPlayer/1).
+:- dynamic(playerName/2).
 /* locPlayer(no player, location) */
 /* moneyPlayer(no player, cash) */
 /* locPlayer(no player, location) */
@@ -17,6 +18,10 @@ is_player(2).
 initPlayer :-
     P1 is 1,
     P2 is 2,
+    /* Set player awal */
+    assertz(currentPlayer(1)),
+    assertz(playerName(1, 'Rachel')),
+    assertz(playerName(2, 'Livia')),
     /* Set lokasi awal */
     assertz(locPlayer(P1, 0)),
     assertz(locPlayer(P2, 0)),

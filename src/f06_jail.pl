@@ -13,22 +13,24 @@ jailMechanism:-
     dice_after_jail(X, 0),
     playerDouble(X,3),
     asserta(in_jail(X)),
-    write('Ooops! What a bad muggle you have been. Welcome to Azkaban!\n'),
+    retractall(playerDouble(X,_)),
+    asserta(playerDouble(X,0)),
+    write('Ooops! What a bad muggle you have been. You are now jailed in Azkaban!\n'),
     checkLocationDetail(jl),
-    incDiceAfterJail,
     !.
 
 jailMechanism:-
     currentPlayer(X),
-    dice_after_jail(X,Y),
     in_jail(X),
+    dice_after_jail(X,Y),
+    Y>=0,
     Y<3,
     playerDouble(X,Z),
     (
         Z = 0 ->  incDiceAfterJail,
                   write('You\'re still in Azkaban :(\n'),
                   !;
-        Z > 0 -> escapeJail,!
+        (Y = 3; Z = 1) -> escapeJail,!
     ),
     !.
 
@@ -52,9 +54,15 @@ incDiceAfterJail:-
     !.
 
 visitJail:-
-    write('You\'ve arrived in Azkaban.. Normally, people lose their sanity here. I certainly hope you don\'nt, \n').
+    write('You\'ve arrived in Azkaban.. Normally, people lose their sanity here. I certainly hope you don\'t, \n').
 
 escapeJail:-
     write('Congratulations! You survived your time in Azkaban. You can throw dice now!\n'),
     currentPlayer(X),
-    retractall(in_jail(X)).
+    retractall(in_jail(X)),
+    retractall(playerDouble(X,_)),
+    asserta(playerDouble(X,0)).
+
+testJail:-
+    retractall(playerDouble(1,_)),
+    asserta(playerDouble(1, 2)).

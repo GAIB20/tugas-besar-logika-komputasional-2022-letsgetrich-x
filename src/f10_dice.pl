@@ -1,4 +1,4 @@
-:- include('move.pl').
+
 /* dynamic variables */
 :- dynamic(playerDouble/2).
 
@@ -50,7 +50,7 @@ throwDice :-
 /* increment player double, check if need to go to jail */
 incPlayerDouble :-
     currentPlayer(PlayerDouble),
-    playerName(PlayerDouble,PlayerDoubleName),
+    playerName(PlayerDouble,_),
     playerDouble(PlayerDouble,DoubleNow),
     NewPlayerDouble is DoubleNow + 1,
     retractall(playerDouble(PlayerDouble,DoubleNow)),

@@ -16,7 +16,8 @@ startGame:-
     ['f11_bankrupt.pl'],
     ['move.pl'],
     initPlayer,
-    initJail.
+    initJail,
+    initChanceCard.
 
 
 

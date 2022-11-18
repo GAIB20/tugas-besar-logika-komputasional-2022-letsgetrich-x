@@ -30,9 +30,23 @@ jailMechanism:-
         Y >= 0 ->  incDiceAfterJail,
                   write('You\'re still in Azkaban :(\n'),
                   write('Do you want to escape now?\n'),
-                  write('0. No, i can hold out the Dementors..\n'),
+                  write('0. No, i\'ll try to fight off the Dementors..\n'),
                   write('1. Pay 1000\n'),
                   write('2. Use Escape Azkaban Card\n'),
+                  read(Choice),
+                  (
+                    Choice == 0 -> write('That\'s very brave of you.. A Gryffindor perhaps..?\n');
+                    Choice == 1 -> (cashPlayer(X, Cash),
+                                    (
+                                        Cash >=1000 -> retractall(cashPlayer(X,_)),
+                                                       Cash1 is Cash-1000,
+                                                       asserta(cashPlayer(X, Cash1)),
+                                                       escapeJail,!;
+                                        write('You don\'t have enough money!'),
+                                        jailMechanism, !    
+                                    ),!  
+                                   );
+                    Choice == 2 -> write('nunggu chance card hore\n'),!),
                   !
     ),
     !.

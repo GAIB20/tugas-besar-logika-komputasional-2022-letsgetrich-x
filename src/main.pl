@@ -2,6 +2,7 @@
 :- dynamic(menu_status/1).
 
 startGame:-
+    ['utility.pl'],
     ['f01_board.pl'],
     ['f02_location.pl'],
     ['f03_property.pl'],

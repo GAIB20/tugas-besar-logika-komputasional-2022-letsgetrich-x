@@ -1,6 +1,6 @@
 :-include('f02_location.pl').
 
-/* hargaBeliProp(loc, jenis, hargaBeli)*/
+/* hargaBeliProp(loc, Tingkatan, hargaBeli)*/
 /*
     tanah = tanah
     bg1 = bangunan 1
@@ -136,73 +136,73 @@ hargaBeli(h3, bg2, 3500).
 hargaBeli(h3, bg3, 4600).
 hargaBeli(h3, lm, 6000).
 
-/*hargaSewa(loc, status lokasi, harga)*/
-hargaSewa(_Loc, _Status, Harga):- 
-    _Status = tanah,
-    hargaBeli(_Loc, _Status, X),
+/*hargaSewa(loc, Tingkatan lokasi, harga)*/
+hargaSewa(_Loc, _Tingkatan, Harga):- 
+    _Tingkatan = tanah,
+    hargaBeli(_Loc, _Tingkatan, X),
     Harga is X//2.
-hargaSewa(_Loc, _Status, Harga):- 
-    _Status = bg1,
+hargaSewa(_Loc, _Tingkatan, Harga):- 
+    _Tingkatan = bg1,
     hargaBeli(_Loc, tanah, X),
     hargaBeli(_Loc, bg1, X1),
     Harga is (X+X1)//2.
-hargaSewa(_Loc, _Status, Harga):- 
-    _Status = bg2,
+hargaSewa(_Loc, _Tingkatan, Harga):- 
+    _Tingkatan = bg2,
     hargaBeli(_Loc, tanah, X),
     hargaBeli(_Loc, bg1, X1),
     hargaBeli(_Loc, bg2, X2),
     Harga is (X+X1+X2)//2.
-hargaSewa(_Loc, _Status, Harga):- 
-    _Status = bg3,
+hargaSewa(_Loc, _Tingkatan, Harga):- 
+    _Tingkatan = bg3,
     hargaBeli(_Loc, tanah, X),
     hargaBeli(_Loc, bg1, X1),
     hargaBeli(_Loc, bg2, X2),
-    hargaBeli(_Loc, _Status, X3),
+    hargaBeli(_Loc, _Tingkatan, X3),
     Harga is (X+X1+X2+X3)//2.
-hargaSewa(_Loc, _Status, Harga):- 
-    _Status = lm,
+hargaSewa(_Loc, _Tingkatan, Harga):- 
+    _Tingkatan = lm,
     hargaBeli(_Loc, tanah, X),
     hargaBeli(_Loc, bg1, X1),
     hargaBeli(_Loc, bg2, X2),
     hargaBeli(_Loc, bg3, X3),
-    hargaBeli(_Loc, _Status, X4),
+    hargaBeli(_Loc, _Tingkatan, X4),
     Harga is (X+X1+X2+X3+X4)//2.
 
-/*Status Kepemilikan*/
-/*status(loc, kepemilikan)*/
+/*Tingkatan Kepemilikan*/
+/*Tingkatan(loc, kepemilikan)*/
 
 /*Harga akuisisi/ambil alih = harga total beli*/
-/*hargaAmbil(loc, status lokasi, harga)*/
-hargaAmbil(_Loc, _Status, Harga):- 
-    _Status = tanah,
-    hargaBeli(_Loc, _Status, X),
+/*hargaAmbil(loc, Tingkatan lokasi, harga)*/
+hargaAmbil(_Loc, _Tingkatan, Harga):- 
+    _Tingkatan = tanah,
+    hargaBeli(_Loc, _Tingkatan, X),
     Harga is X.
-hargaAmbil(_Loc, _Status, Harga):- 
-    _Status = bg1,
+hargaAmbil(_Loc, _Tingkatan, Harga):- 
+    _Tingkatan = bg1,
     hargaBeli(_Loc, tanah, X),
     hargaBeli(_Loc, bg1, X1),
     Harga is X+X1.
-hargaAmbil(_Loc, _Status, Harga):- 
-    _Status = bg2,
+hargaAmbil(_Loc, _Tingkatan, Harga):- 
+    _Tingkatan = bg2,
     hargaBeli(_Loc, tanah, X),
     hargaBeli(_Loc, bg1, X1),
     hargaBeli(_Loc, bg2, X2),
     Harga is X+X1+X2.
-hargaAmbil(_Loc, _Status, Harga):- 
-    _Status = bg3,
+hargaAmbil(_Loc, _Tingkatan, Harga):- 
+    _Tingkatan = bg3,
     hargaBeli(_Loc, tanah, X),
     hargaBeli(_Loc, bg1, X1),
     hargaBeli(_Loc, bg2, X2),
-    hargaBeli(_Loc, _Status, X3),
+    hargaBeli(_Loc, _Tingkatan, X3),
     Harga is X+X1+X2+X3.
 
 
 /*checkPropertyDetail(Loc)*/
 checkPropertyDetail(X):-
     nama_lokasi(X, Name),!,
-    write('Nama Lokasi               : '),
+    write('Location Name               : '),
     write(Name), nl,
-    write('Deskripsi                 : '),
+    write('Description                 : '),
     desc_lokasi(X, Desc),
     write(Desc), nl,
     (
@@ -211,24 +211,35 @@ checkPropertyDetail(X):-
                           hargaBeli(X, bg2, HargaBg2),
                           hargaBeli(X, bg3, HargaBg3),
                           hargaBeli(X, lm, HargaLm),
-                          write('Harga Tanah               : '), write(HargaTanah),nl,
-                          write('Harga Bangunan 1          : '), write(HargaBg1),nl,
-                          write('Harga Bangunan 2          : '), write(HargaBg2),nl,
-                          write('Harga Bangunan 3          : '), write(HargaBg3),nl,
-                          write('Harga Landmark            : '), write(HargaLm),nl,
+                          write('------ Property Price List ------\n'),
+                          write(' Land                  : '), write(HargaTanah),nl,
+                          write(' Small Cottage         : '), write(HargaBg1),nl,
+                          write(' Medium Cottage        : '), write(HargaBg2),nl,
+                          write(' Large Cottage         : '), write(HargaBg3),nl,
+                          write(' Castle                : '), write(HargaLm),nl,
                           nl,
                           hargaSewa(X, tanah, HargaTanah1),
                           hargaSewa(X, bg1, HargaBg11),
                           hargaSewa(X, bg2, HargaBg21),
                           hargaSewa(X, bg3, HargaBg31),
                           hargaSewa(X, lm, HargaLm1),
-                          write('Biaya Sewa Tanah          : '), write(HargaTanah1),nl,
-                          write('Biaya Sewa Bangunan 1     : '), write(HargaBg11),nl,
-                          write('Biaya Sewa Bangunan 2     : '), write(HargaBg21),nl,
-                          write('Biaya Sewa Bangunan 3     : '), write(HargaBg31),nl,
-                          write('Biaya Sewa Landmark       : '), write(HargaLm1),nl
+                          write('------- Rent Price List -------\n'),
+                          write(' Land                  : '), write(HargaTanah1),nl,
+                          write(' Small Cottage         : '), write(HargaBg11),nl,
+                          write(' Medium Cottage        : '), write(HargaBg21),nl,
+                          write(' Large Cottage         : '), write(HargaBg31),nl,
+                          write(' Castle                : '), write(HargaLm1),nl
     ),
     !.
 
 /*Membeli properti
-  buy(Loc, )*/
+  buy(Loc, Tingkatan)*/
+buy(Loc, Tingkatan):- currentPlayer(X), hargaBeli(Loc,Tingkatan, Harga)
+                    (
+                        Harga<=cashPlayer(X) -> retractall(kepemilikan(Loc,_)),
+                                                kepemilikan(Loc, X)
+                    );write('Sorry you doesn\'t have enough cash'), !.
+
+/*Menjual properti
+  sell(Loc, Tingkatan)*/
+sell(Loc, Tingkatan);- currentPlayer(X), hargaBeli(Loc, Tingkatan, Harga), incCash(Harga).   

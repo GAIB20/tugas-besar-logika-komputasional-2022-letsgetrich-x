@@ -1,7 +1,7 @@
 /* File player.pl */
 :- dynamic(currentPlayer/1).
 :- dynamic(namePlayer/2).
-:- dynamic(locPlayer/3).
+:- dynamic(locPlayer/2).
 :- dynamic(cashPlayer/2).
 :- dynamic(listPropPlayer/2).
 :- dynamic(cardPlayer/2).
@@ -33,15 +33,9 @@ initPlayer :-
     assertz(currentPlayer(2)),
     assertz(playerName(1, 'Rachel')),
     assertz(playerName(2, 'Livia')),
-    write('Masukkan nama Player 1: '), read(Name1),nl,
-    write('Masukkan nama Player 2: '), read(Name2),nl,
-    assertz(namePlayer(1, Name1)),
-    assertz(namePlayer(2, Name2)),
-    /* Set pemain pertama */
-    currentPlayer(1),
     /* Set lokasi awal */
-    assertz(locPlayer(P1, 0, 0)),
-    assertz(locPlayer(P2, 0, 0)),
+    assertz(locPlayer(P1, 0)),
+    assertz(locPlayer(P2, 0)),
     /* Set uang awal, nilai properti */ 
     assertz(cashPlayer(P1, 30000)),
     assertz(cashPlayer(P2, 30000)),

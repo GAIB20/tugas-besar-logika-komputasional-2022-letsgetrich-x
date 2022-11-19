@@ -37,7 +37,7 @@ cardMechanism('Improper Use'):-!.
 /* taro ke deck card player */
 cardMechanism('Get Out From Azkaban'):- escapeJail.
 /* tambahin duit 8000 */
-cardMechanism('Quidditch Game'):-currentPlayer(X), cashPlayer(X, CashX),NewCash is CashX + 8000, assertz(cashPlayer(X, NewCash))..
+cardMechanism('Quidditch Game'):-currentPlayer(X), cashPlayer(X, CashX),NewCash is CashX + 8000, assertz(cashPlayer(X, NewCash)).
 /* tambahin ke deck */
 cardMechanism('Knight Bus'):-!.
 /* tambahin duit 2000 */

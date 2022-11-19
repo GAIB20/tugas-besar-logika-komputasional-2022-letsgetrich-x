@@ -321,6 +321,6 @@ propertyMechanism:-
                                             !);
                             !
                         )
-                      );
+                      )
     )
     .

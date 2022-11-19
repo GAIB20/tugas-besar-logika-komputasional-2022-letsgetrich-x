@@ -61,12 +61,12 @@ bankruptMechanism(Amount) :-
 
 /* endGame, retractall */
 endGame :-
-    retractall(locPlayer(_,_)).
-    retractall(cashPlayer(_,_)).
-    retractall(propPlayer(_,_)).
-    retractall(cardPlayer(_,_)).
-    retractall(currentPlayer(_)).
-    retractall(playerName(_,_)).
+    retractall(locPlayer(_,_)),
+    retractall(cashPlayer(_,_)),
+    retractall(propPlayer(_,_)),
+    retractall(cardPlayer(_,_)),
+    retractall(currentPlayer(_)),
+    retractall(playerName(_,_)),
     retractall(in_jail(_)),
     retractall(dice_after_jail(_)),
     retractall(chance_cards(_)),

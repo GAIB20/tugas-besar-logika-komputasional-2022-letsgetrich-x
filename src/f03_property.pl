@@ -214,7 +214,11 @@ tingkatan(g3,-1).
 tingkatan(h1,-1).
 tingkatan(h2,-1).
 
-
+nama_tingkatan(0, 'Land').
+nama_tingkatan(1, 'Small Cottage').
+nama_tingkatan(2, 'Medium Cottage').
+nama_tingkatan(3, 'Large Cottage').
+nama_tingkatan(4, 'Castle').
 
 /*checkPropertyDetail(Loc)*/
 checkPropertyDetail(X):-
@@ -282,7 +286,7 @@ buy(Loc, Tingkatan):- currentPlayer(X), cashPlayer(X, Cash),hargaAmbil(Loc,Tingk
 
 /*Menjual properti
   sell(Loc, Tingkatan)*/
-sell(Loc, Tingkatan);- currentPlayer(X), hargaBeli(Loc, Tingkatan, Harga), incCash(Harga, X), retractall(tingkatan(Loc,_)), assertz(tingkatan(Loc, -1)).   
+sell(Loc);- currentPlayer(X), tingkatan(Loc, Tingkatan), hargaBeli(Loc, Tingkatan, Harga), incCash(Harga, X), retractall(tingkatan(Loc,_)), assertz(tingkatan(Loc, -1)).   
 
 /*property mechanism*/
 propertyMechanism:-
@@ -318,6 +322,5 @@ propertyMechanism:-
                             !
                         )
                       );
-        write('hai')
     )
     .

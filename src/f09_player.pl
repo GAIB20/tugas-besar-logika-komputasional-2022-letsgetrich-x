@@ -19,7 +19,7 @@ initPlayer :-
     P1 is 1,
     P2 is 2,
     /* Set player awal */
-    assertz(currentPlayer(1)),
+    assertz(currentPlayer(2)),
     assertz(playerName(1, 'Rachel')),
     assertz(playerName(2, 'Livia')),
     /* Set lokasi awal */

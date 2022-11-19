@@ -1,0 +1,12 @@
+
+kalau misalnya double, habis keluar dari penjara artinya switch player
+
+sebelum throwDice, dioutput currentplayer 
+artinya setelah switch player, print currentplayer, if in jail, give message you in jail, ask option
+
+
+kalau pakai chance card get out of jail artinya, kasih kesempatan throwDice 
+
+
+jailmechanism ada di switch player, kalau dia 
+

@@ -33,7 +33,7 @@ tile(25, g1).
 tile(26, g2).
 tile(27, g3).
 tile(28, tx).
-tile(29, cc).
+tile(29, cf).
 tile(30, h1).
 tile(31, h2).
 

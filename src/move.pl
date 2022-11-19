@@ -29,5 +29,6 @@ move(Player, Steps) :-
                                 is_property(currLoc) -> propertyMechanism, !
                               ),!
     ),
+    playCoinFlip,
     !.
 

@@ -84,8 +84,9 @@ totalAssets(X, Y) :-
 
 /* Rule menambah cash setiap melewati go, X jumlah steps player Y */
 addCashGO(X, Y) :- 
-    X > 31, !,
-    incCash(3000, Y).
+    (
+        X > 31 -> incCash(3000, Y),
+    ),!.
 
 /* Rule menampilkan daftar properti */
 displayProp(X) :- 

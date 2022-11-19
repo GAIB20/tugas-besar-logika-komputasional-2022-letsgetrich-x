@@ -4,19 +4,11 @@ Pemain menebak koin yang dilempar (head/tail).
 Jika pemain menebak dengan benar, pemain dapat menebak untuk berikutnya sampai maksimal 3 kali. Jika salah, coin flip diakhiri.
 Di akhir minigame, pemain diberikan uang yang sebanding dengan jumlah tebakan yang benar.
 */
-
-/* TEST
-:- dynamic(currentPlayer/1).
-:- dynamic(cashPlayer/2).
-locPlayer(gweh, 29).
-currentPlayer(gweh).
-cashPlayer(gweh, 500).
-*/
-
-
+/* FAKTA: indeks muka koin */
 coin_side(head, 0).
 coin_side(tail, 1).
 
+/* RULE */
 guessFlip(Success) :-
     currentPlayer(PP),
     cashPlayer(P, Money),
@@ -31,7 +23,7 @@ guessFlip(Success) :-
     (Guess == Face -> 
         (
             write('You guessed correctly! 100 has been awarded to you!'), nl,
-            retractall(cashPlayer(_, _)),
+            retractall(cashPlayer(P, Money)),
             NMoney is Money + 100,
             asserta(cashPlayer(P, NMoney)), 
             Success is 1
@@ -44,15 +36,15 @@ guessFlip(Success) :-
     !.
 
 loopGuess(Iter, Success) :-
-    (Iter =< 0; Success =:= 0), write('Coin flip game is over!'), !.
+    (Iter =< 0; Success=:=0), write('Coin flip game is over!'), !.
 loopGuess(Iter, Success) :-
-    Iter > 0, Success=:=1, guessFlip(Success),
-    Iter1 is Iter-1, loopGuess(Iter1, Success).
+    Iter > 0, Success=:=1, guessFlip(Success1),
+    Iter1 is Iter-1, loopGuess(Iter1, Success1).
 
 playCoinFlip :-
     currentPlayer(X), locPlayer(X, 29),
     write('Flip a coin up to three times!'), nl,
-    write('Guess right (head/tail) to win 100 and flip again.'), nl,
+    write('Guess right (\'head\' or \'tail\') to win 100 and flip again.'), nl,
     write('Guess wrong and your turn is over'), nl, nl,
     loopGuess(3, 1),
     !.

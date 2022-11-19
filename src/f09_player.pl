@@ -46,34 +46,23 @@ initPlayer :-
     assertz(cardPlayer(P2, [])).
 
 /* Hitung nilai Prop lokasi X hingga tingkatan Y dan disimpan di Z */
-nilaiProp(X, 0, Z) :-
-    hargaBeli(X, 0, Price),
-    Z is Price.
+nilaiProp(X, -1, 0) :- !.
 
 nilaiProp(X, Y, Z) :-
     hargaBeli(X, Y, Price),
+    Y1 is Y - 1,
     nilaiProp(X, Y1, Z1),
-    Y is Y1 - 1,
     Z is Z1 + Price.
 
 /* total nilai properti player X is Nilai */
-countProp(X, Nilai) :- 
-    Nilai is 0,
-    /* move ListProp to tempList */
-    retractall(tempList(_)),
-    asserta(tempList(ListProp)),
+countProp([], 0, 0) :- !.
 
-    repeat,
-        /* ambil nilai Head */
-        tempList([Head|Tail]),
-
-        /* ambil nilai tingkatan properti dan harga beli */
-        tingkatan(),
-
-        /* Hitung nilai properti */
-        nilaiProp(Head, Y, Z),
-        Nilai is Nilai + Z,
-    Tail == [],!.
+countProp([Head|Tail], Length, Prop) :- 
+    Length1 is Length - 1,
+    tingkatan(Head, Tingk),
+    nilaiProp(Head, Tingk, Nilai),
+    countProp(Tail, Length1, Prop1),
+    Prop is Prop1 + Nilai.
 
 
 /* totalAssets player X is Y */
@@ -108,16 +97,16 @@ displayProp(X) :-
         tempList([Head|Tail]),
 
         /* ambil nilai jenis tanah dan harga beli */
-        hargaBeli(Head,Type,Price),
+        tingkatan(Head, Type),
+        nama_tingkatan(Type, Namatype),
+        nama_lokasi(Head, Namaloc),
 
         /* print details */
         write(Idx),
         write('. '),
-        write(Head),
+        write(Namaloc),
         write(' - '),
-        write(Type),
-        write(' - '),
-        write(Price),nl,
+        write(Namatype),nl,
         NewIdx is Idx + 1,
         retractall(tempIndeks(_)),
         asserta(tempIndeks(NewIdx)),
@@ -136,7 +125,9 @@ checkPlayerDetail(X) :-
                         write('Lokasi                : '), write(Loc),nl,
                         cashPlayer(X, Cash),
                         write('Total Uang            : '), write(Cash),nl,
-                        countProp(X, Prop),
+                        listPropPlayer(X, ListProp)
+                        length(ListProp, Length),
+                        countProp(ListProp, Length, Prop),
                         write('Total Nilai Properti  : '), write(Prop),nl,
                         Aset is Cash + Prop,
                         write('Total Aset            : '), write(Aset),nl,

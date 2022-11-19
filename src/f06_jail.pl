@@ -28,26 +28,28 @@ jailMechanism:-
     playerDouble(X,Z),
     (
         (Y = 3; Z = 1) -> escapeJail,!;
-        Y >= 0 ->  incDiceAfterJail,
+        Y >= 0 -> incDiceAfterJail,
                   write('You\'re still in Azkaban :(\n'),
                   write('Do you want to escape now?\n'),
                   write('0. No, i\'ll try to fight off the Dementors..\n'),
                   write('1. Pay 1000\n'),
                   write('2. Use Escape Azkaban Card\n'),
+                  write('3. Throw Dice'),
                   read(Choice),
                   (
-                    Choice == 0 -> write('That\'s very brave of you.. A Gryffindor perhaps..?\n');
+                    Choice == 0 -> write('That\'s very brave of you.. A Gryffindor perhaps..?\n'), switchPlayer,!,fail;
                     Choice == 1 -> (cashPlayer(X, Cash),
                                     (
                                         Cash >=1000 -> retractall(cashPlayer(X,_)),
                                                        Cash1 is Cash-1000,
                                                        asserta(cashPlayer(X, Cash1)),
                                                        escapeJail,!;
-                                        write('You don\'t have enough money!'),
-                                        jailMechanism, !    
+                                        write('You don\'t have enough money!'), switchPlayer, !,fail    
                                     ),!  
                                    );
-                    Choice == 2 -> write('nunggu chance card hore\n'),!),
+                    Choice == 2 -> cardMechanism('Get Out From Azkaban'),!;
+                    throwDice,!,fail
+                  ),
                   !
     ),
     !.
@@ -79,6 +81,8 @@ escapeJail:-
     currentPlayer(X),
     retractall(in_jail(X)),
     retractall(playerDouble(X,_)),
+    retractall(dice_after_jail(X,_)),
+    asserta(dice_after_jail(X,0)),
     asserta(playerDouble(X,0)).
 
 testJail:-

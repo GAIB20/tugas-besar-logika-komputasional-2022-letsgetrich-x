@@ -8,6 +8,8 @@ move(Player, Steps) :-
         \+ in_jail(Player) -> 
                               locPlayer(P, Loc), P=:=Player,
                               Loc1 is (Loc+Steps) mod 32,
+                              Sumsteps is Loc+Steps,
+                              addCashGO(Sumsteps, P),
                               retract(locPlayer(P, Loc)),
                               asserta(locPlayer(P, Loc1)), 
                               tile(Loc1, Currloc),
@@ -23,6 +25,9 @@ move(Player, Steps) :-
                                 !
                               ),!;
         in_jail(Player) -> !
+                                Currloc = wt -> worldTourMechanism;
+                                is_property(currLoc) -> propertyMechanism, !
+                              ),!
     ),
     !.
 

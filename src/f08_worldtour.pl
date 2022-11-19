@@ -7,7 +7,7 @@ apparateMechanism :-
     tile(No2, Dest),
     locPlayer(X, Asal),
     tile(No1, Asal),
-    Sumloc is No1 + No2
+    Sumloc is No1 + No2,
     addCashGO(Sumloc, X),
     Newloc is (No1 + No2) mod 32,
     retract(locPlayer(X, Asal)),
@@ -34,6 +34,6 @@ worldTourMechanism :-
                             write('You don\'t have enough money!'), !
 
                         ), !
-                    );
+                    )
     ), !.
     

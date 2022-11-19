@@ -24,7 +24,7 @@ move(Player, Steps) :-
                                 is_property(currLoc) -> propertyMechanism, !;
                                 !
                               ),!;
-        in_jail(Player) -> !
+        in_jail(Player) -> !;(
                                 Currloc = wt -> worldTourMechanism;
                                 is_property(currLoc) -> propertyMechanism, !
                               ),!

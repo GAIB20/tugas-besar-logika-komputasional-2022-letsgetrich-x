@@ -81,7 +81,7 @@ totalAssets(X, Y) :-
 /* Rule menambah cash setiap melewati go, X jumlah steps player Y */
 addCashGO(X, Y) :- 
     (
-        X > 31 -> incCash(3000, Y),
+        X > 31 -> incCash(3000, Y)
     ),!.
 
 /* Rule menampilkan daftar properti */
@@ -132,7 +132,7 @@ checkPlayerDetail(X) :-
                         write('Lokasi                : '), write(Loc),nl,
                         cashPlayer(X, Cash),
                         write('Total Uang            : '), write(Cash),nl,
-                        listPropPlayer(X, ListProp)
+                        listPropPlayer(X, ListProp),
                         length(ListProp, Length),
                         countProp(ListProp, Length, Prop),
                         write('Total Nilai Properti  : '), write(Prop),nl,

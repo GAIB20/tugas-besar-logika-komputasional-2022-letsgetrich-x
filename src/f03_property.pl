@@ -199,9 +199,9 @@ hargaAmbil(_Loc, _Status, Harga):-
 /*checkPropertyDetail(Loc)*/
 checkPropertyDetail(X):-
     nama_lokasi(X, Name),!,
-    write('Nama Lokasi          : '),
+    write('Nama Lokasi               : '),
     write(Name), nl,
-    write('Deskripsi            : '),
+    write('Deskripsi                 : '),
     desc_lokasi(X, Desc),
     write(Desc), nl,
     (
@@ -228,3 +228,6 @@ checkPropertyDetail(X):-
                           write('Biaya Sewa Landmark       : '), write(HargaLm1),nl
     ),
     !.
+
+/*Membeli properti
+  buy(Loc, )*/

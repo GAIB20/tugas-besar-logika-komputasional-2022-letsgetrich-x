@@ -24,5 +24,6 @@ move(Player, Steps) :-
                               ),!;
         in_jail(Player) -> !
     ),
+    playCoinFlip,
     !.
 

@@ -15,6 +15,7 @@ startGame:-
     ['f10_dice.pl'],
     ['f11_bankrupt.pl'],
     ['move.pl'],
+    ['b05_coinflip.pl'],
     initPlayer,
     initJail,
     initChanceCard.

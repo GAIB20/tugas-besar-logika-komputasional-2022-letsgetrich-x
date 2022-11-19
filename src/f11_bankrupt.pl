@@ -18,26 +18,34 @@ bankruptMechanism(Amount) :-
     (Assets < Amount),
     write('Dah bokek kau, bai'), nl,
     endGame,
-    !.
+    !,fail.
 
 bankruptMechanism(Amount) :-
     currentPlayer(X),
     write('Gada duit kau bang'), nl,
-    write('Lanjut gak? '),
+    write('Lanjut gak? [ya/tidak] : '),
     read(lanjut),
     (
         (
             lanjut == 'ya',
-            displayProp(X),
-            write('Properti mana yang mau dijual?'),
+            displayProp(X), nl,
+            write('Properti mana yang mau dijual? : '),
             read(JualProp),
 
             /* jual property */
-            write('Property berhasil dijual'), nl,
-            deleteAtList()
+            listPropPlayer(Player, ListProp),
+            getItemAtIdx(ListProp ,JualProp, PropToSell),
+            
+            hargaBeli(PropToSell,Type,Price),   
+            sell(PropToSell,Type),
+
+            nl, 
+            write('Property '),
+            write(PropToSell),
+            write(' berhasil dijual'), nl,
 
             /* recheck */
-            NewAmount is Amount - HasilJual,
+            NewAmount is Amount - Price,
             checkBankrupt(NewAmount),
             !
         );
@@ -52,11 +60,20 @@ bankruptMechanism(Amount) :-
 
 
 /* endGame, retractall */
-/** 
 endGame :-
-**/
+    retractall(locPlayer(_,_)).
+    retractall(cashPlayer(_,_)).
+    retractall(propPlayer(_,_)).
+    retractall(cardPlayer(_,_)).
+    retractall(currentPlayer(_)).
+    retractall(playerName(_,_)).
+    retractall(in_jail(_)),
+    retractall(dice_after_jail(_)),
+    retractall(chance_cards(_)),
+    write('BaiBaii Muggle').
+
 
 /* surrender */
-/** 
 surrender :-
-**/
+    write('Tombol surrender ada di pengaturan'),
+    endGame.

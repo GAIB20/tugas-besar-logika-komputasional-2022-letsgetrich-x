@@ -9,3 +9,10 @@ deleteAtList(Idx,[Head|Tail],[Head|NewList]) :-
     NewIdx is Idx-1,
     deleteAtList(NewIdx,Tail,NewList).
 
+/* getItemAtIdx */
+getItemAtIdx([Head|_], 1, Head) :- !.
+getItemAtIdx([Head|Tail], Index, Item) :-
+    NewIndex is Index - 1,
+    getItemAtIdx(Tail, NewIndex, Item).
+
+

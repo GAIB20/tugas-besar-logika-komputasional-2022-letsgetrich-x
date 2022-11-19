@@ -17,7 +17,8 @@ startGame:-
     ['move.pl'],
     initPlayer,
     initJail,
-    initChanceCard.
+    initChanceCard,
+    switchPlayer.
 
 
 

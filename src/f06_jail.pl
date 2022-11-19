@@ -16,7 +16,8 @@ jailMechanism:-
     retractall(locPlayer(X,_)),
     asserta(locPlayer(X, 8)),
     checkLocationDetail(jl),
-    !.
+    switchPlayer,
+    !, fail.
 
 jailMechanism:-
     currentPlayer(X),

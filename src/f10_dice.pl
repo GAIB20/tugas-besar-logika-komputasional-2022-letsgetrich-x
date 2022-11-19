@@ -1,4 +1,5 @@
-/* */
+
+/* dynamic variables */
 :- dynamic(playerDouble/2).
 
 /* playerDouble(ID, state), state times double */
@@ -28,25 +29,20 @@ throwDice :-
         (
             A == B, 
             write('Double!'), nl,
-            
+            Forward is A+B,
             incPlayerDouble,
+            move(Player, Forward),
             !
 
         );
 
         (
             A \== B, 
-            switchPlayer,
             Forward is A+B,
-            write(PlayerName),
-            write(' moved '),
-            write(Forward),
-            write(' steps'), nl,
-           
-            retractall(playerDouble(1,_)),
-            asserta(playerDouble(1,0)),
-            retractall(playerDouble(2,_)),
-            asserta(playerDouble(2,0))
+            move(Player, Forward),
+            switchPlayer,
+            retractall(playerDouble(Player,_)),
+            asserta(playerDouble(Player,0))
         )
     ).
     
@@ -54,13 +50,26 @@ throwDice :-
 /* increment player double, check if need to go to jail */
 incPlayerDouble :-
     currentPlayer(PlayerDouble),
-    playerName(PlayerDouble,PlayerDoubleName),
+    playerName(PlayerDouble,_),
     playerDouble(PlayerDouble,DoubleNow),
     NewPlayerDouble is DoubleNow + 1,
     retractall(playerDouble(PlayerDouble,DoubleNow)),
     asserta(playerDouble(PlayerDouble, NewPlayerDouble)),
     !.
   
+/* switch player */
+switchPlayer :-
+    currentPlayer(X),
+    (X == 1),
+    retractall(currentPlayer(X)),
+    asserta(currentPlayer(2)),
+    !.
+switchPlayer :-
+    currentPlayer(X),
+    (X == 2),
+    retractall(currentPlayer(X)),
+    asserta(currentPlayer(1)),
+    !.    
 
 
 

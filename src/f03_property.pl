@@ -1,4 +1,5 @@
 :-include('f02_location.pl').
+
 /* hargaBeliProp(loc, jenis, hargaBeli)*/
 /*
     tanah = tanah

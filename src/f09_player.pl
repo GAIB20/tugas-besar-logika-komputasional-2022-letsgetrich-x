@@ -36,8 +36,8 @@ initPlayer :-
     assertz(locPlayer(P1, 0, 0)),
     assertz(locPlayer(P2, 0, 0)),
     /* Set uang awal, nilai properti */ 
-    assertz(cashPlayer(P1, 50000)),
-    assertz(cashPlayer(P2, 50000)),
+    assertz(cashPlayer(P1, 30000)),
+    assertz(cashPlayer(P2, 30000)),
     /* Set daftar lokasi yang dimiliki */ 
     assertz(listPropPlayer(P1, [])),
     assertz(listPropPlayer(P2, [])),
@@ -45,19 +45,51 @@ initPlayer :-
     assertz(cardPlayer(P1, [])),
     assertz(cardPlayer(P2, [])).
 
-/* Rule membuat list daftar properti */
-daftarProp(X) :- !.
+/* Hitung nilai Prop lokasi X hingga tingkatan Y dan disimpan di Z */
+nilaiProp(X, 0, Z) :-
+    hargaBeli(X, 0, Price),
+    Z is Price.
 
-/* Rule hitung nilai properti */
-countProp(X, Y) :- !.
+nilaiProp(X, Y, Z) :-
+    hargaBeli(X, Y, Price),
+    nilaiProp(X, Y1, Z1),
+    Y is Y1 - 1,
+    Z is Z1 + Price.
 
-/* Rule menambah cash setiap melewati go */
-addCashGO(X) :- !.
+/* total nilai properti player X is Nilai */
+countProp(X, Nilai) :- 
+    Nilai is 0,
+    /* move ListProp to tempList */
+    retractall(tempList(_)),
+    asserta(tempList(ListProp)),
+
+    repeat,
+        /* ambil nilai Head */
+        tempList([Head|Tail]),
+
+        /* ambil nilai tingkatan properti dan harga beli */
+        tingkatan(),
+
+        /* Hitung nilai properti */
+        nilaiProp(Head, Y, Z),
+        Nilai is Nilai + Z,
+    Tail == [],!.
+
+
+/* totalAssets player X is Y */
+totalAssets(X, Y) :- 
+    cashPlayer(X, Cash),
+    countProp(X, Prop),
+    Y is Cash + Prop.
+
+/* Rule menambah cash setiap melewati go, X jumlah steps player Y */
+addCashGO(X, Y) :- 
+    X > 31, !,
+    incCash(3000, Y).
 
 /* Rule menampilkan daftar properti */
-displayProp :- 
-    currentPlayer(Player),
-    listPropPlayer(Player,ListProp),
+displayProp(X) :- 
+    listPropPlayer(X,ListProp),
 
     /* reset index */
     retractall(tempIndeks(_)),
@@ -116,15 +148,19 @@ checkPlayerDetail(X) :-
     ),
     !.
 
-/* incrementCash currentPlayer by X */
-incCash(X) :- !.
+/* incrementCash Player by X */
+incCash(X, Player) :- 
+    cashPlayer(Player, Cash),
+    Cashnew is Cash + X,
+    retractall(cashPlayer(Player, Cash)),
+    asserta(cashPlayer(Player, Cashnew)).
 
-/* decrementCash currentPlayer by X */
-decCash(X) :- !.
+/* decrementCash Player by X */
+decCash(X, Player) :- 
+    cashPlayer(Player, Cash),
+    Cashnew is Cash - X,
+    retractall(cashPlayer(Player, Cash)),
+    asserta(cashPlayer(Player, Cashnew)).
 
-/* totalAssets currentPlayer is X */
-totalAssets(X) :- !.
 
-/* Rule membuat list daftar card, sementara ga di pake karena card yang disimpan hanya free from jail */
-/* daftarCard(X) :- !. */
 

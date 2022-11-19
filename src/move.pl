@@ -8,6 +8,7 @@ move(Player, Steps) :-
         \+ in_jail(Player) -> 
                               locPlayer(P, Loc), P=:=Player,
                               Loc1 is (Loc+Steps) mod 32,
+                              addCashGO(Loc1, P),
                               retract(locPlayer(P, Loc)),
                               asserta(locPlayer(P, Loc1)), 
                               tile(Loc1, Currloc),

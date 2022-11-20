@@ -34,7 +34,12 @@ cardMechanism('Tax'):-!.
 /* kurangin duit 200 */
 cardMechanism('Improper Use'):-!.
 /* taro ke deck card player */
-cardMechanism('Get Out From Azkaban'):- escapeJail.
+cardMechanism('Get Out From Azkaban'):-
+    currentPlayer(Player),
+    cardPlayer(Player, Cards),
+    retractall(cardPlayer(Player, _)),
+    insertLast('Get Out From Azkaban', Cards, NewCards),
+    asserta(cardPlayer(Player, NewCards)).
 /* tambahin duit 800 */
 cardMechanism('Quidditch Game'):-!.
 /* tambahin ke deck */

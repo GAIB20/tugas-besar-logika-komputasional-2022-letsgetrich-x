@@ -1,7 +1,9 @@
 :- dynamic(in_jail/1).
 :- dynamic(dice_after_jail/2).
+:- dynamic(hasPickedJailMechanism/0).
 
 initJail:-
+    retractall(hasPickedJailMechanism),
     asserta(dice_after_jail(1,0)),
     asserta(dice_after_jail(2,0)).
 
@@ -22,13 +24,21 @@ jailMechanism:-
 jailMechanism:-
     currentPlayer(X),
     in_jail(X),
+    hasPickedJailMechanism,
+    retractall(hasPickedJailMechanism),
+    playerDouble(X,0),
+    write('HAHA! Don\'t say I didn\'t warn you! Goodluck staying sane..\n').
+
+jailMechanism:-
+    currentPlayer(X),
+    in_jail(X),
     dice_after_jail(X,Y),
     Y>=0,
     Y<3,
     playerDouble(X,Z),
     (
         (Y = 3; Z = 1) -> escapeJail,!;
-        Y >= 0 -> incDiceAfterJail,
+        Y >= 0 ->  incDiceAfterJail,
                   write('You\'re still in Azkaban :(\n'),
                   write('Do you want to escape now?\n'),
                   write('0. No, i\'ll try to fight off the Dementors by throwing dice..\n'),
@@ -53,11 +63,13 @@ jailMechanism:-
                                         cardMechanism('Get Out From Azkaban'),!
                                       ),!
                                    );
-                    write('LMAOOO whatt?! You really think you can get out by just throwing dice?\n That\'s very brave of you.. A Gryffindor perhaps..?\n'),throwDice,!,fail
+                    write('LMAOOO whatt?! You really think you can get out by just throwing dice?\n That\'s very brave of you.. A Gryffindor perhaps..?\n'),asserta(hasPickedJailMechanism),throwDice,!,fail
                   ),
                   !
     ),
     !.
+
+
 
 jailMechanism:-
     currentPlayer(X),
@@ -88,6 +100,7 @@ escapeJail:-
     retractall(playerDouble(X,_)),
     retractall(dice_after_jail(X,_)),
     asserta(dice_after_jail(X,0)),
+    retractall(hasPickedJailMechanism),
     asserta(playerDouble(X,0)).
 
 testJail:-

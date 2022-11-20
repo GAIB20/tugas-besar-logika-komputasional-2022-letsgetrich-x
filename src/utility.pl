@@ -25,3 +25,11 @@ getValAtIdx([_|T], Idx, Val1):-
     Idx>1,
     Idx1 is Idx-1,
     getValAtIdx(T,Idx1,Val1).
+
+getIndex([], X, 0):-!.
+getIndex([H|_], H, Index):-
+    Index is 1,
+    !.
+getIndex([_H|T], X, Index):-
+    getIndex(T,X,Index1),
+    Index is 1+Index1.

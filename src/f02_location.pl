@@ -140,4 +140,3 @@ checkLocationDetail(X):-
 checkLocationDetail(X):-
     write(X),
     write(' is not a valid location, sorry! :(\n').
-

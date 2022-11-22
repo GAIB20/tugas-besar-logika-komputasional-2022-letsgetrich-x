@@ -33,7 +33,7 @@ bankruptMechanism(Amount) :-
             read(JualProp),
 
             /* jual property */
-            listPropPlayer(Player, ListProp),
+            listPropPlayer(X, ListProp),
             getItemAtIdx(ListProp ,JualProp, PropToSell),
             tingkatan(PropToSell, Type),
             hargaBeli(PropToSell,Type,Price),   

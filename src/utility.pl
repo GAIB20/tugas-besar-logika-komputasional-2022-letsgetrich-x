@@ -9,26 +9,26 @@ deleteAtList(Idx,[Head|Tail],[Head|NewList]) :-
     NewIdx is Idx-1,
     deleteAtList(NewIdx,Tail,NewList).
 
-
 /* getItemAtIdx */
 getItemAtIdx([Head|_], 1, Head) :- !.
 getItemAtIdx([_Head|Tail], Index, Item) :-
     NewIndex is Index - 1,
     getItemAtIdx(Tail, NewIndex, Item).
 
-
-
+/* displaylist */
 displayList([]):-!.
 displayList([Head|Tail]):-
     write(Head),
     displayList(Tail).
 
+/* insertNTimes */
 insertNTimes(_Val, List, List, 0) :- !.
 insertNTimes(Val, List, Newlist, N) :-
     insertLast(Val, List, Inserted),
     N1 is N-1,
     insertNTimes(Val, Inserted, Newlist, N1).
 
+/* getValAtIdx */
 getValAtIdx([H|_], 1, H):-!.
 getValAtIdx([_|T], Idx, Val1):-
     Idx>1,
@@ -38,10 +38,10 @@ getValAtIdx([_|T], Idx, Val1):-
 /* subset */
 subset(List1,List2,Ans) :-
     subsetRec(List1,List2,AnsRec),
-    AnsRec == 3 -> Ans is 1;
+    AnsRec == length(List1) -> Ans is 1;
     Ans is 0.
 
-subsetRec([_Head|_Tail], _List, _Ans):- !.
+subsetRec([], _List, _Ans):- !.
 subsetRec([Head|Tail], List, Ans):-
     isIn(Head,List,In),
     subsetRec(Tail,List,NewAns),
@@ -53,6 +53,7 @@ isIn(X,[X|_Tail],1) :- !.
 isIn(X,[_Head|Tail],Ans) :-
     isIn(X,Tail,Ans).
 
+/* getIndex */
 getIndex([], _X, 0):-!.
 getIndex([H|_], H, Index):-
     Index is 1, 

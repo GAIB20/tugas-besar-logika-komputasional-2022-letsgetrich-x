@@ -35,7 +35,7 @@ bankruptMechanism(Amount) :-
             /* jual property */
             listPropPlayer(Player, ListProp),
             getItemAtIdx(ListProp ,JualProp, PropToSell),
-            
+            tingkatan(PropToSell, Type),
             hargaBeli(PropToSell,Type,Price),   
             sell(PropToSell,Type),
 
@@ -55,9 +55,6 @@ bankruptMechanism(Amount) :-
             endGame
         )
     ).
-    
-
-
 
 /* endGame, retractall */
 endGame :-

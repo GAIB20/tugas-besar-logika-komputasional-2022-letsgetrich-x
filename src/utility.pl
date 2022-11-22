@@ -25,3 +25,21 @@ getValAtIdx([_|T], Idx, Val1):-
     Idx>1,
     Idx1 is Idx-1,
     getValAtIdx(T,Idx1,Val1).
+
+/* subset */
+subset(List1,List2,Ans) :-
+    subsetRec(List1,List2,AnsRec),
+    AnsRec == 3 -> Ans is 1;
+    Ans is 0;
+
+subsetRec([Head|Tail], List, Ans):-
+subsetRec([Head|Tail], List, Ans):-
+    isIn(Head,List,In),
+    subsetRec(Tail,List,NewAns),
+    Ans is NewAns + In
+
+/* isIn */
+isIn(X,[],0) :- !.
+isIn(X,[X|Tail],1) :-
+isIn(X,[Head|Tail],Ans) :-
+    isIn(X,Tail,Ans).

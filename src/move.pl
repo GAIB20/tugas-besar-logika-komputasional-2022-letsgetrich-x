@@ -9,7 +9,7 @@ move(Player, Steps) :-
                               locPlayer(P, Loc), P=:=Player,
                               Loc1 is (Loc+Steps) mod 32,
                               Sumsteps is Loc+Steps,
-                              addCashGO(Sumsteps, P),
+                              (Sumsteps > 31 -> incCash(3000, P);incCash(0,P)),
                               retract(locPlayer(P, Loc)),
                               asserta(locPlayer(P, Loc1)), 
                               tile(Loc1, Currloc),
@@ -21,13 +21,17 @@ move(Player, Steps) :-
                               (
                                 Currloc =  fp -> parkirGratisMechanism;
                                 Currloc = jl -> visitJail;
-                                is_property(currLoc) -> propertyMechanism, !;
+                                is_property(CurrLoc) -> propertyMechanism, !;
                                 !
-                              ),!;
-        in_jail(Player) -> !;(
+                              ),!;(
                                 Currloc = wt -> worldTourMechanism;
-                                is_property(currLoc) -> propertyMechanism, !
-                              ),!
+                                is_property(CurrLoc) -> propertyMechanism, !
+                              ),!;(
+                                Currloc = cc -> write('hai');
+                                /*nunggu chance*/
+                                is_property(CurrLoc) -> propertyMechanism, !
+                              ),!;
+        in_jail(Player) -> !
     ),
     playCoinFlip,
     !.

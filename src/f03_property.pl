@@ -168,25 +168,33 @@ hargaSewa(_Loc, _Tingkatan, Harga):-
 hargaAmbil(_Loc, _Tingkatan, Harga):- 
     _Tingkatan == 0 ->
     hargaBeli(_Loc, _Tingkatan, X),
-    Harga is X.
+    Harga is X,!.
 hargaAmbil(_Loc, _Tingkatan, Harga):- 
     _Tingkatan == 1 ->
     hargaBeli(_Loc, 0, X),
     hargaBeli(_Loc, 1, X1),
-    Harga is X+X1.
+    Harga is X+X1,!.
 hargaAmbil(_Loc, _Tingkatan, Harga):- 
     _Tingkatan == 2 ->
     hargaBeli(_Loc, 0, X),
     hargaBeli(_Loc, 1, X1),
     hargaBeli(_Loc, 2, X2),
-    Harga is X+X1+X2.
+    Harga is X+X1+X2,!.
 hargaAmbil(_Loc, _Tingkatan, Harga):- 
     _Tingkatan == 3 ->
     hargaBeli(_Loc, 0, X),
     hargaBeli(_Loc, 1, X1),
     hargaBeli(_Loc, 2, X2),
     hargaBeli(_Loc, _Tingkatan, X3),
-    Harga is X+X1+X2+X3.
+    Harga is X+X1+X2+X3,!.
+hargaAmbil(_Loc, _Tingkatan, Harga):- 
+    _Tingkatan == 4 ->
+    hargaBeli(_Loc, 0, X),
+    hargaBeli(_Loc, 1, X1),
+    hargaBeli(_Loc, 2, X2),
+    hargaBeli(_Loc, 3, X3),
+    hargaBeli(_Loc, _Tingkatan, X4),
+    Harga is X+X1+X2+X3+X4,!.
 
 /*tingkatan properti
   tingkatan(Loc)*/
@@ -259,15 +267,15 @@ checkPropertyDetail(X):-
   buy(Loc, Tingkatan)*/
 buy(Loc, Tingkatan):- currentPlayer(X), cashPlayer(X, Cash),hargaAmbil(Loc,Tingkatan, Harga),tingkatan(Loc, Temp),(
                     (
-                        Tingkatan == 4 ->((Temp == 3, hargaBeli(Loc, Tingkatan, HargaLM),
+                        Tingkatan == 4 ->(Temp\=3->write('Can\'t build Castle') ;( hargaBeli(Loc, Tingkatan, HargaLM),
                                           HargaLM=<Cash -> retractall(kepemilikan(Loc,_)),
                                                                   kepemilikan(Loc, X),
                                                                   retractall(tingkatan(Loc,_)),
                                                                   assertz(tingkatan(Loc, Tingkatan)),
                                                                   NewCash is Cash - HargaLM,
                                                                   retractall(cashPlayer(_)),
-                                                                  assertz(cashPlayer(NewCash))
-                                                                  
+                                                                  assertz(cashPlayer(NewCash)),
+                                                                  write('Congrats! Castle have been build!\n')     
                                           );
                                           write('Can\'t build Castle') 
                                          );
@@ -278,15 +286,16 @@ buy(Loc, Tingkatan):- currentPlayer(X), cashPlayer(X, Cash),hargaAmbil(Loc,Tingk
                                                     assertz(tingkatan(Loc, Tingkatan)),
                                                     NewCash is Cash - Harga,
                                                     retractall(cashPlayer(X, _)),
-                                                    assertz(cashPlayer(X, NewCash))  
+                                                    assertz(cashPlayer(X, NewCash)),
+                                                    write('Property paid!\n')
                         );!
                     );
                     write('Sorry you doesn\'t have enough cash')
                     ), !.
 
 /*Menjual properti
-  sell(Loc, Tingkatan)*/
-sell(Loc);- currentPlayer(X), tingkatan(Loc, Tingkatan), hargaBeli(Loc, Tingkatan, Harga), incCash(Harga, X), retractall(tingkatan(Loc,_)), assertz(tingkatan(Loc, -1)).   
+  sell(Loc)*/
+sell(Loc):- currentPlayer(X), tingkatan(Loc,Tingkatan), hargaAmbil(Loc, Tingkatan, Harga), incCash(Harga, X), retractall(tingkatan(Loc,_)), assertz(tingkatan(Loc, -1)).   
 
 /*property mechanism*/
 propertyMechanism:-
@@ -299,7 +308,13 @@ propertyMechanism:-
                       read(Choice),
                         (
                             Choice == 0 -> write('Pass an opportunity? What a shame\n');
-                            Choice == 1 -> (write('Good choice, what do you want to buy?\n'),read(Tingkatan),
+                            Choice == 1 -> (write('Good choice, what do you want to buy?\n'),
+                                            write('0. Land\n'),
+                                            write('1. Small Cottage \n'),
+                                            write('2. Medium Cottage\n'),
+                                            write('3. Large Cottage\n'),
+                                            write('4. Castle\n'),
+                                            read(Tingkatan),
                                             (
                                                 buy(CurrLoc1,Tingkatan)
                                             ),!
@@ -314,7 +329,12 @@ propertyMechanism:-
                         read(Choice),
                         (
                             Choice == 0 -> write('Pass an opportunity? What a shame\n');
-                            Choice == 1 -> (write('Good choice, what do you want to buy?\n'),read(Tingkatan),
+                            Choice == 1 -> (write('Good choice, choose your building upgrade:\n'),
+                                            write('1. Small Cottage \n'),
+                                            write('2. Medium Cottage\n'),
+                                            write('3. Large Cottage\n'),
+                                            write('4. Castle\n'),
+                                            read(Tingkatan),
                                             (
                                                 buy(Loc,Tingkatan)
                                             ),

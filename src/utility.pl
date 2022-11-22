@@ -9,6 +9,15 @@ deleteAtList(Idx,[Head|Tail],[Head|NewList]) :-
     NewIdx is Idx-1,
     deleteAtList(NewIdx,Tail,NewList).
 
+
+/* getItemAtIdx */
+getItemAtIdx([Head|_], 1, Head) :- !.
+getItemAtIdx([Head|Tail], Index, Item) :-
+    NewIndex is Index - 1,
+    getItemAtIdx(Tail, NewIndex, Item).
+
+
+
 displayList([]):-!.
 displayList([Head|Tail]):-
     write(Head),
@@ -51,3 +60,4 @@ getIndex([H|_], H, Index):-
 getIndex([_H|T], X, Index):-
     getIndex(T,X,Index1),
     Index is 1+Index1.
+

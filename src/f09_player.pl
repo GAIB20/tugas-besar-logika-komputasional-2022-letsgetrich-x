@@ -152,6 +152,7 @@ checkPlayerDetail(X) :-
     ),
     !.
 
+
 /* incrementCash Player by X */
 incCash(X, Player) :- 
     cashPlayer(Player, Cash),

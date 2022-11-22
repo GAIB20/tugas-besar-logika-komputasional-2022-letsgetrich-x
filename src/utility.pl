@@ -43,3 +43,11 @@ isIn(X,[],0) :- !.
 isIn(X,[X|Tail],1) :-
 isIn(X,[Head|Tail],Ans) :-
     isIn(X,Tail,Ans).
+
+getIndex([], X, 0):-!.
+getIndex([H|_], H, Index):-
+    Index is 1,
+    !.
+getIndex([_H|T], X, Index):-
+    getIndex(T,X,Index1),
+    Index is 1+Index1.

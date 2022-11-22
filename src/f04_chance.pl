@@ -1,3 +1,4 @@
+:-include('main.pl').
 :- dynamic(chance_cards/1).
 
 /* red chance cards */
@@ -34,13 +35,18 @@ cardMechanism('Tax'):-!.
 /* kurangin duit 200 */
 cardMechanism('Improper Use'):-!.
 /* taro ke deck card player */
-cardMechanism('Get Out From Azkaban'):- escapeJail.
-/* tambahin duit 800 */
-cardMechanism('Quidditch Game'):-!.
+cardMechanism('Get Out From Azkaban'):-
+    currentPlayer(Player),
+    cardPlayer(Player, Cards),
+    retractall(cardPlayer(Player, _)),
+    insertLast('Get Out From Azkaban', Cards, NewCards),
+    asserta(cardPlayer(Player, NewCards)).
+/* tambahin duit 8000 */
+cardMechanism('Quidditch Game'):-currentPlayer(X), cashPlayer(X, CashX),NewCash is CashX + 8000, assertz(cashPlayer(X, NewCash)).
 /* tambahin ke deck */
 cardMechanism('Knight Bus'):-!.
-/* tambahin duit 200 */
-cardMechanism('Gift'):-!.
+/* tambahin duit 2000 */
+cardMechanism('Gift'):-currentPlayer(X), cashPlayer(X, CashX),NewCash is CashX + 2000, assertz(cashPlayer(X, NewCash)).
 /* jeblosss */
 cardMechanism('Go To Azkaban'):-
     currentPlayer(X),

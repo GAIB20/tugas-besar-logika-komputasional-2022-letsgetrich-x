@@ -4,18 +4,17 @@ apparateMechanism :-
     currentPlayer(X),
     write('Choose your apparate destination \n'),
     read(Dest),
-    tile(No2, Dest),
+    tile(NoDest, Dest),
     locPlayer(X, Asal),
-    tile(No1, Asal),
-    Sumloc is No1 + No2,
+    Sumloc is NoDest+Asal,
     addCashGO(Sumloc, X),
-    Newloc is (No1 + No2) mod 32,
     retract(locPlayer(X, Asal)),
-    asserta(locPlayer(X, Newloc)),
-    namePlayer(X, Name),
+    asserta(locPlayer(X, NoDest)),
+    playerName(X, Name),
     write(Name),
     write(' has arrived in '),
-    write(Dest).
+    nama_lokasi(Dest, LocName),
+    write(LocName).
 
 
 worldTourMechanism :-
@@ -31,7 +30,7 @@ worldTourMechanism :-
                         (
                             Cash >= 500 -> decCash(500, X),
                                             apparateMechanism, !;
-                            write('You don\'t have enough money!'), !
+                            write('You don\'t have enough money!'), switchPlayer, !,fail
 
                         ), !
                     )

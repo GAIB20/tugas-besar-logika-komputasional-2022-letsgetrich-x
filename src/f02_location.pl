@@ -28,6 +28,7 @@ is_property(h1).
 is_property(h2).
 
 /* NAMA LOKASI */
+nama_lokasi(go, 'GO' ).
 nama_lokasi(a1, 'Ottery St Catchpole' ).
 nama_lokasi(a2, 'Godric\'s Hollow').
 nama_lokasi(a3, 'Little Hangleton').

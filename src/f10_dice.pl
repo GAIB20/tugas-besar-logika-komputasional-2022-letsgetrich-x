@@ -1,4 +1,4 @@
-:- include('move.pl').
+
 /* dynamic variables */
 :- dynamic(playerDouble/2).
 
@@ -12,10 +12,6 @@ rand(X) :- random(1,7,X).
 /* throwDice */
 throwDice :-
     currentPlayer(Player),
-    playerName(Player, PlayerName), 
-    write('It\'s '),
-    write(PlayerName), 
-    write(' turns'), nl,
 
     rand(A),
     write('Dice 1 : '),
@@ -29,11 +25,12 @@ throwDice :-
         (
             A == B, 
             write('Double!'), nl,
+            (in_jail(Player) -> switchPlayer;!), 
             Forward is A+B,
             incPlayerDouble,
             move(Player, Forward),
+            map,
             !
-
         );
 
         (
@@ -50,7 +47,7 @@ throwDice :-
 /* increment player double, check if need to go to jail */
 incPlayerDouble :-
     currentPlayer(PlayerDouble),
-    playerName(PlayerDouble,PlayerDoubleName),
+    playerName(PlayerDouble,_),
     playerDouble(PlayerDouble,DoubleNow),
     NewPlayerDouble is DoubleNow + 1,
     retractall(playerDouble(PlayerDouble,DoubleNow)),
@@ -60,18 +57,26 @@ incPlayerDouble :-
 /* switch player */
 switchPlayer :-
     currentPlayer(X),
-    (X == 1),
-    retractall(currentPlayer(X)),
-    asserta(currentPlayer(2)),
+    retractall(currentPlayer(_)),
+    (
+        X == 1 -> asserta(currentPlayer(2));
+        asserta(currentPlayer(1))
+    ),
+    currentPlayer(NewPlayer),
+    playerName(NewPlayer,NewPlayerName),
+
+    map,
+    nl,
+    write('It\'s '),
+    write(NewPlayerName),
+    write('\'s turn'),nl,
+    jailMechanism, 
+    
+    write('Type throwDice to advance'),nl,
+
     !.
-switchPlayer :-
-    currentPlayer(X),
-    (X == 2),
-    retractall(currentPlayer(X)),
-    asserta(currentPlayer(1)),
-    !.    
 
-
+    
 
 
 /**

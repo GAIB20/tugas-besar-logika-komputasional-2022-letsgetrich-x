@@ -1,4 +1,4 @@
-:- include('f09_player.pl').
+
 :- dynamic(grid/3).
 
 /* posisi pemain 1 dan pemain 2, default position == 0 (GO) */
@@ -33,7 +33,7 @@ tile(25, g1).
 tile(26, g2).
 tile(27, g3).
 tile(28, tx).
-tile(29, cc).
+tile(29, cf).
 tile(30, h1).
 tile(31, h2).
 
@@ -121,7 +121,7 @@ grid(6, 5, '     ').
 grid(6, 6, '     ').
 grid(6, 7, '     ').
 grid(6, 8, '    |').
-grid(6, 9, ' CC | ').
+grid(6, 9, ' CF | ').
 grid(6, 10, '  ').
 
 grid(7, 0, '  ').
@@ -182,7 +182,7 @@ ROW/COL
 3       | D2 |                                  | G2 | 
 4       | D1 |                                  | G3 | 
 5       | TX |          M O N O P O L Y         | TX | 
-6       | C3 |                                  | CC | 
+6       | C3 |                                  | CF | 
 7       | C2 |                                  | H1 | 
 8       | C1 |----------------------------------| H2 | 
 9       | JL | B3 | B2 | B1 | CC | A3 | A2 | A1 | GO | 

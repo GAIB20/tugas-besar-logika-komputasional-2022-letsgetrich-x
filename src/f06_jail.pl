@@ -1,10 +1,9 @@
-:- include('f10_dice.pl').
-:- include('f09_player.pl').
 :- dynamic(in_jail/1).
 :- dynamic(dice_after_jail/2).
+:- dynamic(hasPickedJailMechanism/0).
 
-/* inJail(ID, state), state : 0 false, 1 true */
 initJail:-
+    retractall(hasPickedJailMechanism),
     asserta(dice_after_jail(1,0)),
     asserta(dice_after_jail(2,0)).
 
@@ -13,24 +12,64 @@ jailMechanism:-
     dice_after_jail(X, 0),
     playerDouble(X,3),
     asserta(in_jail(X)),
-    write('Ooops! What a bad muggle you have been. Welcome to Azkaban!\n'),
+    retractall(playerDouble(X,_)),
+    asserta(playerDouble(X,0)),
+    write('Ooops! What a bad muggle you have been. You are now jailed in Azkaban!\n'),
+    retractall(locPlayer(X,_)),
+    asserta(locPlayer(X, 8)),
     checkLocationDetail(jl),
-    incDiceAfterJail,
-    !.
+    switchPlayer,
+    !, fail.
 
 jailMechanism:-
     currentPlayer(X),
-    dice_after_jail(X,Y),
     in_jail(X),
+    hasPickedJailMechanism,
+    retractall(hasPickedJailMechanism),
+    playerDouble(X,0),
+    write('HAHA! Don\'t say I didn\'t warn you! Goodluck staying sane..\n').
+
+jailMechanism:-
+    currentPlayer(X),
+    in_jail(X),
+    dice_after_jail(X,Y),
+    Y>=0,
     Y<3,
     playerDouble(X,Z),
     (
-        Z = 0 ->  incDiceAfterJail,
+        (Y = 3; Z = 1) -> escapeJail,!;
+        Y >= 0 ->  incDiceAfterJail,
                   write('You\'re still in Azkaban :(\n'),
-                  !;
-        Z > 0 -> escapeJail,!
+                  write('Do you want to escape now?\n'),
+                  write('0. No, i\'ll try to fight off the Dementors by throwing dice..\n'),
+                  write('1. Pay 1000\n'),
+                  write('2. Use Escape Azkaban Card\n'),
+                  read(Choice),
+                  (
+                    Choice == 1 -> (cashPlayer(X, Cash),
+                                    (
+                                        Cash >=1000 -> retractall(cashPlayer(X,_)),
+                                                       Cash1 is Cash-1000,
+                                                       asserta(cashPlayer(X, Cash1)),
+                                                       escapeJail,!;
+                                        write('You don\'t have enough money!'), switchPlayer, !,fail    
+                                    ),!  
+                                   );
+                    Choice == 2 -> (
+                                      cardPlayer(X, Cards),
+                                      getIndex(Cards,'Get Out From Azkaban', Idx),
+                                      (
+                                        Idx == 0 -> write('You don\'t have any card to help you get out! Guess you\'ll have to survive longer..\n'), switchPlayer, !, fail;
+                                        cardMechanism('Get Out From Azkaban'),!
+                                      ),!
+                                   );
+                    write('LMAOOO whatt?! You really think you can get out by just throwing dice?\n That\'s very brave of you.. A Gryffindor perhaps..?\n'),asserta(hasPickedJailMechanism),throwDice,!,fail
+                  ),
+                  !
     ),
     !.
+
+
 
 jailMechanism:-
     currentPlayer(X),
@@ -40,7 +79,7 @@ jailMechanism:-
     !.
 
 jailMechanism:-
-    write('hafhaskfskafjiasj').
+    !.
 
 incDiceAfterJail:-
     currentPlayer(X),
@@ -52,9 +91,19 @@ incDiceAfterJail:-
     !.
 
 visitJail:-
-    write('You\'ve arrived in Azkaban.. Normally, people lose their sanity here. I certainly hope you don\'nt, \n').
+    write('You\'ve arrived in Azkaban.. Normally, people lose their sanity here. I certainly hope you don\'t, \n').
 
 escapeJail:-
-    write('Congratulations! You survived your time in Azkaban. You can throw dice now!\n'),
+    write('Congratulations! You survived your time in Azkaban. You can move now!\n'),
     currentPlayer(X),
-    retractall(in_jail(X)).
+    retractall(in_jail(X)),
+    retractall(playerDouble(X,_)),
+    retractall(dice_after_jail(X,_)),
+    asserta(dice_after_jail(X,0)),
+    retractall(hasPickedJailMechanism),
+    asserta(playerDouble(X,0)).
+
+testJail:-
+    retractall(playerDouble(1,_)),
+    asserta(playerDouble(1, 3)),
+    jailMechanism.

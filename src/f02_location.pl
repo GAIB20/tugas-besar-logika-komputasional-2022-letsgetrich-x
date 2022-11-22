@@ -1,4 +1,3 @@
-:- dynamic(kepemilikan/2).
 :- dynamic(biaya_sewa/2).
 :- dynamic(biaya_akuisisi/2).
 :- dynamic(tingkatan_property/2).
@@ -59,37 +58,38 @@ nama_lokasi(h1, 'Daily Prophet').
 nama_lokasi(h2, 'Forest of Dean').
 
 /* DESKRIPSI LOKASI */
-desc_lokasi(a1, 'Desa asal keluarga Weasley, Lovegood, dan Diggory' ).
-desc_lokasi(a2, 'Desa asal Lily dan James Potter').
-desc_lokasi(a3, 'Desa asal Voldemort').
-desc_lokasi(b1, 'Kota tempat tinggal keluarga Dursley').
-desc_lokasi(b2, 'Tempat tinggal keluarga Malfoy').
-desc_lokasi(b3, 'Tempat tinggal keluarga Black').
-desc_lokasi(jl, 'Tempat ini adalah penjara paling mengerikan di dunia sihir. \n                       Pemain akan masuk ke Azkaban jika mendapatkan kartu masuk penjara \n                       atau mendapatkan double 3 kali berturut-turut. \n \nTerdapat 4 mekanisme untuk keluar dari Azkaban : \n     1. Apabila terdapat dadu yang double sebelum tiga kali giliran,\n       pemain langsung keluar dari penjara\n     2. Apabila pemain sudah melempar dadu sebanyak tiga kali, pemain keluar dari penjara. \n     3. Pemain mempunyai kartu untuk lolos dari penjara. Pada giliran berikutnya, \n       pemain dapat memilih untuk mengaktifkannya. \n     4. Pemain dapat membayar pada giliran berikutnya sehingga lolos dari penjara lalu \n       dapat langsung melempar dadu. \n').
-desc_lokasi(c1, 'Tempat persembunyian Golden Trio').
-desc_lokasi(c2, 'Sekolah sihir Prancis').
-desc_lokasi(c3, 'Sekolah sihir Scandinavia').
+desc_lokasi(a1, 'The Hometown of Great Wizard Families, The Weasleys, The Lovegoods, and The Diggorys' ).
+desc_lokasi(a2, 'The Hometown of Lily dan James Potter').
+desc_lokasi(a3, 'The Village of The Dark Lord, Voldemort').
+desc_lokasi(b1, 'A Muggle City, The Hometown of The Dursleys').
+desc_lokasi(b2, 'Where The Malfoys Resort').
+desc_lokasi(b3, 'The Black Family\'s Residence.').
+desc_lokasi(jl, 'The Fortress That Jails The Criminals of The Wizarding World \n                       Here lives the Dementors that drained people of all happiness and leave them with their worst memories.\n                       Players will be jailed in Azkaban if they draw the "Go To Azakaban" card, \n                       or.. they get three doubles three times in a row. \n \nThere are 4 mechanisms to get out of Azkaban alive : \n     1. If the jailed player roll a double before passing three turns,\n       they will escape Azkaban at once.\n     2. If the player has passed three turns, they can escape. \n     3. If the player has Escape From Azkaban chance card, on the next turn, \n       they can activate it and escape. \n     4. Players can pay their way out off Azkaban on their next turn \n       and throw dice. \n').
+desc_lokasi(c1, 'The Home of Bill Weasley where The Golden Trio hid').
+desc_lokasi(c2, 'France Wizarding School').
+desc_lokasi(c3, 'Scandinavian Wizarding School').
 desc_lokasi(tx, 'Tax').
-desc_lokasi(d1, 'Sekolah sihir Inggris').
-desc_lokasi(d2, 'Sekolah sihir dengan spesialisasi teater').
-desc_lokasi(d3, 'Pusat ekonomi dunia sihir').
+desc_lokasi(d1, 'Scottish Wizarding School').
+desc_lokasi(d2, 'Wizarding School for Threatrical or Performance Career').
+desc_lokasi(d3, 'The Economic Hub of The Wizarding World').
 desc_lokasi(fp, 'Free Park').
-desc_lokasi(e1, 'Kantor pemerintahan dunia sihir').
-desc_lokasi(e2, 'Stasiun kereta api').
-desc_lokasi(e3, 'Pusat kesehatan dunia sihir').
-desc_lokasi(f1, 'Sisi gelap Diagon Alley').
-desc_lokasi(f2, 'Markas Gellert Grindelwart').
-desc_lokasi(f3, 'Muggle street, asal Severus Snape').
-desc_lokasi(wt, 'Apparate').
+desc_lokasi(e1, 'The Government of The Wizarding World').
+desc_lokasi(e2, 'A Magically Concealed Train Platform').
+desc_lokasi(e3, 'Hospital for Magical Maladies and Injuries').
+desc_lokasi(f1, 'The Dark Side of Diagon Alley').
+desc_lokasi(f2, 'Where Gellert Grindelwart Jails His Captives').
+desc_lokasi(f3, 'Muggle Street, Home to Severus Snape').
+desc_lokasi(wt, 'Apparate: Magically Travel to A Place of Your Choice').
 desc_lokasi(g1, 'Forbidden Forest').
-desc_lokasi(g2, 'Bank dunia sihir').
-desc_lokasi(g3, 'Desa khusus penyihir').
+desc_lokasi(g2, 'The Bank of The Wizarding World').
+desc_lokasi(g3, 'All-Wizarding Village in Britain').
 desc_lokasi(cc, 'Chance Card').
-desc_lokasi(h1, 'Pusat informasi dunia sihir').
-desc_lokasi(h2, 'Sebuah hutan di Inggris').
+desc_lokasi(h1, 'The Office to The Wizarding Newspaper in Britain').
+desc_lokasi(h2, 'A Forest in England').
 
 
 /* Kepemilikan */
+:- dynamic(kepemilikan/2).
 kepemilikan(a1, 0).
 kepemilikan(a2, 0).
 kepemilikan(a3, 0).
@@ -116,25 +116,27 @@ kepemilikan(h2, 0).
 
 checkLocationDetail(X):-
     nama_lokasi(X, Name),!,
-    write('Nama Lokasi          : '),
+    write('Location Name        : '),
     write(Name), nl,
-    write('Deskripsi            : '),
+    write('Description          : '),
     desc_lokasi(X, Desc),
     write(Desc), nl,
-    (
-        is_property(X) -> write('Kepemilikan          : '),
+    (                    
+        is_property(X) -> write('Ownership            : '),
                           kepemilikan(X, Milik),
-                          write(Milik), nl,
-                          /* nunggu properti jadi ?*/
-                          write('Biaya sewa saat ini  : \n'),
-                          write('Biaya Akuisisi       : \n'),
-                          write('Tingkatan Properti   : \n'), !;
-        X = cc -> write('Anda berhak memilih salah satu dari kartu berikut: \n'), !
-        /* nunggu chance card */
+                          (Milik \== 0 -> write(Milik),!; write('-'),! ),nl,
+                          hargaSewa(X, Sewa),
+                          hargaBeli(X, Beli),
+                          tingkatan_property(X, Level),
+                          format('Current rent price   : ~d\n', Sewa),
+                          format('Acquisition price    : ~d\n', Beli),
+                          format('Property Level       : ~d\n', Level), !;
+        X = cc -> write('Can\'t get you Felix Felicis, but in return, You have *chances* to get one of these cards   : \n'),
+                          forall(card_info(_,Y),  write(Y)), !;
+        !
     ),
     !.
 
 checkLocationDetail(X):-
     write(X),
-    write(' bukan lokasi yang valid! Silahkan masukkan lokasi yang valid.').
-
+    write(' is not a valid location, sorry! :(\n').

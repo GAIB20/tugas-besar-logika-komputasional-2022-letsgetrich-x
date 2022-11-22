@@ -1,27 +1,25 @@
-:- include('f01_board.pl').
-:- include('f02_location.pl').
-:- include('f03_property.pl').
-:- include('f04_chance.pl').
-:- include('f05_tax.pl').
-:- include('f06_jail.pl').
-:- include('f07_freeparking.pl').
-:- include('f08_worldtour.pl').
-:- include('f09_player.pl').
-:- include('f10_dice.pl').
 
-:- dynamic(playerName/2).
 :- dynamic(menu_status/1).
 
-/* manually assign player name */
-playerName(1, 'Rachel').
-playerName(2, 'Livia').
-
-/* choose start player */
-currentPlayer(1).
-
 startGame:-
+    ['utility.pl'],
+    ['f01_board.pl'],
+    ['f02_location.pl'],
+    ['f03_property.pl'],
+    ['f04_chance.pl'],
+    ['f05_tax.pl'],
+    ['f06_jail.pl'],
+    ['f07_freeparking.pl'],
+    ['f08_worldtour.pl'],
+    ['f09_player.pl'],
+    ['f10_dice.pl'],
+    ['f11_bankrupt.pl'],
+    ['move.pl'],
+    ['b05_coinflip.pl'],
     initPlayer,
-    initJail.
+    initJail,
+    initChanceCard,
+    switchPlayer.
 
 
 

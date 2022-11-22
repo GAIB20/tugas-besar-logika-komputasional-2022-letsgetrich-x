@@ -46,7 +46,7 @@ initPlayer :-
     assertz(cardPlayer(P2, [])).
 
 /* Hitung nilai Prop lokasi X hingga tingkatan Y dan disimpan di Z */
-nilaiProp(X, -1, 0) :- !.
+nilaiProp(_X, -1, 0) :- !.
 
 nilaiProp(X, Y, Z) :-
     hargaBeli(X, Y, Price),
@@ -80,7 +80,7 @@ addCashGO(X, Y) :-
         incCash(0, Y), !
     ),!.
 
-/* Rule menampilkan daftar properti */
+/* Rule menampilkan daftar properti 
 displayProp([],_):-!.
 displayProp([Head|Tail], No):-
     write(No),
@@ -92,8 +92,8 @@ displayProp([Head|Tail], No):-
     write(InfoTingkt),nl,
     No1 is No - 1,
     displayProp(Tail, No1).
+*/
 
-/*
 displayProp(X) :- 
     listPropPlayer(X,ListProp),
     retractall(tempIndeks(_)),
@@ -121,7 +121,7 @@ displayProp(X) :-
         asserta(tempIndeks(NewIdx)),
         retractall(tempList(_)),
         asserta(tempList(Tail)),
-    Tail == [],!. */
+    Tail == [],!. 
 
 /* Rule menampilkan daftar card */
 displayPlayerCard(X) :- 
@@ -133,8 +133,10 @@ checkPlayerDetail(X) :-
     (
         is_player(X) -> playerName(X, Name),
                         write('Information of '), write(Name), nl,
-                        locPlayer(X, Loc), nama_lokasi(Loc, LocName),
-                        write('Location         : '), write(LocName),nl,
+                        locPlayer(X, Loc), tile(Loc, TileName),
+                        nama_lokasi(TileName, LocName),
+                        write('Location         : '), write(TileName), write(' - '),
+                        write(LocName),nl,
                         cashPlayer(X, Cash),
                         write('Money            : '), write(Cash),nl,
                         listPropPlayer(X, ListProp),

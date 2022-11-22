@@ -265,13 +265,13 @@ checkPropertyDetail(X):-
 
 /*Membeli properti
   buy(Loc, Tingkatan)*/
-buy(Loc, Tingkatan):- currentPlayer(X), cashPlayer(X, Cash),hargaAmbil(Loc,Tingkatan, Harga),tingkatan(Loc, Temp),(
+buy(_Loc, Tingkatan):- currentPlayer(X), cashPlayer(X, Cash),hargaAmbil(_Loc,Tingkatan, Harga),tingkatan(_Loc, Temp),(
                     (
-                        Tingkatan == 4 ->(Temp\=3->write('Can\'t build Castle') ;( hargaBeli(Loc, Tingkatan, HargaLM),
-                                          HargaLM=<Cash -> retractall(kepemilikan(Loc,_)),
-                                                                  kepemilikan(Loc, X),
-                                                                  retractall(tingkatan(Loc,_)),
-                                                                  assertz(tingkatan(Loc, Tingkatan)),
+                        Tingkatan == 4 ->(Temp\=3->write('Can\'t build Castle') ;( hargaBeli(_Loc, Tingkatan, HargaLM),
+                                          HargaLM=<Cash -> retractall(kepemilikan(_Loc,_)),
+                                                                  kepemilikan(_Loc, X),
+                                                                  retractall(tingkatan(_Loc,_)),
+                                                                  assertz(tingkatan(_Loc, Tingkatan)),
                                                                   NewCash is Cash - HargaLM,
                                                                   retractall(cashPlayer(_)),
                                                                   assertz(cashPlayer(NewCash)),
@@ -280,10 +280,10 @@ buy(Loc, Tingkatan):- currentPlayer(X), cashPlayer(X, Cash),hargaAmbil(Loc,Tingk
                                           write('Can\'t build Castle') 
                                          );
                         Temp == -1 ->(
-                            Harga=<Cash -> retractall(kepemilikan(Loc,_)),
-                                                    assertz(kepemilikan(Loc, X)),
-                                                    retractall(tingkatan(Loc,_)),
-                                                    assertz(tingkatan(Loc, Tingkatan)),
+                            Harga=<Cash -> retractall(kepemilikan(_Loc,_)),
+                                                    assertz(kepemilikan(_Loc, X)),
+                                                    retractall(tingkatan(_Loc,_)),
+                                                    assertz(tingkatan(_Loc, Tingkatan)),
                                                     NewCash is Cash - Harga,
                                                     retractall(cashPlayer(X, _)),
                                                     assertz(cashPlayer(X, NewCash)),

@@ -7,8 +7,6 @@
 :- dynamic(currentPlayer/1).
 :- dynamic(playerName/2).
 /* locPlayer(no player, location) */
-:- dynamic(tempIndeks/1).
-:- dynamic(tempList/1).
 /* currentPlayer(no player) */
 /* playerName(no player, name) */
 /* locPlayer(no player, titik X, titik Y) */
@@ -93,35 +91,6 @@ displayProp([Head|Tail], No):-
     No1 is No - 1,
     displayProp(Tail, No1).
 
-/*
-displayProp(X) :- 
-    listPropPlayer(X,ListProp),
-    retractall(tempIndeks(_)),
-    asserta(tempIndeks(1)),
-
-    retractall(tempList(_)),
-    asserta(tempList(ListProp)),
-    
-    repeat,
-        tempIndeks(Idx),
-
-        tempList([Head|Tail]),
-
-        tingkatan(Head, Type),
-        nama_tingkatan(Type, Namatype),
-        nama_lokasi(Head, Namaloc),
-
-        write(Idx),
-        write('. '),
-        write(Namaloc),
-        write(' - '),
-        write(Namatype),nl,
-        NewIdx is Idx + 1,
-        retractall(tempIndeks(_)),
-        asserta(tempIndeks(NewIdx)),
-        retractall(tempList(_)),
-        asserta(tempList(Tail)),
-    Tail == [],!. */
 
 /* Rule menampilkan daftar card */
 displayPlayerCard(X) :- 

@@ -80,7 +80,7 @@ addCashGO(X, Y) :-
         incCash(0, Y), !
     ),!.
 
-/* Rule menampilkan daftar properti 
+
 displayProp([],_):-!.
 displayProp([Head|Tail], No):-
     write(No),
@@ -92,8 +92,8 @@ displayProp([Head|Tail], No):-
     write(InfoTingkt),nl,
     No1 is No - 1,
     displayProp(Tail, No1).
-*/
 
+/*
 displayProp(X) :- 
     listPropPlayer(X,ListProp),
     retractall(tempIndeks(_)),
@@ -121,7 +121,7 @@ displayProp(X) :-
         asserta(tempIndeks(NewIdx)),
         retractall(tempList(_)),
         asserta(tempList(Tail)),
-    Tail == [],!. 
+    Tail == [],!. */
 
 /* Rule menampilkan daftar card */
 displayPlayerCard(X) :- 

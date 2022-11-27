@@ -20,6 +20,27 @@ cheatMove(Player, Steps) :-
     retractall(playerDouble(Player,_)),
     asserta(playerDouble(Player,0)).
 
+cheatDoubleDice(DiceVal) :-
+    currentPlayer(Player),
+    
+    (DiceVal>0, DiceVal<7) -> (    
+        write('Dice 1 : '),
+        write(DiceVal), nl,
+
+        write('Dice 2 : '),
+        write(DiceVal), nl,nl,nl,
+
+        write('Double!'), nl,
+        (in_jail(Player) -> switchPlayer;!), 
+        Forward is 2*DiceVal,
+        incPlayerDouble,
+        move(Player, Forward),
+        map,
+        !
+    ); write('Double dice value must be in between 1-6.'), nl
+    , !.
+
+
 cheatAddMoney(Player, Increment) :-
     is_player(Player),
     cashPlayer(P, Money),

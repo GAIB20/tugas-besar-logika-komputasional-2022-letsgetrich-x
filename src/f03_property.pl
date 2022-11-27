@@ -1,8 +1,4 @@
-:-include('f02_location.pl').
-:-include('f09_player.pl').
-:-include('f11_bankrupt.pl').
-:-include('f04_chance.pl').
-:-include('b01_colorset.pl').
+
 :- dynamic(tingkatan/2).
 :- dynamic(hargaBeli/3).
 /* hargaBeliProp(loc, Tingkatan, hargaBeli)*/
@@ -400,7 +396,7 @@ propertyMechanism:-
                               getIndex(Cards,'Cloak of Invisibility', Idx),
                                       (
                                         Idx == 0 -> write('You don\'t have Cloak of Invisibility\n'), hargaSewa(CurrLoc1, Stat, HargaSewa),
-                                                    totalAssets(X, AssetsPlayer)), decCash(HargaSewa,X), !, fail;
+                                                    totalAssets(X, AssetsPlayer)), decCash(HargaSewa,X);
                                         write('You can visit this place without paying anything because you are invisible, enjoy your time~\n'),                
                                         deleteAtList(Idx, Cards, UpdatedCards), retractall(cardPlayer(X, _)), asserta(cardPlayer(X, NewCards))
                                       )
@@ -424,8 +420,9 @@ propertyMechanism:-
                                                            propertyMechanism, modifyTileInfo(CurrLoc1)
                                             );!
                                         )
-                                    )
+                                    
                                 );
             write('Can\'t take over property');!
+        )
     )
     .

@@ -41,7 +41,52 @@ cardMechanism('Tax'):-
     closestTax(PlayerLoc, ListTax, ClosestTax),
     retractall(locPlayer(X,_)),
     asserta(locPlayer(X, ClosestTax)),
+    write('You have been moved to Tax!'), nl,
     payTax(X),
+    !.
+
+/* kurangin duit 3000 */
+cardMechanism('Improper Use'):-
+    currentPlayer(X),
+    write('masuk?'),
+    decCash(3000, X),
+    !.
+
+/* taro ke deck card player */
+cardMechanism('Get Out From Azkaban'):-
+    currentPlayer(Player),
+    cardPlayer(Player, Cards),
+    retractall(cardPlayer(Player, _)),
+    insertLast('Get Out From Azkaban', Cards, NewCards),
+    asserta(cardPlayer(Player, NewCards)),
+    !.
+
+/* tambahin duit 8000 */
+cardMechanism('Quidditch Game'):-
+    currentPlayer(X),
+    incCash(8000, X),
+    !.
+
+/* advance to go */
+cardMechanism('Knight Bus'):-
+    currentPlayer(X),
+    retractall(locPlayer(X,_)),
+    tile(Go, go),
+    asserta(locPlayer(X, Go)),
+    !.
+
+/* tambahin duit 2000 */
+cardMechanism('Gift'):-
+    currentPlayer(X),
+    incCash(2000, X),
+    !.
+
+/* jeblosss */
+cardMechanism('Go To Azkaban'):-
+    currentPlayer(X),
+    retractall(playerDouble(X,_)),
+    asserta(playerDouble(X,3)),
+    jailMechanism,
     !.
 
 closestTax(CurrLoc, [Head|[]], ClosestTax):-
@@ -55,45 +100,6 @@ closestTax(CurrLoc, [Head|Tail], ClosestTax):-
         ClosestTax is CurrClosestTax
     ),
     !.
-
-/* kurangin duit 3000 */
-cardMechanism('Improper Use'):-
-    currentPlayer(X),
-    decCash(3000, X),
-    !.
-
-/* taro ke deck card player */
-cardMechanism('Get Out From Azkaban'):-
-    currentPlayer(Player),
-    cardPlayer(Player, Cards),
-    retractall(cardPlayer(Player, _)),
-    insertLast('Get Out From Azkaban', Cards, NewCards),
-    asserta(cardPlayer(Player, NewCards)).
-
-/* tambahin duit 8000 */
-cardMechanism('Quidditch Game'):-
-    currentPlayer(X),
-    incCash(8000, X).
-
-/* advance to go */
-cardMechanism('Knight Bus'):-
-    currentPlayer(X),
-    retractall(locPlayer(X,_)),
-    tile(Go, go),
-    retractall(locPlayer(X, Go)),
-    !.
-
-/* tambahin duit 2000 */
-cardMechanism('Gift'):-
-    currentPlayer(X),
-    incCash(2000, X).
-
-/* jeblosss */
-cardMechanism('Go To Azkaban'):-
-    currentPlayer(X),
-    retractall(playerDouble(X,_)),
-    asserta(playerDouble(X,3)),
-    jailMechanism.
 
 useChanceCard:-
     chance_cards(List),
@@ -116,7 +122,8 @@ drawChanceCard:-
     write('You drew a card!\n'),
     card_info(Card, Info),
     write(Info),
-    cardMechanism(Card).
+    cardMechanism(Card),
+    !.
 
 
 insertCardToList(X, N):-

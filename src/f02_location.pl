@@ -69,7 +69,7 @@ desc_lokasi(jl, 'The Fortress That Jails The Criminals of The Wizarding World \n
 desc_lokasi(c1, 'The Home of Bill Weasley where The Golden Trio hid').
 desc_lokasi(c2, 'France Wizarding School').
 desc_lokasi(c3, 'Scandinavian Wizarding School').
-desc_lokasi(tx, 'Tax').
+desc_lokasi(tx, 'Tax. You have to pay your Tax to the Ministry of Magic!').
 desc_lokasi(d1, 'Scottish Wizarding School').
 desc_lokasi(d2, 'Wizarding School for Threatrical or Performance Career').
 desc_lokasi(d3, 'The Economic Hub of The Wizarding World').

@@ -1,4 +1,3 @@
-
 :- dynamic(menu_status/1).
 
 startGame:-
@@ -15,6 +14,7 @@ startGame:-
     ['f10_dice.pl'],
     ['f11_bankrupt.pl'],
     ['move.pl'],
+    ['b01_colorset.pl'],
     ['b05_coinflip.pl'],
     initPlayer,
     initJail,

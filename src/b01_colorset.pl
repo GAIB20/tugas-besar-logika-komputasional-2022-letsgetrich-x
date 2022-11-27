@@ -22,11 +22,7 @@ colorset(h, [h1,h2]).
 
 checkColorset :-
     listPropPlayer(1,PropPlayer1),
-    colorsetMechanism(PropPlayer1),
     listPropPlayer(2,PropPlayer2),
-    colorsetMechanism(PropPlayer2).
-
-colorsetMechanism(PropPlayer) :-
     /* reset colorsets */
     retractall(colorsets(_)),
     asserta(colorsets([a,b,c,d,e,f,g,h])),
@@ -34,21 +30,19 @@ colorsetMechanism(PropPlayer) :-
     /* loop for every colorsets */
     repeat, 
         /* Color to process */
-        write('sdsdf'),
         colorsets([Color|TailColorsets]),
 
         /* List of Color */
         colorset(Color, ListColorsetColor),
-        write(Color),nl,
         list_colorset(ListColorset),
-        write(ListColorset),nl,
 
-        subset(ListColorsetColor, PropPlayer, Verdict),
-        write(Verdict),nl,
+        subset(ListColorsetColor, PropPlayer1, Verdict1),
+        subset(ListColorsetColor, PropPlayer2, Verdict2),
+
         isIn(Color, ListColorset, IsInList),
-        write(IsInList),nl,
+
         /* if ListColorsetColor subset of PropPlayer */
-        (Verdict == 1 -> 
+        (((Verdict1 == 1) ; (Verdict2 == 1))-> 
         (
             /* if Color not in ListColorset */
             IsInList == 0 -> (
@@ -64,7 +58,7 @@ colorsetMechanism(PropPlayer) :-
         /* else */
         (
             /* if Color in List Colorset */
-            IsInList == 1 -> ( write('hello'),
+            IsInList == 1 -> (
                 retractall(list_colorset(_)),
                 getIndex(ListColorset, Color, Index),
                 Index \= 0 -> (
@@ -117,7 +111,7 @@ downgradePrice(Colorset) :-
         forall(hargaBeli(Head,Type,_), 
             (
                 hargaBeli(Head,Type,X),
-                NewX is X / 2,
+                NewX is X // 2,
                 retractall(hargaBeli(Head,Type,X)),
                 asserta(hargaBeli(Head,Type,NewX))
             )

@@ -22,9 +22,9 @@ guessFlip(Success) :-
 
     (Guess == Face -> 
         (
-            write('You guessed correctly! 100 has been awarded to you!'), nl,
+            write('You guessed correctly! 2000 has been awarded to you!'), nl,
             retractall(cashPlayer(P, Money)),
-            NMoney is Money + 100,
+            NMoney is Money + 2000,
             asserta(cashPlayer(P, NMoney)), 
             Success is 1
         ) ;

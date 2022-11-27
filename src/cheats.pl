@@ -73,34 +73,12 @@ testAngel:-
     asserta(locPlayer(2, 1)),
     propertyMechanism.
 
-testBankrupt:-
-    retractall(cashPlayer(2,_)),
-    asserta(cashPlayer(2,100)),
-
-    retractall(kepemilikan(a1,_)),
-    asserta(kepemilikan(a1,2)),
-    retractall(tingkatan(a1,_)),
-    asserta(tingkatan(a1,3)),
-    modifyTileInfo(a1),
-
-    retractall(kepemilikan(a2,_)),
-    asserta(kepemilikan(a2,2)),
-    retractall(tingkatan(a2,_)),
-    asserta(tingkatan(a2,3)),
-    modifyTileInfo(a2),
-
-    retractall(kepemilikan(a3,_)),
-    asserta(kepemilikan(a3,1)),
-    retractall(tingkatan(a3,_)),
-    asserta(tingkatan(a3,3)),
-    modifyTileInfo(a3).
-
 
 cheatWorldTour:-
     currentPlayer(X),
     retractall(locPlayer(X,_)),
     asserta(locPlayer(X,24)),
-    apparateMechanism.
+    worldTourMechanism.
 
 cheatFlipCoin:-
     currentPlayer(X),
@@ -112,4 +90,4 @@ cheatTax:-
     currentPlayer(X),
     retractall(locPlayer(X,_)),
     asserta(locPlayer(X,28)),
-    payTax.
+    payTax(X).

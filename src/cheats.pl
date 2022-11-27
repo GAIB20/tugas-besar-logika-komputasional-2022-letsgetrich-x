@@ -63,3 +63,12 @@ cheatChanceCard :-
     retractall(locPlayer(X, _)),
     asserta(locPlayer(X, 4)),
     drawChanceCard.
+
+testAngel:- 
+    retractall(kepemilikan(a1,_)),
+    asserta(kepemilikan(a1, 1)),
+    retractall(tingkatan(a1,_)),
+    asserta(tingkatan(a1, 1)),
+    retractall(locPlayer(2, _)),
+    asserta(locPlayer(2, 1)),
+    propertyMechanism.

@@ -240,6 +240,14 @@ checkPropertyDetail(X):-
     write('Description                 : '),
     desc_lokasi(X, Desc),
     write(Desc), nl,
+    write('Property Level              : '),
+    tingkatan(X,Level),
+    (Level = 0 -> write('Land'),nl;
+    Level = 1 -> write('Small Cottage'),nl;
+    Level = 2 -> write('Medium Cottage'),nl;
+    Level = 3 -> write('Large Cottage'),nl;
+    Level = 4 -> write('Castle'),nl;
+    Level = -1 -> write('-'),nl),
     (
         is_property(X) -> hargaBeli(X, 0, HargaTanah), 
                           hargaBeli(X, 1, HargaBg1),
@@ -311,7 +319,7 @@ buy(_Loc, Tingkatan):- currentPlayer(X), cashPlayer(X, Cash),hargaAmbil(_Loc,Tin
                                     retractall(tingkatan(_Loc,_)),
                                     asserta(tingkatan(_Loc,Tingkatan)),
                                     write('Congrats! Your Property have been upgraded!\n')
-                                );!
+                                );write('Sorry you don\'t have enough cash\n')
                             );write('Can\'t upgrade below state\n'), propertyMechanism
                         )
                         ;!
@@ -376,6 +384,9 @@ propertyMechanism:-
             write('You arrive at other player property, you have to pay the rent fee\n'),
             hargaSewa(CurrLoc1, Stat, HargaSewa),
             totalAssets(X, AssetsPlayer),
+            /*bankruptMechanism(HargaSewa),*/
+            decCash(HargaSewa,X),
+            cashPlayer(X,NewCash),
             cashPlayer(X, Cash),
             NewCash is Cash-HargaSewa,
             retractall(cashPlayer(X, NewCash)),
@@ -389,9 +400,7 @@ propertyMechanism:-
                                         write('1. Take Over\n'),
                                         read(Choice),(
                                             Choice == 0 -> write('Pass an opportunity? What a shame\n');
-                                            Choice == 1 -> (NewCash2 is NewCash-HargaAmbil,
-                                                           retractall(cashPlayer(X,_)),
-                                                           asserta(cashPlayer(X,NewCash2)),
+                                            Choice == 1 -> (decCash(HargaAmbil,X),
                                                            retractall(kepemilikan(CurrLoc1,_)),
                                                            assertz(kepemilikan(CurrLoc1, X)),
                                                            write('Congratulations!! The Property is now yours\n'),

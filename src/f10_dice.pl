@@ -2,6 +2,7 @@
 /* dynamic variables */
 :- dynamic(playerDouble/2).
 
+
 /* playerDouble(ID, state), state times double */
 playerDouble(1,0).
 playerDouble(2,0).
@@ -19,7 +20,7 @@ throwDice :-
 
     rand(B),
     write('Dice 2 : '),
-    write(B), nl,
+    write(B), nl,nl,nl,
 
     (
         (
@@ -57,6 +58,17 @@ incPlayerDouble :-
 /* switch player */
 switchPlayer :-
     currentPlayer(X),
+    playerName(X, PlayerName),
+
+    (firstTurn -> 
+        (   nl,write(PlayerName), 
+            write(' turn is over...'),nl,
+            write('Press any key to continue'),nl,
+            read(_)
+        );!
+    ),
+    retractall(firstTurn),
+
     retractall(currentPlayer(_)),
     (
         X == 1 -> asserta(currentPlayer(2));

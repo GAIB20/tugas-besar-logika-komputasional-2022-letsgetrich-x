@@ -24,8 +24,17 @@ initPlayer :-
     P2 is 2,
     /* Set player awal */
     assertz(currentPlayer(2)),
-    assertz(playerName(1, 'Rachel')),
-    assertz(playerName(2, 'Livia')),
+
+    /* read playername */
+    nl,
+    write('Insert Player 1 name : '),
+    read(Player1Name),
+    write('Insert Player 2 name : '),
+    read(Player2Name),
+
+    assertz(playerName(1, Player1Name)),
+    assertz(playerName(2, Player2Name)),
+
     /* Set lokasi awal */
     assertz(locPlayer(P1, 0)),
     assertz(locPlayer(P2, 0)),
@@ -138,6 +147,7 @@ incCash(X, Player) :-
 
 /* decrementCash Player by X */
 decCash(X, Player) :- 
+    \+ bankruptMechanism(X),
     cashPlayer(Player, Cash),
     Cashnew is Cash - X,
     retractall(cashPlayer(Player, Cash)),

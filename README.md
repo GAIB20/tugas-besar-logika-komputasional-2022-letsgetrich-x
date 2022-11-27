@@ -31,7 +31,7 @@ $ git clone https://github.com/GAIB20/tugas-besar-logika-komputasional-2022-lets
 
 2. navigate to `src` folder and run `main.pl` file
 
-3. Run main.pk with the argument below
+3. Run main.pl with the argument below
 
 ```
 $ startGame.

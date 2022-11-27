@@ -98,7 +98,7 @@ cardMechanism('Go To Azkaban'):-
     jailMechanism,
     !.
 
-closestTax(CurrLoc, [Head|[]], ClosestTax):-
+closestTax(_CurrLoc, [Head|[]], ClosestTax):-
     ClosestTax is Head.
 
 closestTax(CurrLoc, [Head|Tail], ClosestTax):-

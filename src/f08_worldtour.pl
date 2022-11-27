@@ -23,7 +23,7 @@ apparateMechanism :-
                         Dest = wt -> worldTourMechanism;
                         Dest = cc -> drawChanceCard;
                         Dest = cf -> playCoinFlip;
-                        Dest = tx -> payTax(Player);
+                        Dest = tx -> payTax(X);
                         Dest = go -> buildGoMechanism;
                         is_property(Dest) -> propertyMechanism, !; 
                         !

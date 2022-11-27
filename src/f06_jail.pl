@@ -60,7 +60,7 @@ jailMechanism:-
                                       getIndex(Cards,'Get Out From Azkaban', Idx),
                                       (
                                         Idx == 0 -> write('You don\'t have any card to help you get out! Guess you\'ll have to survive longer..\n'), switchPlayer, !, fail;
-                                        escapeJail, deleteAtList(Idx, Cards, UpdatedCards), retractall(cardPlayer(X, _)), asserta(cardPlayer(X, NewCards)),!
+                                        escapeJail, deleteAtList(Idx, Cards, _UpdatedCards), retractall(cardPlayer(X, _)), asserta(cardPlayer(X, _NewCards)),!
                                       ),!
                                    );
                     write('LMAOOO whatt?! You really think you can get out by just throwing dice?\n That\'s very brave of you.. A Gryffindor perhaps..?\n'),asserta(hasPickedJailMechanism),throwDice,!,fail

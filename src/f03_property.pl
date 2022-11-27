@@ -332,9 +332,21 @@ buy(Loc, Tingkatan):- currentPlayer(X), cashPlayer(X, Cash),hargaAmbil(Loc,Tingk
 
 /*Menjual properti
   sell(Loc)*/
-sell(Loc):- currentPlayer(X), tingkatan(Loc,Tingkatan), hargaAmbil(Loc, Tingkatan, Harga), 
-            incCash(Harga, X), retractall(tingkatan(Loc,_)), assertz(tingkatan(Loc, -1)),
-            retractall(kepemilikan(Loc,_)),assertz(kepemilikan(Loc, 0)), modifyTileInfo(Loc).   
+sell(Loc):- 
+    currentPlayer(X), 
+    tingkatan(Loc,Tingkatan), 
+    hargaAmbil(Loc, Tingkatan, Harga), 
+    incCash(Harga,X), 
+    retractall(tingkatan(Loc,_)), 
+    assertz(tingkatan(Loc, -1)),
+    retractall(kepemilikan(Loc,_)),
+    assertz(kepemilikan(Loc, 0)),
+    listPropPlayer(X,ListPropPlayer),
+    getIndex(ListPropPlayer,Loc,IndexToSell),
+    deleteAtList(IndexToSell,ListPropPlayer,NewListPropPlayer),
+    retractall(listPropPlayer(X,_)),
+    asserta(listPropPlayer(X,NewListPropPlayer)),
+    modifyTileInfo(Loc).   
 
 /*property mechanism*/
 propertyMechanism:-
@@ -391,14 +403,16 @@ propertyMechanism:-
             read(Input),(
                 Input == 0 -> (hargaSewa(CurrLoc1, Stat, HargaSewa),
                               totalAssets(X, AssetsPlayer)),
-                              decCash(HargaSewa,X);
+                              decCash(HargaSewa,X),
+                              otherPlayer(Other),
+                              incCash(HargaSewa,Other);
                 Input == 1 -> cardPlayer(X, Cards),
                               getIndex(Cards,'Cloak of Invisibility', Idx),
                                       (
                                         Idx == 0 -> write('You don\'t have Cloak of Invisibility\n'), hargaSewa(CurrLoc1, Stat, HargaSewa),
                                                     totalAssets(X, AssetsPlayer)), decCash(HargaSewa,X);
                                         write('You can visit this place without paying anything because you are invisible, enjoy your time~\n'),                
-                                        deleteAtList(Idx, Cards, UpdatedCards), retractall(cardPlayer(X, _)), asserta(cardPlayer(X, NewCards))
+                                        deleteAtList(Idx, Cards, _UpdatedCards), retractall(cardPlayer(X, _)), asserta(cardPlayer(X, _NewCards))
                                       )
             ),
             /*hanya bisa ambil alih menggunakan uang cash*/

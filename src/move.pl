@@ -27,7 +27,7 @@ move(Player, Steps) :-
                                 Currloc = cf -> playCoinFlip;
                                 Currloc = tx -> payTax(Player);
                                 Currloc = go -> buildGoMechanism;
-                                is_property(CurrLoc) -> propertyMechanism, !; !
+                                is_property(Currloc) -> propertyMechanism, !; !
                               ),!;
         in_jail(Player) -> !
     ),

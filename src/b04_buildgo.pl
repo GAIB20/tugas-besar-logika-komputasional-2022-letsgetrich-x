@@ -51,7 +51,7 @@ buildGoMechanism:-
                         (
                             Choice == 0 -> write('You\'re going to regret this ...\n'), !;
                             Choice == 1 -> write('Choose the location you\'re going to upgrade \n'),
-                                            listUpgradeableProp(ListProp, ListUp),
+                                            listUpgradeableProp(ListProp, _ListUp),
                                             displayUpgradeableProp(ListProp, 1),
                                             read(Loc), buildMechanism(Loc), !
                         )

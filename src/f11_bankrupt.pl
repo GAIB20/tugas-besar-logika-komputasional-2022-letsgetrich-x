@@ -19,13 +19,17 @@ bankruptMechanism(Amount) :-
 
 bankruptMechanism(Amount) :-
     currentPlayer(X),
-    write('Your galleons is not enough...'), nl,
-    write('Do you still wanna continue fighting for Harry? [yes/no] : '),
-    read(lanjut),
+    write('Your galleons is not enough...\n'), 
+    write('Do you still wanna continue fighting for Harry?\n'),
+    write('0. No\n'),
+    write('1. Yes\n'),
+    write('Choice : '),
+    read(Lanjut),
     (
-        (
-            lanjut == 'yes',
-            displayProp(X), nl,
+        Lanjut == 1 -> (
+            listPropPlayer(X,ListProp),
+            write('\nList of your property: \n'),
+            displayProp(ListProp,1), nl,
             write('Which property you want to sell? : '),
             read(JualProp),
 
@@ -34,18 +38,16 @@ bankruptMechanism(Amount) :-
             getItemAtIdx(ListProp ,JualProp, PropToSell),
             tingkatan(PropToSell, Type),
             hargaBeli(PropToSell,Type,Price),   
-            sell(PropToSell,Type),
+            sell(PropToSell),
 
             nl, 
-            write(PropToSell),
+            nama_lokasi(PropToSell, NamaProp),
+            write(NamaProp),
             write(' has been sold'), nl,
 
             /* recheck */
-            NewAmount is Amount - Price,
-            checkBankrupt(NewAmount),
-            !
+            bankruptMechanism(Amount)
         );
-
         (
             write('What a shame, no fighting spirit bro...'),nl,
             endGame

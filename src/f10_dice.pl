@@ -90,7 +90,10 @@ switchPlayer :-
 
     !.
 
-    
+otherPlayer(Other) :-
+    currentPlayer(X),
+    X == 1 -> Other is 0;
+    Other is 1.
 
 
 /**

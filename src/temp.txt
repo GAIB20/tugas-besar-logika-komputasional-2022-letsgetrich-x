@@ -1,0 +1,27 @@
+ (
+            lanjut == 1 -> (
+                listPropPlayer(X,ListProp),
+                displayProp(ListProp,1), nl,
+                write('Which property you want to sell? : '),
+                read(JualProp),
+
+                /* jual property */
+                listPropPlayer(X, ListProp),
+                getItemAtIdx(ListProp ,JualProp, PropToSell),
+                tingkatan(PropToSell, Type),
+                hargaBeli(PropToSell,Type,Price),   
+                sell(PropToSell,Type),
+
+                nl, 
+                write(PropToSell),
+                write(' has been sold'), nl,
+
+                /* recheck */
+                NewAmount is Amount - Price,
+                checkBankrupt(NewAmount),
+                !
+            );
+        (
+            write('What a shame, no fighting spirit bro...'),nl,
+            endGame
+        )

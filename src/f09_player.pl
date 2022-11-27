@@ -147,7 +147,10 @@ incCash(X, Player) :-
     Cashnew is Cash + X,
     retractall(cashPlayer(Player, Cash)),
     asserta(cashPlayer(Player, Cashnew)),
-    write('Yay! Your cash is increased by '), write(X), write('!'), nl,
+    playerName(Player,PlayerName),
+    write('Yay! '),
+    write(PlayerName),
+    write('\'s cash is increased by '), write(X), write('!'), nl,
     write('Your money right now is '), write(Cashnew), nl.
 
 /* decrementCash Player by X */
@@ -157,5 +160,7 @@ decCash(X, Player) :-
     Cashnew is Cash - X,
     retractall(cashPlayer(Player, Cash)),
     asserta(cashPlayer(Player, Cashnew)),
-    write('Your cash is decreased by '), write(X), write('!'), nl,
+    playerName(Player,PlayerName),
+    write(PlayerName),
+    write('\'s cash is decreased by '), write(X), write('!'), nl,
     write('Your money right now is '), write(Cashnew), nl.

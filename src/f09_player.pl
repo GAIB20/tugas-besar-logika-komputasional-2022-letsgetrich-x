@@ -1,6 +1,5 @@
 /* File player.pl */
 :- dynamic(currentPlayer/1).
-:- dynamic(namePlayer/2).
 :- dynamic(locPlayer/2).
 :- dynamic(cashPlayer/2).
 :- dynamic(listPropPlayer/2).
@@ -8,10 +7,8 @@
 :- dynamic(currentPlayer/1).
 :- dynamic(playerName/2).
 /* locPlayer(no player, location) */
-:- dynamic(tempIndeks/1).
-:- dynamic(tempList/1).
 /* currentPlayer(no player) */
-/* namePlayer(no player, name) */
+/* playerName(no player, name) */
 /* locPlayer(no player, titik X, titik Y) */
 /* moneyPlayer(no player, cash) */
 /* listPropPlayer(no player, list location yang dimiliki) */
@@ -21,9 +18,9 @@
 is_player(1).
 is_player(2).
 
-/* initialize temp predicate */
+/* initialize temp predicate 
 tempIndeks(-1).
-tempList([]).
+tempList([]). */
 
 /* Rule inisiasi player */
 initPlayer :-
@@ -47,7 +44,7 @@ initPlayer :-
     assertz(cardPlayer(P2, [])).
 
 /* Hitung nilai Prop lokasi X hingga tingkatan Y dan disimpan di Z */
-nilaiProp(X, -1, 0) :- !.
+nilaiProp(_X, -1, 0) :- !.
 
 nilaiProp(X, Y, Z) :-
     hargaBeli(X, Y, Price),
@@ -69,77 +66,63 @@ countProp([Head|Tail], Length, Prop) :-
 /* totalAssets player X is Y */
 totalAssets(X, Y) :- 
     cashPlayer(X, Cash),
-    countProp(X, Prop),
+    listPropPlayer(X, ListProp),
+    length(ListProp, Length),
+    countProp(ListProp, Length, Prop),
     Y is Cash + Prop.
 
 /* Rule menambah cash setiap melewati go, X jumlah steps player Y */
 addCashGO(X, Y) :- 
     (
-        X > 31 -> incCash(3000, Y)
+        X > 31 -> incCash(3000, Y), !;
+        incCash(0, Y), !
     ),!.
 
-/* Rule menampilkan daftar properti */
-displayProp(X) :- 
-    listPropPlayer(X,ListProp),
 
-    /* reset index */
-    retractall(tempIndeks(_)),
-    asserta(tempIndeks(1)),
+displayProp([],_):-!.
+displayProp([Head|Tail], No):-
+    write(No),
+    nama_lokasi(Head, InfoLoc),
+    write(InfoLoc),
+    write(' - '),
+    tingkatan(Head, Tingk),
+    nama_tingkatan(Tingk, InfoTingkt),
+    write(InfoTingkt),nl,
+    No1 is No - 1,
+    displayProp(Tail, No1).
 
-    /* move ListProp to tempList */
-    retractall(tempList(_)),
-    asserta(tempList(ListProp)),
-    
-    repeat,
-        /* ambil nilai indeks */
-        tempIndeks(Idx),
-
-        /* ambil nilai Head */
-        tempList([Head|Tail]),
-
-        /* ambil nilai jenis tanah dan harga beli */
-        tingkatan(Head, Type),
-        nama_tingkatan(Type, Namatype),
-        nama_lokasi(Head, Namaloc),
-
-        /* print details */
-        write(Idx),
-        write('. '),
-        write(Namaloc),
-        write(' - '),
-        write(Namatype),nl,
-        NewIdx is Idx + 1,
-        retractall(tempIndeks(_)),
-        asserta(tempIndeks(NewIdx)),
-        retractall(tempList(_)),
-        asserta(tempList(Tail)),
-    Tail == [],!.
 
 /* Rule menampilkan daftar card */
-displayCard(X) :- !.
+displayPlayerCard(X) :- 
+    cardPlayer(X, ListCard),
+    displayCards(ListCard).
 
 /* Rule cek detail player */
 checkPlayerDetail(X) :-
     (
-        is_player(X) -> write('Informasi Player '), write(X), nl,
-                        locPlayer(X, Loc),
-                        write('Lokasi                : '), write(Loc),nl,
+        is_player(X) -> playerName(X, Name),
+                        write('Information of '), write(Name), nl,
+                        locPlayer(X, Loc), tile(Loc, TileName),
+                        nama_lokasi(TileName, LocName),
+                        write('Location         : '), write(TileName), write(' - '),
+                        write(LocName),nl,
                         cashPlayer(X, Cash),
-                        write('Total Uang            : '), write(Cash),nl,
+                        write('Money            : '), write(Cash),nl,
                         listPropPlayer(X, ListProp),
                         length(ListProp, Length),
                         countProp(ListProp, Length, Prop),
-                        write('Total Nilai Properti  : '), write(Prop),nl,
+                        write('Property value   : '), write(Prop),nl,
                         Aset is Cash + Prop,
-                        write('Total Aset            : '), write(Aset),nl,
+                        write('Asset value      : '), write(Aset),nl,
 
-                        write('Daftar Kepemilikan Properti  : '), nl,
-                        displayProp(X),nl,
+                        write('Properties owned : '), nl,
+                        displayProp(ListProp, 1),nl,
 
-                        write('Daftar Kepemilikan Card      : '), nl,
-                        displayCard(X),nl,!
+                        write('Chance card owned: '), nl,
+                        displayPlayerCard(X),nl,!
     ),
     !.
+
 
 /* incrementCash Player by X */
 incCash(X, Player) :- 

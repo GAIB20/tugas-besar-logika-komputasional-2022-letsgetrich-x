@@ -1,5 +1,9 @@
 :-include('f02_location.pl').
+:-include('f09_player.pl').
+:-include('f11_bankrupt.pl').
+:-include('b01_colorset.pl').
 :- dynamic(tingkatan/2).
+:- dynamic(hargaBeli/3).
 /* hargaBeliProp(loc, Tingkatan, hargaBeli)*/
 /*
     0 = tanah
@@ -265,44 +269,74 @@ checkPropertyDetail(X):-
 
 /*Membeli properti
   buy(Loc, Tingkatan)*/
-buy(Loc, Tingkatan):- currentPlayer(X), cashPlayer(X, Cash),hargaAmbil(Loc,Tingkatan, Harga),tingkatan(Loc, Temp),(
+/*Player hanya bisa beli landmark jika sampai di properti sendiri dan bangunannya sudah tingkat 3*/
+buy(_Loc, Tingkatan):- currentPlayer(X), cashPlayer(X, Cash),hargaAmbil(_Loc,Tingkatan, Harga),tingkatan(_Loc, Temp),(
                     (
-                        Tingkatan == 4 ->(Temp\=3->write('Can\'t build Castle') ;( hargaBeli(Loc, Tingkatan, HargaLM),
-                                          HargaLM=<Cash -> retractall(kepemilikan(Loc,_)),
-                                                                  kepemilikan(Loc, X),
-                                                                  retractall(tingkatan(Loc,_)),
-                                                                  assertz(tingkatan(Loc, Tingkatan)),
+                        Tingkatan == 4 ->(Temp\=3->write('Can\'t build Castle\n'),propertyMechanism ;( hargaBeli(_Loc, Tingkatan, HargaLM),
+                                          HargaLM=<Cash -> retractall(kepemilikan(_Loc,_)),
+                                                                  kepemilikan(_Loc, X),
+                                                                  retractall(tingkatan(_Loc,_)),
+                                                                  assertz(tingkatan(_Loc, Tingkatan)),
                                                                   NewCash is Cash - HargaLM,
                                                                   retractall(cashPlayer(_)),
                                                                   assertz(cashPlayer(NewCash)),
-                                                                  write('Congrats! Castle have been build!\n')     
+                                                                  retractall(tingkatan(_Loc,_)),
+                                                                  asserta(tingkatan(_Loc,Tingkatan)),
+                                                                  write('Congrats! Castle have been build!\n')
                                           );
-                                          write('Can\'t build Castle') 
+                                          write('Can\'t build Castle\n') 
                                          );
                         Temp == -1 ->(
-                            Harga=<Cash -> retractall(kepemilikan(Loc,_)),
-                                                    assertz(kepemilikan(Loc, X)),
-                                                    retractall(tingkatan(Loc,_)),
-                                                    assertz(tingkatan(Loc, Tingkatan)),
+                            Harga=<Cash -> retractall(kepemilikan(_Loc,_)),
+                                                    assertz(kepemilikan(_Loc, X)),
+                                                    retractall(tingkatan(_Loc,_)),
+                                                    assertz(tingkatan(_Loc, Tingkatan)),
                                                     NewCash is Cash - Harga,
                                                     retractall(cashPlayer(X, _)),
                                                     assertz(cashPlayer(X, NewCash)),
-                                                    write('Property paid!\n')
-                        );!
+                                                    write('Property paid!\n'),
+                                                    listPropPlayer(X, List),
+                                                    retractall(listPropPlayer(X,_)),
+                                                    insertLast(_Loc, List, NewList),
+                                                    retractall(tingkatan(_Loc,_)),
+                                                    asserta(tingkatan(_Loc,Tingkatan)),
+                                                    asserta(listPropPlayer(X,NewList)),
+                                                    length(NewList,Len),
+                                                    write('\nProperties List:\n'),
+                                                    displayProp(NewList, Len),
+                                                    checkColorset
+                        );
+                        Temp \= 4 -> (
+                            Tingkatan > Temp -> (
+                                hargaAmbil(_Loc, Temp, HargaAsli),
+                                HargaUpgrade is Harga - HargaAsli,
+                                HargaUpgrade=< Cash ->(
+                                    NewCash is Cash - HargaUpgrade,
+                                    retractall(cashPlayer(X, _)),
+                                    assertz(cashPlayer(X, NewCash)),
+                                    retractall(tingkatan(_Loc,_)),
+                                    asserta(tingkatan(_Loc,Tingkatan)),
+                                    write('Congrats! Your Property have been upgraded!\n')
+                                );!
+                            );write('Can\'t upgrade below state\n'), propertyMechanism
+                        )
+                        ;!
                     );
-                    write('Sorry you doesn\'t have enough cash')
+                    write('Sorry you don\'t have enough cash\n'), propertyMechanism
                     ), !.
 
 /*Menjual properti
   sell(Loc)*/
-sell(Loc):- currentPlayer(X), tingkatan(Loc,Tingkatan), hargaAmbil(Loc, Tingkatan, Harga), incCash(Harga, X), retractall(tingkatan(Loc,_)), assertz(tingkatan(Loc, -1)).   
+sell(Loc):- currentPlayer(X), tingkatan(Loc,Tingkatan), hargaAmbil(Loc, Tingkatan, Harga), 
+            incCash(Harga, X), retractall(tingkatan(Loc,_)), assertz(tingkatan(Loc, -1)),
+            retractall(kepemilikan(_Loc,_)),assertz(kepemilikan(_Loc, 0)).   
 
 /*property mechanism*/
 propertyMechanism:-
     currentPlayer(X), locPlayer(X, CurrLoc), tile(CurrLoc, CurrLoc1),kepemilikan(CurrLoc1,Milik),
     checkPropertyDetail(CurrLoc1), tingkatan(CurrLoc1, Stat),
     (
-        Milik == 0 -> (write('Noone has bought any property here.\n'),
+        Milik == 0 -> (write('No one has bought any property here.\n'),
                       write('0. Pass \n'),
                       write('1. Buy\n'),
                       read(Choice),
@@ -336,11 +370,44 @@ propertyMechanism:-
                                             write('4. Castle\n'),
                                             read(Tingkatan),
                                             (
-                                                buy(Loc,Tingkatan)
+                                                buy(CurrLoc1,Tingkatan)
                                             ),
                                             !);
                             !
+                        );(
+                            write('You arrive at your own Castle\n')
                         )
-                      )
+                      );
+        (
+            write('You arrive at other player property, you have to pay the rent fee\n'),
+            hargaSewa(CurrLoc1, Stat, HargaSewa),
+            totalAssets(X, AssetsPlayer),
+            /*bankruptMechanism(HargaSewa),*/
+            cashPlayer(X, Cash),
+            NewCash is Cash-HargaSewa,
+            retractall(cashPlayer(X, NewCash)),
+            /*cuma bisa ambil alih kalo cashnya masih ada, bukan assets*/
+            Stat\=4 -> 
+                                (
+                                    hargaAmbil(CurrLoc1, Stat, HargaAmbil),
+                                    HargaAmbil=<NewCash ->(
+                                        write('Do you want to take over?\n'),
+                                        write('0. Pass \n'),
+                                        write('1. Take Over\n'),
+                                        read(Choice),(
+                                            Choice == 0 -> write('Pass an opportunity? What a shame\n');
+                                            Choice == 1 -> (NewCash2 is NewCash-HargaAmbil,
+                                                           retractall(cashPlayer(X,_)),
+                                                           asserta(cashPlayer(X,NewCash2)),
+                                                           retractall(kepemilikan(CurrLoc1,_)),
+                                                           assertz(kepemilikan(CurrLoc1, X)),
+                                                           write('Congratulations!! The Property is now yours\n'),
+                                                           propertyMechanism
+                                            );!
+                                        )
+                                    )
+                                );
+            write('Can\'t take over property');!
+        )
     )
     .

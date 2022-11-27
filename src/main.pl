@@ -15,6 +15,7 @@ startGame:-
     ['f11_bankrupt.pl'],
     ['move.pl'],
     ['b01_colorset.pl'],
+    ['b04_buildgo.pl'],
     ['b05_coinflip.pl'],
     initPlayer,
     initJail,

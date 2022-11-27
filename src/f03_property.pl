@@ -272,28 +272,25 @@ checkPropertyDetail(X):-
 /*Player hanya bisa beli landmark jika sampai di properti sendiri dan bangunannya sudah tingkat 3*/
 buy(_Loc, Tingkatan):- currentPlayer(X), cashPlayer(X, Cash),hargaAmbil(_Loc,Tingkatan, Harga),tingkatan(_Loc, Temp),(
                     (
-                        Tingkatan == 4 ->(Temp\=3->write('Can\'t build Castle\n'),propertyMechanism ;( hargaBeli(_Loc, Tingkatan, HargaLM),
+                        Tingkatan == 4 ->(Temp\=3->write('Can\'t build Castle, because you don\'t have Large Cottage\n'),propertyMechanism ;
+                        ( hargaBeli(_Loc, Tingkatan, HargaLM),
                                           HargaLM=<Cash -> (retractall(kepemilikan(_Loc,_)),
                                                                   kepemilikan(_Loc, X),
                                                                   retractall(tingkatan(_Loc,_)),
                                                                   assertz(tingkatan(_Loc, Tingkatan)),
-                                                                  NewCash is Cash - HargaLM,
-                                                                  retractall(cashPlayer(_)),
-                                                                  assertz(cashPlayer(NewCash)),
+                                                                  decCash(HargaLM, X),
                                                                   retractall(tingkatan(_Loc,_)),
                                                                   asserta(tingkatan(_Loc,Tingkatan)),
                                                                   write('Congrats! Castle have been build!\n'));write('Sorry you don\'t have enough cash\n')
                                           );
-                                          write('Can\'t build Castle\n') 
+                                          write('Can\'t build Castle, you don\'t have enough cash\n') 
                                          );
                         Temp == -1 ->(
                             Harga=<Cash -> (retractall(kepemilikan(_Loc,_)),
                                                     assertz(kepemilikan(_Loc, X)),
                                                     retractall(tingkatan(_Loc,_)),
                                                     assertz(tingkatan(_Loc, Tingkatan)),
-                                                    NewCash is Cash - Harga,
-                                                    retractall(cashPlayer(X, _)),
-                                                    assertz(cashPlayer(X, NewCash)),
+                                                    decCash(Harga, X),
                                                     write('Property paid!\n'),
                                                     listPropPlayer(X, List),
                                                     retractall(listPropPlayer(X,_)),
@@ -301,9 +298,8 @@ buy(_Loc, Tingkatan):- currentPlayer(X), cashPlayer(X, Cash),hargaAmbil(_Loc,Tin
                                                     retractall(tingkatan(_Loc,_)),
                                                     asserta(tingkatan(_Loc,Tingkatan)),
                                                     asserta(listPropPlayer(X,NewList)),
-                                                    length(NewList,Len),
                                                     write('\nProperties List:\n'),
-                                                    displayProp(NewList, Len),
+                                                    displayProp(NewList, 1),
                                                     checkColorset);write('Sorry you don\'t have enough cash\n')
                         );
                         Temp \= 4 -> (
@@ -311,9 +307,7 @@ buy(_Loc, Tingkatan):- currentPlayer(X), cashPlayer(X, Cash),hargaAmbil(_Loc,Tin
                                 hargaAmbil(_Loc, Temp, HargaAsli),
                                 HargaUpgrade is Harga - HargaAsli,
                                 HargaUpgrade=< Cash ->(
-                                    NewCash is Cash - HargaUpgrade,
-                                    retractall(cashPlayer(X, _)),
-                                    assertz(cashPlayer(X, NewCash)),
+                                    decCash(HargaUpgrade, X),
                                     retractall(tingkatan(_Loc,_)),
                                     asserta(tingkatan(_Loc,Tingkatan)),
                                     write('Congrats! Your Property have been upgraded!\n')
@@ -382,7 +376,6 @@ propertyMechanism:-
             write('You arrive at other player property, you have to pay the rent fee\n'),
             hargaSewa(CurrLoc1, Stat, HargaSewa),
             totalAssets(X, AssetsPlayer),
-            /*bankruptMechanism(HargaSewa),*/
             cashPlayer(X, Cash),
             NewCash is Cash-HargaSewa,
             retractall(cashPlayer(X, NewCash)),

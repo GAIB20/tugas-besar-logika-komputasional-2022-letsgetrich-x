@@ -346,6 +346,7 @@ sell(Loc):-
     deleteAtList(IndexToSell,ListPropPlayer,NewListPropPlayer),
     retractall(listPropPlayer(X,_)),
     asserta(listPropPlayer(X,NewListPropPlayer)),
+    checkColorset,
     modifyTileInfo(Loc).   
 
 /*property mechanism*/
@@ -430,6 +431,19 @@ propertyMechanism:-
                                             Choice == 1 -> (decCash(HargaAmbil,X),
                                                            retractall(kepemilikan(CurrLoc1,_)),
                                                            assertz(kepemilikan(CurrLoc1, X)),
+                                                           otherPlayer(Other),
+                                                           incCash(HargaAmbil,Other),
+                                                           listPropPlayer(Other,ListPropPlayerOther),
+                                                            getIndex(ListPropPlayerOther,CurrLoc1,IndexToTakeOver),
+                                                            deleteAtList(IndexToTakeOver,ListPropPlayerOther,NewListPropPlayerOther),
+                                                            retractall(listPropPlayer(Other,_)),
+                                                            asserta(listPropPlayer(Other,NewListPropPlayerOther)),
+                                                            listPropPlayer(X,ListPropPlayerX),
+                                                            retractall(listPropPlayer(X,_)),
+                                                            insertLast(CurrLoc1,ListPropPlayerX, NewListPropPlayerX),
+                                                            asserta(listPropPlayer(X,NewListPropPlayerX)),
+                                                            checkColorset,
+
                                                            write('Congratulations!! The Property is now yours\n'),
                                                            propertyMechanism, modifyTileInfo(CurrLoc1)
                                             );!

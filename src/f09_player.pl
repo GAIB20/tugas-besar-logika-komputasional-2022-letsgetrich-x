@@ -70,8 +70,9 @@ totalAssets(X, Y) :-
 /* Rule menambah cash setiap melewati go, X jumlah steps player Y */
 addCashGO(X, Y) :- 
     (
-        X > 31 -> incCash(3000, Y), !
-    ),!.
+        X > 31 -> incCash(3000, Y);
+        !
+    ).
 
 
 displayProp([],_):-!.
@@ -114,7 +115,7 @@ checkPlayerDetail(X) :-
                         (
                             Length > 0 -> displayProp(ListProp, 1),nl;
                             write('You don\'t have any property yet ...\n')
-                        )
+                        ),
                         write('Chance card owned: '), nl,
                         cardPlayer(X, ListCard),
                         length(ListCard, LengthCard),

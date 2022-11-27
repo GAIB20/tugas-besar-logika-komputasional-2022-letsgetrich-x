@@ -16,6 +16,7 @@ startGame:-
     ['f10_dice.pl'],
     ['f11_bankrupt.pl'],
     ['move.pl'],
+    ['help.pl'],
     ['b01_colorset.pl'],
     ['b04_buildgo.pl'],
     ['b05_coinflip.pl'],
@@ -47,12 +48,21 @@ startGame:-
     write('\n ***The two players will compete in a game of Monopoly to show their worth and their understanding on the Wizarding World***'),nl,
     write('*** What are you waiting for? I hope you enjoy your time in the Wizarding World! ***'),nl,nl,
     write('Press any key to continue'),nl,
-    read(_),
+    read(_),nl,nl,
+    write('Skip tutorial?'),nl,
+    write('0. No'),nl,
+    write('1. Yes'),nl,
+
+    read(SkipTutorial),
+    (
+        SkipTutorial = 0 -> help;
+        !
+    ),
+    asserta(firstTurn),
     initPlayer,
     initJail,
     initChanceCard,
-    switchPlayer,
-    asserta(firstTurn).
+    switchPlayer.
 
 
 

@@ -20,6 +20,7 @@ cheatMove(Player, Steps) :-
     retractall(playerDouble(Player,_)),
     asserta(playerDouble(Player,0)).
 
+/* Check Mekanisme Double */
 cheatDoubleDice(DiceVal) :-
     currentPlayer(Player),
     
@@ -39,7 +40,6 @@ cheatDoubleDice(DiceVal) :-
         !
     ); write('Double dice value must be in between 1-6.'), nl
     , !.
-
 
 cheatAddMoney(Player, Increment) :-
     is_player(Player),
@@ -96,4 +96,20 @@ testBankrupt:-
     modifyTileInfo(a3).
 
 
+cheatWorldTour:-
+    currentPlayer(X),
+    retractall(locPlayer(X,_)),
+    asserta(locPlayer(X,24)),
+    apparateMechanism.
 
+cheatFlipCoin:-
+    currentPlayer(X),
+    retractall(locPlayer(X,_)),
+    asserta(locPlayer(X,29)),
+    playCoinFlip.
+
+cheatTax:-
+    currentPlayer(X),
+    retractall(locPlayer(X,_)),
+    asserta(locPlayer(X,28)),
+    payTax.

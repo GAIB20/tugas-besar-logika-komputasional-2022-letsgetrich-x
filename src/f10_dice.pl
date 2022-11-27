@@ -62,7 +62,7 @@ switchPlayer :-
     currentPlayer(X),
     playerName(X, PlayerName),
 
-    (firstTurn -> 
+    (\+firstTurn -> 
         (   nl,write(PlayerName), 
             write('\'s turn is over...'),nl,
             write('Press any key to continue'),nl,
@@ -92,7 +92,7 @@ switchPlayer :-
 
 otherPlayer(Other) :-
     currentPlayer(X),
-    X == 1 -> Other is 0;
+    X == 1 -> Other is 2;
     Other is 1.
 
 

@@ -1,5 +1,16 @@
 help:-
-    write('1. throwDice: to throw dice and start your round\n'),
-    write('2. map: to print the map and player information\n'),
-    write('3. checkLocationDetail(X): to check detail of location X\n'),
-    write('4. checkPropertyDetail(X): to check detail of property X\n').
+    write('    ------------------------    TUTORIAL    ------------------------    '),nl,nl,
+    write('       The two players will be given 30000 Galleons at first and'),nl,
+    write('       they will compete to get as much asset as they can. Who-'),nl,
+    write('       ever goes bankrupt first loses and the other player will'),nl,
+    write('       be automatically enrolled as a student in Hogwarts~~'),nl,
+    write('       These are the commands that can be used during the game:'),nl,nl,
+    write('       1. throwDice: to throw dice and start your round\n'),
+    write('       2. map: to print the map and player information\n'),
+    write('       3. checkLocationDetail(X): to check detail of location X\n'),
+    write('       4. checkPropertyDetail(X): to check detail of property X\n'),
+    write('       5. help: read tutorial'),nl,
+    write('       6. surrender: to surrender and give up all your chances\n         to be a Wizard\n'),nl,
+    write('    ----------------------------------------------------------------    '),nl,nl,
+    write('Press any key to start the game'),nl,
+    read(_),nl,nl.

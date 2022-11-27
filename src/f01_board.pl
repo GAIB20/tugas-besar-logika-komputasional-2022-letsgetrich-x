@@ -38,38 +38,37 @@ tile(30, h1).
 tile(31, h2).
 
 /* tile info location in map grid */
+/* bottow row */
 tile_info(go, 10, 10).
 tile_info(a1, 10, 8).
 tile_info(a2, 10, 7).
 tile_info(a3, 10, 6).
-/*tile_info(4, cc).*/
 tile_info(b1, 10, 4).
 tile_info(b2, 10, 3).
 tile_info(b3, 10, 2).
-/* tile_info(8, jl).*/
+
+/* left column */
 tile_info(c1, 8, 0).
 tile_info(c2, 7, 0).
 tile_info(c3, 6, 0).
-/* tile_info(12, tx).*/
 tile_info(d1, 4, 0).
 tile_info(d2, 3, 0).
 tile_info(d3, 2, 0).
-/* tile_info(16, fp). */
+
+/* top row */
 tile_info(e1, 0, 2).
 tile_info(e2, 0, 3).
 tile_info(e3, 0, 4).
-/* tile_info(20, cc).*/
 tile_info(f1, 0, 6).
 tile_info(f2, 0, 7).
 tile_info(f3, 0, 8).
-/* tile_info(24, f4). */
-tile_info(g1, 10, 2).
-tile_info(g2, 10, 3).
-tile_info(g3, 10, 4).
-/* tile_info(28, tx).*/
-/* tile_info(29, cf).*/
-tile_info(h1, 10, 7).
-tile_info(h2, 10, 8).
+
+/* right column */
+tile_info(g1, 2, 10).
+tile_info(g2, 3, 10).
+tile_info(g3, 4, 10).
+tile_info(h1, 7, 10).
+tile_info(h2, 8, 10).
 
 
 /* map grids row x, col y */

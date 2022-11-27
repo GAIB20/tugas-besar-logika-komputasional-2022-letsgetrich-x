@@ -3,6 +3,7 @@
 
 startGame:-
     ['utility.pl'],
+    ['cheats.pl'],
     ['f01_board.pl'],
     ['f02_location.pl'],
     ['f03_property.pl'],

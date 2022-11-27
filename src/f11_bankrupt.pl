@@ -17,20 +17,20 @@ bankruptMechanism(Amount) :-
     currentPlayer(X),
     totalAssets(X,Assets),
     (Assets < Amount),
-    write('Dah bokek kau, bai'), nl,
+    write('Sorry, your total assets cannot cover your sin...'), nl,
     endGame,
     !,fail.
 
 bankruptMechanism(Amount) :-
     currentPlayer(X),
-    write('Gada duit kau bang'), nl,
-    write('Lanjut gak? [ya/tidak] : '),
+    write('Your galleons is not enough...'), nl,
+    write('Do you still wanna continue fighting for Harry? [yes/no] : '),
     read(lanjut),
     (
         (
-            lanjut == 'ya',
+            lanjut == 'yes',
             displayProp(X), nl,
-            write('Properti mana yang mau dijual? : '),
+            write('Which property you want to sell? : '),
             read(JualProp),
 
             /* jual property */
@@ -41,9 +41,8 @@ bankruptMechanism(Amount) :-
             sell(PropToSell,Type),
 
             nl, 
-            write('Property '),
             write(PropToSell),
-            write(' berhasil dijual'), nl,
+            write(' has been sold'), nl,
 
             /* recheck */
             NewAmount is Amount - Price,
@@ -52,7 +51,7 @@ bankruptMechanism(Amount) :-
         );
 
         (
-            write('memang dasar ga punya spirit berjuang, bye dek'),nl,
+            write('What a shame, no fighting spirit bro...'),nl,
             endGame
         )
     ).
@@ -68,10 +67,10 @@ endGame :-
     retractall(in_jail(_)),
     retractall(dice_after_jail(_)),
     retractall(chance_cards(_)),
-    write('BaiBaii Muggle').
+    write('Thank you for visiting harry\'s house').
 
 
 /* surrender */
 surrender :-
-    write('Tombol surrender ada di pengaturan'),
+    write('Why so weak? Why? Why you surrender?'),
     endGame.

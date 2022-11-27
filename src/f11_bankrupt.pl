@@ -14,7 +14,8 @@ bankruptMechanism(Amount) :-
 
 bankruptMechanism(Amount) :-
     /* If harta X < yang harus dibayarkan, X kalah  */
-    totalAssets(Assets),
+    currentPlayer(X),
+    totalAssets(X,Assets),
     (Assets < Amount),
     write('Dah bokek kau, bai'), nl,
     endGame,

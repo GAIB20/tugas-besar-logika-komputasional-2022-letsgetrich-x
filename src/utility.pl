@@ -35,23 +35,24 @@ getValAtIdx([_|T], Idx, Val1):-
     Idx1 is Idx-1,
     getValAtIdx(T,Idx1,Val1).
 
-/* subset */
-subset(List1,List2,Ans) :-
-    subsetRec(List1,List2,AnsRec),
-    AnsRec == length(List1) -> Ans is 1;
-    Ans is 0.
-
-subsetRec([], _List, _Ans):- !.
-subsetRec([Head|Tail], List, Ans):-
-    isIn(Head,List,In),
-    subsetRec(Tail,List,NewAns),
-    Ans is NewAns + In.
-
 /* isIn */
 isIn(_X,[],0) :- !.
 isIn(X,[X|_Tail],1) :- !.
 isIn(X,[_Head|Tail],Ans) :-
     isIn(X,Tail,Ans).
+
+/* subset */
+subset(List1,List2,Ans) :-
+    subsetRec(List1,List2,AnsRec),
+    length(List1, LenList1),
+    AnsRec == LenList1 -> Ans is 1;
+    Ans is 0.
+
+subsetRec([], _List, 0):- !.
+subsetRec([Head|Tail], List, Ans):-
+    isIn(Head,List,In),
+    subsetRec(Tail,List,NewAns),
+    Ans is NewAns + In.
 
 /* getIndex */
 getIndex([], _X, 0):-!.

@@ -38,13 +38,13 @@ colorsetMechanism(PropPlayer) :-
 
         /* List of Color */
         colorset(Color, ListColorsetColor),
-
+        
         list_colorset(ListColorset),
 
         subset(ListColorsetColor, PropPlayer, Verdict),
         isIn(Color, ListColorset, IsInList),
         /* if ListColorsetColor subset of PropPlayer */
-        Verdict == 1 -> 
+        (Verdict == 1 -> 
         (
             /* if Color not in ListColorset */
             IsInList == 0 -> (
@@ -70,7 +70,7 @@ colorsetMechanism(PropPlayer) :-
                 write(Color),
                 write(' price has been downgraded'),nl
             );!
-        ),
+        )),
 
         retractall(colorsets(_)),
         asserta(colorsets(TailColorsets)),

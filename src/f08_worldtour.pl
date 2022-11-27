@@ -42,7 +42,7 @@ worldTourMechanism :-
                         (
                             Cash >= 500 -> decCash(500, X),
                                             apparateMechanism, !;
-                            write('You don\'t have enough money!'), switchPlayer, !,fail
+                            write('You don\'t have enough money!'),!,fail
 
                         ), !
                     )

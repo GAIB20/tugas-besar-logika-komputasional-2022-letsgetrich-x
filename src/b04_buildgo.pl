@@ -41,7 +41,7 @@ buildGoMechanism:-
     listPropPlayer(X, ListProp),
     length(ListProp, Length),
     (
-        Length \= 0 -> write("You\'ve got a chance to build your property! Do you want to use this chance?\n"),
+        Length \= 0 -> write('You\'ve got a chance to build your property! Do you want to use this chance?\n'),
                         write('0. Pass\n'),
                         write('1. Build\n'),
                         read(Choice),
@@ -50,6 +50,8 @@ buildGoMechanism:-
                             Choice == 1 -> write('Choose the location you\'re going to upgrade \n'),
                                             listPropPlayer(X, ListProp),
                                             listUpgradeableProp(ListProp, ListUp),
+                                            retractall(tempNo),
+                                            asserta(tempNo(0)),
                                             displayUpgradeableProp(ListUp, 1),
                                             read(Loc), buildMechanism(Loc), !
                         )

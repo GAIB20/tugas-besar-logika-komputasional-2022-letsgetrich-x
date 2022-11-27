@@ -9,6 +9,5 @@ payTax(P) :-
     write('Total Asset Value: '), write(PAsset), nl,
     write('Tax (10%): '), write(Tax), nl,
 
-    \+ bankruptMechanism(Tax),
     decCash(Tax, P),
     !.

@@ -138,6 +138,7 @@ incCash(X, Player) :-
 
 /* decrementCash Player by X */
 decCash(X, Player) :- 
+    \+ bankruptMechanism(X),
     cashPlayer(Player, Cash),
     Cashnew is Cash - X,
     retractall(cashPlayer(Player, Cash)),

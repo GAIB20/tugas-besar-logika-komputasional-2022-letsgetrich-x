@@ -1,4 +1,5 @@
 :- dynamic(menu_status/1).
+:- dynamic(firstTurn/0).
 
 startGame:-
     ['utility.pl'],
@@ -15,6 +16,7 @@ startGame:-
     ['f11_bankrupt.pl'],
     ['move.pl'],
     ['b01_colorset.pl'],
+    ['b04_buildgo.pl'],
     ['b05_coinflip.pl'],
     write('        ___                             | \'  \\'),nl,
     write('   ___  \\ /  ___         ,\'\\_           | .-. \\        /|'),nl,
@@ -48,7 +50,8 @@ startGame:-
     initPlayer,
     initJail,
     initChanceCard,
-    switchPlayer.
+    switchPlayer,
+    asserta(firstTurn).
 
 
 

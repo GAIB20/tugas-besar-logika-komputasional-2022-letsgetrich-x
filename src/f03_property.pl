@@ -202,15 +202,15 @@ hargaAmbil(_Loc, _Tingkatan, Harga):-
 
 /*tingkatan properti
   tingkatan(Loc)*/
-tingkatan(a1,1).
-tingkatan(a2,1).
-tingkatan(a3,1).
-tingkatan(b1,1).
-tingkatan(b2,1).
-tingkatan(b3,1).
-tingkatan(c1,1).
-tingkatan(c2,1).
-tingkatan(c3,1).
+tingkatan(a1,-1).
+tingkatan(a2,-1).
+tingkatan(a3,-1).
+tingkatan(b1,-1).
+tingkatan(b2,-1).
+tingkatan(b3,-1).
+tingkatan(c1,-1).
+tingkatan(c2,-1).
+tingkatan(c3,-1).
 tingkatan(d1,-1).
 tingkatan(d2,-1).
 tingkatan(d3,-1).
@@ -387,6 +387,9 @@ propertyMechanism:-
             /*bankruptMechanism(HargaSewa),*/
             decCash(HargaSewa,X),
             cashPlayer(X,NewCash),
+            cashPlayer(X, Cash),
+            NewCash is Cash-HargaSewa,
+            retractall(cashPlayer(X, NewCash)),
             /*cuma bisa ambil alih kalo cashnya masih ada, bukan assets*/
             Stat\=4 -> 
                                 (

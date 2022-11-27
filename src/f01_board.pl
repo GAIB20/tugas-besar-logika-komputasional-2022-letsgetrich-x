@@ -28,7 +28,7 @@ tile(20, cc).
 tile(21, f1).
 tile(22, f2).
 tile(23, f3).
-tile(24, f4).
+tile(24, wt).
 tile(25, g1).
 tile(26, g2).
 tile(27, g3).

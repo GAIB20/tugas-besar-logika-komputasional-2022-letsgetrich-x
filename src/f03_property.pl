@@ -386,6 +386,7 @@ propertyMechanism:-
             totalAssets(X, AssetsPlayer),
             /*bankruptMechanism(HargaSewa),*/
             decCash(HargaSewa,X),
+            cashPlayer(X,NewCash),
             /*cuma bisa ambil alih kalo cashnya masih ada, bukan assets*/
             Stat\=4 -> 
                                 (
@@ -396,9 +397,7 @@ propertyMechanism:-
                                         write('1. Take Over\n'),
                                         read(Choice),(
                                             Choice == 0 -> write('Pass an opportunity? What a shame\n');
-                                            Choice == 1 -> (NewCash2 is NewCash-HargaAmbil,
-                                                           retractall(cashPlayer(X,_)),
-                                                           asserta(cashPlayer(X,NewCash2)),
+                                            Choice == 1 -> (decCash(HargaAmbil,X),
                                                            retractall(kepemilikan(CurrLoc1,_)),
                                                            assertz(kepemilikan(CurrLoc1, X)),
                                                            write('Congratulations!! The Property is now yours\n'),

@@ -37,7 +37,7 @@ bankruptMechanism(Amount) :-
             listPropPlayer(X, ListProp),
             getItemAtIdx(ListProp ,JualProp, PropToSell),
             tingkatan(PropToSell, Type),
-            hargaBeli(PropToSell,Type,Price),   
+            hargaBeli(PropToSell,Type,_Price),   
             sell(PropToSell),
 
             nl, 

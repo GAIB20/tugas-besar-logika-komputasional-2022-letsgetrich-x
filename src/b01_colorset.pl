@@ -22,8 +22,8 @@ colorset(h, [h1,h2]).
 
 checkColorset :-
     listPropPlayer(1,PropPlayer1),
-    listPropPlayer(2,PropPlayer2),
     colorsetMechanism(PropPlayer1),
+    listPropPlayer(2,PropPlayer2),
     colorsetMechanism(PropPlayer2).
 
 colorsetMechanism(PropPlayer) :-
@@ -34,15 +34,19 @@ colorsetMechanism(PropPlayer) :-
     /* loop for every colorsets */
     repeat, 
         /* Color to process */
+        write('sdsdf'),
         colorsets([Color|TailColorsets]),
 
         /* List of Color */
         colorset(Color, ListColorsetColor),
-        
+        write(Color),nl,
         list_colorset(ListColorset),
+        write(ListColorset),nl,
 
         subset(ListColorsetColor, PropPlayer, Verdict),
+        write(Verdict),nl,
         isIn(Color, ListColorset, IsInList),
+        write(IsInList),nl,
         /* if ListColorsetColor subset of PropPlayer */
         (Verdict == 1 -> 
         (
@@ -52,29 +56,32 @@ colorsetMechanism(PropPlayer) :-
                 insertLast(Color, ListColorset, NewListColorsetTrue),
                 assertz(list_colorset(NewListColorsetTrue)),
                 upgradePrice(Color),
-                write('Colorset '),
+                write('\nColorset '),
                 write(Color),
                 write(' price has been upgraded'),nl
-            );!
+            );write('')
         ); 
         /* else */
         (
             /* if Color in List Colorset */
-            IsInList == 1 -> (
+            IsInList == 1 -> ( write('hello'),
                 retractall(list_colorset(_)),
                 getIndex(ListColorset, Color, Index),
-                deleteAtList(Index, ListColorset, NewListColorsetFalse),
-                assertz(list_colorset(NewListColorsetFalse)),
-                downgradePrice(Color),
-                write('Colorset '),
-                write(Color),
-                write(' price has been downgraded'),nl
-            );!
+                Index \= 0 -> (
+                    deleteAtList(Index, ListColorset, NewListColorsetFalse),
+                    assertz(list_colorset(NewListColorsetFalse)),
+                    downgradePrice(Color),
+                    write('\nColorset '),
+                    write(Color),
+                    write(' price has been downgraded'),nl
+                )
+                
+            );write('')
         )),
 
         retractall(colorsets(_)),
         asserta(colorsets(TailColorsets)),
-    
+
     TailColorsets == [],!.
     
 upgradePrice(Colorset) :- 

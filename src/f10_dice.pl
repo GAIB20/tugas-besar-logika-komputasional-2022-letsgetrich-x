@@ -92,7 +92,7 @@ switchPlayer :-
 
 otherPlayer(Other) :-
     currentPlayer(X),
-    X == 1 -> Other is 0;
+    X == 1 -> Other is 2;
     Other is 1.
 
 

@@ -28,7 +28,7 @@ tile(20, cc).
 tile(21, f1).
 tile(22, f2).
 tile(23, f3).
-tile(24, f4).
+tile(24, wt).
 tile(25, g1).
 tile(26, g2).
 tile(27, g3).
@@ -36,6 +36,41 @@ tile(28, tx).
 tile(29, cf).
 tile(30, h1).
 tile(31, h2).
+
+/* tile info location in map grid */
+tile_info(go, 10, 10).
+tile_info(a1, 10, 8).
+tile_info(a2, 10, 7).
+tile_info(a3, 10, 6).
+/*tile_info(4, cc).*/
+tile_info(b1, 10, 4).
+tile_info(b2, 10, 3).
+tile_info(b3, 10, 2).
+/* tile_info(8, jl).*/
+tile_info(c1, 8, 0).
+tile_info(c2, 7, 0).
+tile_info(c3, 6, 0).
+/* tile_info(12, tx).*/
+tile_info(d1, 4, 0).
+tile_info(d2, 3, 0).
+tile_info(d3, 2, 0).
+/* tile_info(16, fp). */
+tile_info(e1, 0, 2).
+tile_info(e2, 0, 3).
+tile_info(e3, 0, 4).
+/* tile_info(20, cc).*/
+tile_info(f1, 0, 6).
+tile_info(f2, 0, 7).
+tile_info(f3, 0, 8).
+/* tile_info(24, f4). */
+tile_info(g1, 10, 2).
+tile_info(g2, 10, 3).
+tile_info(g3, 10, 4).
+/* tile_info(28, tx).*/
+/* tile_info(29, cf).*/
+tile_info(h1, 10, 7).
+tile_info(h2, 10, 8).
+
 
 /* map grids row x, col y */
 /* grid[1-9][1-9] are constants */
@@ -234,6 +269,18 @@ map :-
 
     write_playerinfo,
     !.
+
+/* change tile_info */
+modify_tile_info(Loc) :-
+    tingkatan(Loc, Level),
+    kepemilikan(Loc, PlayerID),
+    tile_info(Loc, Row, Col),
+    grid(Row, Col, _),
+    (
+        Level =< -1 -> retractall(grid(Row, Col, _Info)), asserta(grid(Row, Col, '  '));
+        retractall(grid(Row, Col, _Info)), atom_concat(PlayerID, Level, NewInfo), asserta(grid(Row, Col, NewInfo))
+    )    
+    .
 
 
 /* move player and build property demo */

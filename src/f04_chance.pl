@@ -11,6 +11,7 @@ card_chance('Get Out From Azkaban', 3).
 card_chance('Quidditch Game', 1).
 card_chance('Knight Bus', 2). 
 card_chance('Gift', 3).
+card_chance('Angel', 4).
 
 
 card_info('Go To Azkaban', '__| |____________________________________________| |__\n(__   ____________________________________________   __)\n   | |                GO TO AZKABAN               | |\n   | |                                            | |\n   | |       You used an unforgiveable curse,     | |\n   | |          I hope you enjoy your time        | |\n   | |        with the Dementors in Azkaban..     | |\n __| |____________________________________________| |__\n(__   ____________________________________________   __)\n   | |                                            | | \n \n').
@@ -21,13 +22,22 @@ card_info('Get Out From Azkaban',' __| |________________________________________
 card_info('Quidditch Game',' __| |____________________________________________| |__ \n(__   ____________________________________________   __)\n   | |               QUIDDITCH GAME               | |\n   | |                                            | |\n   | |       Any Wizard would enjoy some good     | |\n   | |     Quidditch Game, eh? Get 800 to watch   | |\n   | |           the game of the year!            | |\n __| |____________________________________________| |__\n(__   ____________________________________________   __)\n   | |                                            | | \n \n' ).
 card_info('Knight Bus',' __| |____________________________________________| |__ \n(__   ____________________________________________   __)\n   | |                  KNIGHT BUS                | |\n   | |                                            | |\n   | |       Get a chance to use Knight Bus!      | |\n   | |     Activate this card to use the knight   | |\n   | |         bus and go straight to GO          | |\n __| |____________________________________________| |__\n(__   ____________________________________________   __)\n  | |                                            | | \n \n' ).
 card_info('Gift',' __| |____________________________________________| |__ \n(__   ____________________________________________   __)\n   | |                    GIFT                    | |\n   | |                                            | |\n   | |      Her name wouldn\'t be Mrs. Weasley     | |\n   | |     if she hadn\'t been so kind! You got    | |\n   | |       200 as a gift from Mrs. Weasley!     | |\n __| |____________________________________________| |__\n(__   ____________________________________________   __)\n   | |                                            | | \n \n' ).
-
+card_info('Cloak of Invisibility',' __| |____________________________________________| |__ \n (__   ____________________________________________   __)\n   | |           CLOAK OF INVISIBILITY            | |\n   | |                                            | |\n   | |      Anyone who wears this cloak would     | |\n   | |    be *Invisible*. Use this on people\'s    | |\n   | |          property and not pay rent~        | |\n __| |____________________________________________| |__\n(__   ____________________________________________   __)\n   | |                                            | | \n \n').
 displayCards([]):-!.
 displayCards([Head|Tail]):-
     card_info(Head, Info),
     write(Info),
     displayCards(Tail),
     !.
+
+/*bebas biaya sewa*/
+cardMechanism('Cloak of Invisibility'):-
+    currentPlayer(Player),
+    cardPlayer(Player, Cards),
+    retractall(cardPlayer(Player, _)),
+    insertLast('Cloak of Invisibility', Cards, NewCards),
+    asserta(cardPlayer(Player, NewCards)).
+
 /* kurangin duit 5000 */
 cardMechanism('Attack By Death Eaters'):-
     currentPlayer(X),

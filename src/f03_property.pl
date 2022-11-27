@@ -442,7 +442,7 @@ propertyMechanism:-
                                                             retractall(listPropPlayer(X,_)),
                                                             insertLast(CurrLoc1,ListPropPlayerX, NewListPropPlayerX),
                                                             asserta(listPropPlayer(X,NewListPropPlayerX)),
-                                                        
+                                                            checkColorset,
 
                                                            write('Congratulations!! The Property is now yours\n'),
                                                            propertyMechanism, modifyTileInfo(CurrLoc1)

@@ -248,6 +248,7 @@ writePlayerInfo :-
     tile(Pos1, P1), tile(Pos2, P2),
     cashPlayer(1, Cash1),
     cashPlayer(2, Cash2),
+    nl,
     write('    ---------------    PLAYER INFO   -------------'),nl,
     write('       PLAYER    ||     LOCATION     ||   CASH    '), nl,
     write('    ----------------------------------------------    '),nl,
@@ -287,7 +288,7 @@ modifyTileInfo(Loc) :-
         Level =< -1 -> (retractall(grid(Row, Col, Info)), asserta(grid(Row, Col, '  ')));
 
         (
-            number_atom(PlayerID, X), number_atom(Level, Y), atom_concat(X, Y, NewInfo),
+            number_atom(Level, Y), (PlayerID = 1-> atom_concat('A', Y, NewInfo); atom_concat('B', Y, NewInfo)),
             retractall(grid(Row, Col, _Info)), asserta(grid(Row, Col, NewInfo))
         )
     ),!.

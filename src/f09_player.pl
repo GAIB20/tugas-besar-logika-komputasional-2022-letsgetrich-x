@@ -28,9 +28,9 @@ initPlayer :-
     /* read playername */
     nl,
     write('Insert player name, use single quote, e.g. \'Rachelszzz\''), nl,
-    write('Insert Player 1 name : '),
+    write('Insert Player A name : '),
     read(Player1Name),
-    write('Insert Player 2 name : '),
+    write('Insert Player B name : '),
     read(Player2Name),
 
     assertz(playerName(1, Player1Name)),

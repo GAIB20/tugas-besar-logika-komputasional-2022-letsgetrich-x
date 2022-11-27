@@ -19,20 +19,16 @@ move(Player, Steps) :-
                               write(' steps'),nl,
                               write(Currloc), nl,
                               (
-                                Currloc =  fp -> parkirGratisMechanism;
+                                Currloc = fp -> parkirGratisMechanism;
                                 Currloc = jl -> visitJail;
-                                is_property(CurrLoc) -> propertyMechanism, !;
-                                !
-                              ),!;(
                                 Currloc = wt -> worldTourMechanism;
-                                is_property(CurrLoc) -> propertyMechanism, !
-                              ),!;(
-                                Currloc = cc -> write('hai');
-                                /*nunggu chance*/
-                                is_property(CurrLoc) -> propertyMechanism, !
+                                Currloc = cc -> drawChanceCard;
+                                Currloc = cf -> playCoinFlip;
+                                CurrLoc = tx -> payTax(Player);
+                                CurrLoc = go -> buildGoMechanism;
+                                is_property(CurrLoc) -> propertyMechanism; !
                               ),!;
         in_jail(Player) -> !
     ),
-    playCoinFlip,
     !.
 

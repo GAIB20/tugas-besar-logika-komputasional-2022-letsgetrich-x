@@ -24,9 +24,9 @@ move(Player, Steps) :-
                                 Currloc = wt -> worldTourMechanism;
                                 Currloc = cc -> drawChanceCard;
                                 Currloc = cf -> playCoinFlip;
-                                CurrLoc = tx -> payTax(Player);
-                                CurrLoc = go -> buildGoMechanism;
-                                is_property(CurrLoc) -> propertyMechanism; !
+                                Currloc = tx -> payTax(Player);
+                                Currloc = go -> buildGoMechanism;
+                                is_property(Currloc) -> propertyMechanism; !
                               ),!;
         in_jail(Player) -> !
     ),

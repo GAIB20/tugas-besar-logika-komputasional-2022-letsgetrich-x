@@ -19,7 +19,7 @@ bankruptMechanism(Amount) :-
     (Assets < Amount),
     write('Sorry, your total assets cannot cover your sin...'), nl,
     endGame,
-    !,fail.
+    !.
 
 bankruptMechanism(Amount) :-
     currentPlayer(X),

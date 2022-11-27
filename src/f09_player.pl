@@ -9,7 +9,7 @@
 /* locPlayer(no player, location) */
 /* currentPlayer(no player) */
 /* playerName(no player, name) */
-/* locPlayer(no player, titik X, titik Y) */
+/* locPlayer(no player, no tile) */
 /* moneyPlayer(no player, cash) */
 /* listPropPlayer(no player, list location yang dimiliki) */
 /* cardPlayer(no player, list card yang dimiliki) */
@@ -17,10 +17,6 @@
 /* is Player */
 is_player(1).
 is_player(2).
-
-/* initialize temp predicate 
-tempIndeks(-1).
-tempList([]). */
 
 /* Rule inisiasi player */
 initPlayer :-
@@ -74,21 +70,22 @@ totalAssets(X, Y) :-
 /* Rule menambah cash setiap melewati go, X jumlah steps player Y */
 addCashGO(X, Y) :- 
     (
-        X > 31 -> incCash(3000, Y), !;
-        incCash(0, Y), !
-    ),!.
+        X > 31 -> incCash(3000, Y);
+        !
+    ).
 
 
 displayProp([],_):-!.
 displayProp([Head|Tail], No):-
     write(No),
+    write('. '),
     nama_lokasi(Head, InfoLoc),
     write(InfoLoc),
     write(' - '),
     tingkatan(Head, Tingk),
     nama_tingkatan(Tingk, InfoTingkt),
     write(InfoTingkt),nl,
-    No1 is No - 1,
+    No1 is No + 1,
     displayProp(Tail, No1).
 
 
@@ -114,12 +111,18 @@ checkPlayerDetail(X) :-
                         write('Property value   : '), write(Prop),nl,
                         Aset is Cash + Prop,
                         write('Asset value      : '), write(Aset),nl,
-
                         write('Properties owned : '), nl,
-                        displayProp(ListProp, 1),nl,
-
+                        (
+                            Length > 0 -> displayProp(ListProp, 1),nl;
+                            write('You don\'t have any property yet ...\n')
+                        ),
                         write('Chance card owned: '), nl,
-                        displayPlayerCard(X),nl,!
+                        cardPlayer(X, ListCard),
+                        length(ListCard, LengthCard),
+                        (
+                            LengthCard > 0 -> displayPlayerCard(X),nl, !;
+                            write('You don\'t have any chance card yet ...\n'), !
+                        )
     ),
     !.
 
@@ -129,14 +132,15 @@ incCash(X, Player) :-
     cashPlayer(Player, Cash),
     Cashnew is Cash + X,
     retractall(cashPlayer(Player, Cash)),
-    asserta(cashPlayer(Player, Cashnew)).
+    asserta(cashPlayer(Player, Cashnew)),
+    write('Yay! Your cash is increased by '), write(X), write('!'), nl,
+    write('Your money right now is '), write(Cashnew), nl.
 
 /* decrementCash Player by X */
 decCash(X, Player) :- 
     cashPlayer(Player, Cash),
     Cashnew is Cash - X,
     retractall(cashPlayer(Player, Cash)),
-    asserta(cashPlayer(Player, Cashnew)).
-
-
-
+    asserta(cashPlayer(Player, Cashnew)),
+    write('Your cash is decreased by '), write(X), write('!'), nl,
+    write('Your money right now is '), write(Cashnew), nl.

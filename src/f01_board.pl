@@ -211,9 +211,16 @@ write_cols(Row, StartCol) :-
 write_playerinfo :-
     locPlayer(1, Pos1), locPlayer(2, Pos2), 
     tile(Pos1, P1), tile(Pos2, P2),
-    write('    Posisi pemain:'), nl,
-    write('    1 = '), write(P1), nl,
-    write('    2 = '), write(P2), nl,
+    cashPlayer(1, Cash1),
+    cashPlayer(2, Cash2),
+    write('    ---------------    PLAYER INFO   -------------'),nl,
+    write('       PLAYER    ||     LOCATION     ||   CASH    '), nl,
+    write('    ----------------------------------------------    '),nl,
+    write('          1      ||        '), write(P1),
+    write('        ||   '), write(Cash1), nl,
+    write('          2      ||        '), write(P2),
+    write('        ||   '), write(Cash2), nl,
+    write('    ----------------------------------------------    '), nl,
     !.
 
 /* write map */

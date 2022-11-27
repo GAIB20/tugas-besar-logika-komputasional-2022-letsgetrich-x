@@ -19,7 +19,7 @@ throwDice :-
 
     rand(B),
     write('Dice 2 : '),
-    write(B), nl,
+    write(B), nl,nl,nl,
 
     (
         (

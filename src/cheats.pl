@@ -28,3 +28,14 @@ cheatAddMoney(Player, Increment) :-
     retractall(cashPlayer(P, Money)),
     NMoney is Money + Increment,
     asserta(cashPlayer(P, NMoney)), !.
+
+cheatJail:-
+    retractall(playerDouble(1,_)),
+    asserta(playerDouble(1, 3)),
+    jailMechanism.
+
+cheatChanceCard :-
+    currentPlayer(X),
+    retractall(locPlayer(X, _)),
+    asserta(locPlayer(X, 4)),
+    drawChanceCard.

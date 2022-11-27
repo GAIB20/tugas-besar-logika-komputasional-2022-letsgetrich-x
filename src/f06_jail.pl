@@ -103,7 +103,3 @@ escapeJail:-
     retractall(hasPickedJailMechanism),
     asserta(playerDouble(X,0)).
 
-testJail:-
-    retractall(playerDouble(1,_)),
-    asserta(playerDouble(1, 3)),
-    jailMechanism.

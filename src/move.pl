@@ -1,6 +1,4 @@
-:- include('f02_location.pl').
-:- include('f07_freeparking.pl').
-:- include('f09_player.pl').
+
 
 move(Player, Steps) :-
     jailMechanism,
@@ -17,22 +15,19 @@ move(Player, Steps) :-
                               write(' moved '),
                               write(Steps),
                               write(' steps'),nl,
+                              write('You are currently in '),
                               write(Currloc), nl,
                               (
-                                Currloc =  fp -> parkirGratisMechanism;
+                                Currloc = fp -> parkirGratisMechanism;
                                 Currloc = jl -> visitJail;
-                                is_property(CurrLoc) -> propertyMechanism, !;
-                                !
-                              ),!;(
                                 Currloc = wt -> worldTourMechanism;
-                                is_property(CurrLoc) -> propertyMechanism, !
-                              ),!;(
-                                Currloc = cc -> write('hai');
-                                /*nunggu chance*/
-                                is_property(CurrLoc) -> propertyMechanism, !
+                                Currloc = cc -> drawChanceCard;
+                                Currloc = cf -> playCoinFlip;
+                                Currloc = tx -> payTax(Player);
+                                Currloc = go -> buildGoMechanism;
+                                is_property(CurrLoc) -> propertyMechanism, !; !
                               ),!;
         in_jail(Player) -> !
     ),
-    playCoinFlip,
     !.
 

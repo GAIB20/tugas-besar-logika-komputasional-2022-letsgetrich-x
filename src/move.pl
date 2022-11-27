@@ -1,6 +1,4 @@
-:- include('f02_location.pl').
-:- include('f07_freeparking.pl').
-:- include('f09_player.pl').
+
 
 move(Player, Steps) :-
     jailMechanism,
@@ -17,6 +15,7 @@ move(Player, Steps) :-
                               write(' moved '),
                               write(Steps),
                               write(' steps'),nl,
+                              write('You are currently in '),
                               write(Currloc), nl,
                               (
                                 Currloc = fp -> parkirGratisMechanism;
@@ -26,7 +25,7 @@ move(Player, Steps) :-
                                 Currloc = cf -> playCoinFlip;
                                 Currloc = tx -> payTax(Player);
                                 Currloc = go -> buildGoMechanism;
-                                is_property(Currloc) -> propertyMechanism; !
+                                is_property(CurrLoc) -> propertyMechanism, !; !
                               ),!;
         in_jail(Player) -> !
     ),

@@ -33,7 +33,9 @@ cheatJail:-
     retractall(playerDouble(1,_)),
     asserta(playerDouble(1, 3)),
     cardMechanism('Get Out From Azkaban'),
-    jailMechanism.
+    jailMechanism,
+    retractall(playerDouble(1,_)),
+    asserta(playerDouble(1, 1)).
 
 cheatChanceCard :-
     currentPlayer(X),

@@ -26,8 +26,10 @@ throwDice :-
         (
             A == B, 
             write('Double!'), nl,
-            (in_jail(Player) -> switchPlayer;!), 
             Forward is A+B,
+            ((in_jail(Player), hasPickedJailMechanism) -> escapeJail, move(Player, Forward), switchPlayer,fail;
+            in_jail(Player) -> switchPlayer;
+            !), 
             incPlayerDouble,
             move(Player, Forward),
             map,

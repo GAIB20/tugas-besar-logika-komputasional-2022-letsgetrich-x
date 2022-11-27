@@ -9,7 +9,7 @@ move(Player, Steps) :-
                               locPlayer(P, Loc), P=:=Player,
                               Loc1 is (Loc+Steps) mod 32,
                               Sumsteps is Loc+Steps,
-                              (Sumsteps > 31 -> incCash(3000, P);incCash(0,P)),
+                              addCashGO(Sumsteps, P),
                               retract(locPlayer(P, Loc)),
                               asserta(locPlayer(P, Loc1)), 
                               tile(Loc1, Currloc),

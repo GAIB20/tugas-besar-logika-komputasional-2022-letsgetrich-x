@@ -39,6 +39,8 @@ colorsetMechanism(PropPlayer) :-
         /* List of Color */
         colorset(Color, ListColorsetColor),
 
+        list_colorset(ListColorset),
+
         subset(ListColorsetColor, PropPlayer, Verdict),
         isIn(Color, ListColorset, IsInList),
         /* if ListColorsetColor subset of PropPlayer */

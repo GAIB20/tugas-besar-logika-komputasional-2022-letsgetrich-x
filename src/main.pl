@@ -1,4 +1,3 @@
-
 :- dynamic(menu_status/1).
 
 startGame:-

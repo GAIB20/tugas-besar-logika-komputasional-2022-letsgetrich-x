@@ -382,7 +382,6 @@ propertyMechanism:-
             write('You arrive at other player property, you have to pay the rent fee\n'),
             hargaSewa(CurrLoc1, Stat, HargaSewa),
             totalAssets(X, AssetsPlayer),
-            /*bankruptMechanism(HargaSewa),*/
             cashPlayer(X, Cash),
             NewCash is Cash-HargaSewa,
             retractall(cashPlayer(X, NewCash)),

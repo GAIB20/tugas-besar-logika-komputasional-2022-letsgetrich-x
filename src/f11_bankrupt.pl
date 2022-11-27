@@ -1,9 +1,5 @@
 :- include('utility.pl').
 
-/* checkBankrupt */
-checkBankrupt(Amount) :-
-    bankruptMechanism(Amount);!.
-
 /* bankruptMechanism */
 bankruptMechanism(Amount) :-
     /* If cash >= yang harus dibayarkan, pass */

@@ -17,6 +17,10 @@
 /* is Player */
 is_player(1).
 is_player(2).
+
+playerID(1, a).
+playerID(2, b).
+
 /* Rule inisiasi player */
 initPlayer :-
     P1 is 1,
@@ -104,8 +108,9 @@ displayPlayerCard(X) :-
     displayCards(ListCard).
 
 /* Rule cek detail player */
-checkPlayerDetail(X) :-
+checkPlayerDetail(ID) :-
     (
+        playerID(X, ID),
         is_player(X) -> playerName(X, Name),
                         write('Information of '), write(Name), nl,
                         locPlayer(X, Loc), tile(Loc, TileName),

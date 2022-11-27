@@ -251,9 +251,9 @@ writePlayerInfo :-
     write('    ---------------    PLAYER INFO   -------------'),nl,
     write('       PLAYER    ||     LOCATION     ||   CASH    '), nl,
     write('    ----------------------------------------------    '),nl,
-    write('          1      ||        '), write(P1),
+    write('          A      ||        '), write(P1),
     write('        ||   '), write(Cash1), nl,
-    write('          2      ||        '), write(P2),
+    write('          B      ||        '), write(P2),
     write('        ||   '), write(Cash2), nl,
     write('    ----------------------------------------------    '), nl,
     !.

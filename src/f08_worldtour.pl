@@ -6,10 +6,11 @@ apparateMechanism :-
     read(Dest),
     (
         Dest \= wt -> (tile(NoDest, Dest),
-                    locPlayer(X, Asal),
-                    Sumloc is NoDest+Asal,
-                    addCashGO(Sumloc, X),
-                    retract(locPlayer(X, Asal)),
+                    (
+                        NoDest < 24 -> incCash(3000, X);
+                        !
+                    ),
+                    retract(locPlayer(X, _)),
                     asserta(locPlayer(X, NoDest)),
                     playerName(X, Name),
                     write(Name),
@@ -17,11 +18,14 @@ apparateMechanism :-
                     nama_lokasi(Dest, LocName),
                     write(LocName),
                     (
-                        Dest =  fp -> parkirGratisMechanism;
+                        Dest = fp -> parkirGratisMechanism;
                         Dest = jl -> visitJail;
                         Dest = wt -> worldTourMechanism;
-                        Dest = cc -> write('hai');
-                        is_property(Dest) -> propertyMechanism, !;
+                        Dest = cc -> drawChanceCard;
+                        Dest = cf -> playCoinFlip;
+                        Dest = tx -> payTax(Player);
+                        Dest = go -> buildGoMechanism;
+                        is_property(Dest) -> propertyMechanism, !; 
                         !
                     )
                     );

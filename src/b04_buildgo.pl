@@ -4,22 +4,25 @@ listUpgradeableProp([],[]) :- !.
 listUpgradeableProp([Head|Tail],ListUp) :- 
     tingkatan(Head, Tingk),
     Tingk == 4, !,
-    listUpgradeableProp(Tail, ListUp).
+    listUpgradeableProp(Tail, Result),
+    ListUp = Result.
 listUpgradeableProp([Head|Tail],ListUp) :- 
     tingkatan(Head, Tingk),
     Tingk \= 4, !,
-    ListUp1 is ListUp,
-    insertLast(Head, ListUp1, Result),
+    % insertLast(Head, ListUp, ListUp1),
     listUpgradeableProp(Tail, Result),
-    ListUp is Result.
+    ListUp = [Head|Result].
+
 
 displayUpgradeableProp([],_) :- !.
 displayUpgradeableProp([Head|Tail],No) :-
+    tingkatan(Head, Tingk),
+    Tingk \= 4, !,
     write(No), write('. '),
     write(Head),
     write(' - '),
     nama_lokasi(Head, InfoLoc),
-    write(InfoLoc),
+    write(InfoLoc),nl,
     No1 is No + 1,
     displayUpgradeableProp(Tail, No1).
     
@@ -48,11 +51,8 @@ buildGoMechanism:-
                         (
                             Choice == 0 -> write('You\'re going to regret this ...\n'), !;
                             Choice == 1 -> write('Choose the location you\'re going to upgrade \n'),
-                                            listPropPlayer(X, ListProp),
                                             listUpgradeableProp(ListProp, ListUp),
-                                            retractall(tempNo),
-                                            asserta(tempNo(0)),
-                                            displayUpgradeableProp(ListUp, 1),
+                                            displayUpgradeableProp(ListProp, 1),
                                             read(Loc), buildMechanism(Loc), !
                         )
     ).

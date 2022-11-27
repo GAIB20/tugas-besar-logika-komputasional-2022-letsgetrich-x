@@ -64,7 +64,7 @@ switchPlayer :-
 
     (firstTurn -> 
         (   nl,write(PlayerName), 
-            write(' turn is over...'),nl,
+            write('\'s turn is over...'),nl,
             write('Press any key to continue'),nl,
             read(_)
         );!

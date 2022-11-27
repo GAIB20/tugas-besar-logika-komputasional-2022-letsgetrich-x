@@ -37,6 +37,41 @@ tile(29, cf).
 tile(30, h1).
 tile(31, h2).
 
+/* tile info location in map grid */
+tile_info(go, 10, 10).
+tile_info(a1, 10, 8).
+tile_info(a2, 10, 7).
+tile_info(a3, 10, 6).
+/*tile_info(4, cc).*/
+tile_info(b1, 10, 4).
+tile_info(b2, 10, 3).
+tile_info(b3, 10, 2).
+/* tile_info(8, jl).*/
+tile_info(c1, 8, 0).
+tile_info(c2, 7, 0).
+tile_info(c3, 6, 0).
+/* tile_info(12, tx).*/
+tile_info(d1, 4, 0).
+tile_info(d2, 3, 0).
+tile_info(d3, 2, 0).
+/* tile_info(16, fp). */
+tile_info(e1, 0, 2).
+tile_info(e2, 0, 3).
+tile_info(e3, 0, 4).
+/* tile_info(20, cc).*/
+tile_info(f1, 0, 6).
+tile_info(f2, 0, 7).
+tile_info(f3, 0, 8).
+/* tile_info(24, f4). */
+tile_info(g1, 10, 2).
+tile_info(g2, 10, 3).
+tile_info(g3, 10, 4).
+/* tile_info(28, tx).*/
+/* tile_info(29, cf).*/
+tile_info(h1, 10, 7).
+tile_info(h2, 10, 8).
+
+
 /* map grids row x, col y */
 /* grid[1-9][1-9] are constants */
 /* grid[0][_], grid[10][_], grid[_][0], grid[_][10] hold property count */
@@ -198,17 +233,17 @@ padding(R) :-
 padding(R) :-
     R\=0, R\=10, !.
 
-write_grid(R, C) :- grid(Row, Col, Info), R=:=Row, C=:=Col, write(Info), !.
+writeGrid(R, C) :- grid(Row, Col, Info), R=:=Row, C=:=Col, write(Info), !.
 
-write_cols(Row, StartCol) :-
+writeCols(Row, StartCol) :-
     StartCol =:= 10, 
-    write_grid(Row, StartCol), !.
-write_cols(Row, StartCol) :-
+    writeGrid(Row, StartCol), !.
+writeCols(Row, StartCol) :-
     StartCol<10, StartCol>=0, 
-    write_grid(Row, StartCol), padding(Row),
-    NextCol is StartCol+1, write_cols(Row, NextCol).
+    writeGrid(Row, StartCol), padding(Row),
+    NextCol is StartCol+1, writeCols(Row, NextCol).
     
-write_playerinfo :-
+writePlayerInfo :-
     locPlayer(1, Pos1), locPlayer(2, Pos2), 
     tile(Pos1, P1), tile(Pos2, P2),
     cashPlayer(1, Cash1),
@@ -225,25 +260,34 @@ write_playerinfo :-
 
 /* write map */
 map :- 
-    write(' '), write_cols(0, 0), write(' '), nl,
+    write(' '), writeCols(0, 0), write(' '), nl,
     border,
-    write(' '), write_cols(1, 0), write(' '), nl,
-    write(' '), write_cols(2, 0), write(' '), nl,
-    write(' '), write_cols(3, 0), write(' '), nl,
-    write(' '), write_cols(4, 0), write(' '), nl,
-    write(' '), write_cols(5, 0), write(' '), nl,
-    write(' '), write_cols(6, 0), write(' '), nl,
-    write(' '), write_cols(7, 0), write(' '), nl,
-    write(' '), write_cols(8, 0), write(' '), nl,
-    write(' '), write_cols(9, 0), write(' '), nl,
+    write(' '), writeCols(1, 0), write(' '), nl,
+    write(' '), writeCols(2, 0), write(' '), nl,
+    write(' '), writeCols(3, 0), write(' '), nl,
+    write(' '), writeCols(4, 0), write(' '), nl,
+    write(' '), writeCols(5, 0), write(' '), nl,
+    write(' '), writeCols(6, 0), write(' '), nl,
+    write(' '), writeCols(7, 0), write(' '), nl,
+    write(' '), writeCols(8, 0), write(' '), nl,
+    write(' '), writeCols(9, 0), write(' '), nl,
     border,
-    write(' '), write_cols(10, 0), write(' '), nl,
+    write(' '), writeCols(10, 0), write(' '), nl,
 
-    write_playerinfo,
+    writePlayerInfo,
     !.
 
+/* change tile_info */
+modifyTileInfo(Loc) :-
+    tingkatan(Loc, Level),
+    kepemilikan(Loc, PlayerID),
+    tile_info(Loc, Row, Col),
+    grid(Row, Col, Info),
+    (
+        Level =< -1 -> (retractall(grid(Row, Col, Info)), asserta(grid(Row, Col, '  ')));
 
-/* move player and build property demo */
-/* chore: link player movement and property ownership */
-buy :- retract(grid(0,3,_Info)), asserta(grid(0,3,'10')), !.
-sell :- retract(grid(0,3,_Info)), asserta(grid(0,3,'  ')), !.
+        (
+            number_atom(PlayerID, X), number_atom(Level, Y), atom_concat(X, Y, NewInfo),
+            retractall(grid(Row, Col, _Info)), asserta(grid(Row, Col, NewInfo))
+        )
+    ),!.

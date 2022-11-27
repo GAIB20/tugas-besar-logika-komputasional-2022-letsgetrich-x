@@ -1,4 +1,5 @@
 :- dynamic(menu_status/1).
+:- dynamic(firstTurn/0).
 
 startGame:-
     ['utility.pl'],
@@ -49,7 +50,8 @@ startGame:-
     initPlayer,
     initJail,
     initChanceCard,
-    switchPlayer.
+    switchPlayer,
+    asserta(firstTurn).
 
 
 

@@ -202,15 +202,15 @@ hargaAmbil(_Loc, _Tingkatan, Harga):-
 
 /*tingkatan properti
   tingkatan(Loc)*/
-tingkatan(a1,-1).
-tingkatan(a2,-1).
-tingkatan(a3,-1).
-tingkatan(b1,-1).
-tingkatan(b2,-1).
-tingkatan(b3,-1).
-tingkatan(c1,-1).
-tingkatan(c2,-1).
-tingkatan(c3,-1).
+tingkatan(a1,1).
+tingkatan(a2,1).
+tingkatan(a3,1).
+tingkatan(b1,1).
+tingkatan(b2,1).
+tingkatan(b3,1).
+tingkatan(c1,1).
+tingkatan(c2,1).
+tingkatan(c3,1).
 tingkatan(d1,-1).
 tingkatan(d2,-1).
 tingkatan(d3,-1).
@@ -240,6 +240,14 @@ checkPropertyDetail(X):-
     write('Description                 : '),
     desc_lokasi(X, Desc),
     write(Desc), nl,
+    write('Property Level              : '),
+    tingkatan(X,Level),
+    (Level = 0 -> write('Land'),nl;
+    Level = 1 -> write('Small Cottage'),nl;
+    Level = 2 -> write('Medium Cottage'),nl;
+    Level = 3 -> write('Large Cottage'),nl;
+    Level = 4 -> write('Castle'),nl;
+    Level = -1 -> write('-'),nl),
     (
         is_property(X) -> hargaBeli(X, 0, HargaTanah), 
                           hargaBeli(X, 1, HargaBg1),
@@ -311,7 +319,7 @@ buy(_Loc, Tingkatan):- currentPlayer(X), cashPlayer(X, Cash),hargaAmbil(_Loc,Tin
                                     retractall(tingkatan(_Loc,_)),
                                     asserta(tingkatan(_Loc,Tingkatan)),
                                     write('Congrats! Your Property have been upgraded!\n')
-                                );!
+                                );write('Sorry you don\'t have enough cash\n')
                             );write('Can\'t upgrade below state\n'), propertyMechanism
                         )
                         ;!
@@ -377,9 +385,7 @@ propertyMechanism:-
             hargaSewa(CurrLoc1, Stat, HargaSewa),
             totalAssets(X, AssetsPlayer),
             /*bankruptMechanism(HargaSewa),*/
-            cashPlayer(X, Cash),
-            NewCash is Cash-HargaSewa,
-            retractall(cashPlayer(X, NewCash)),
+            decCash(HargaSewa,X),
             /*cuma bisa ambil alih kalo cashnya masih ada, bukan assets*/
             Stat\=4 -> 
                                 (

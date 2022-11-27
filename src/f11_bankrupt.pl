@@ -19,7 +19,7 @@ bankruptMechanism(Amount) :-
     (Assets < Amount),
     write('Dah bokek kau, bai'), nl,
     endGame,
-    !,fail.
+    !.
 
 bankruptMechanism(Amount) :-
     currentPlayer(X),

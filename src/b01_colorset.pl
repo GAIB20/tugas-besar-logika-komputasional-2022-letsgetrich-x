@@ -49,7 +49,10 @@ colorsetMechanism(PropPlayer) :-
                 retractall(list_colorset(_)),
                 insertLast(Color, ListColorset, NewListColorsetTrue),
                 assertz(list_colorset(NewListColorsetTrue)),
-                upgradePrice(Color)
+                upgradePrice(Color),
+                write('Colorset '),
+                write(Color),
+                write(' price has been upgraded'),nl
             );!
         ); 
         /* else */
@@ -60,7 +63,10 @@ colorsetMechanism(PropPlayer) :-
                 getIndex(ListColorset, Color, Index),
                 deleteAtList(Index, ListColorset, NewListColorsetFalse),
                 assertz(list_colorset(NewListColorsetFalse)),
-                downgradePrice(Color)
+                downgradePrice(Color),
+                write('Colorset '),
+                write(Color),
+                write(' price has been downgraded'),nl
             );!
         ),
 

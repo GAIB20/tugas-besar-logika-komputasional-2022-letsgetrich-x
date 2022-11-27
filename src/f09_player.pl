@@ -129,14 +129,16 @@ incCash(X, Player) :-
     cashPlayer(Player, Cash),
     Cashnew is Cash + X,
     retractall(cashPlayer(Player, Cash)),
-    asserta(cashPlayer(Player, Cashnew)).
+    asserta(cashPlayer(Player, Cashnew)),
+    write(X), write(' has been withdrawn from your account.'), nl, !.
 
 /* decrementCash Player by X */
 decCash(X, Player) :- 
     cashPlayer(Player, Cash),
     Cashnew is Cash - X,
     retractall(cashPlayer(Player, Cash)),
-    asserta(cashPlayer(Player, Cashnew)).
+    asserta(cashPlayer(Player, Cashnew)),
+    write(X), write(' has been added to your account.'), nl, !.
 
 
 

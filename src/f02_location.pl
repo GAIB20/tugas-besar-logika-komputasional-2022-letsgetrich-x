@@ -123,15 +123,7 @@ checkLocationDetail(X):-
     desc_lokasi(X, Desc),
     write(Desc), nl,
     (                    
-        is_property(X) -> write('Ownership            : '),
-                          kepemilikan(X, Milik),
-                          (Milik \== 0 -> write(Milik),!; write('-'),! ),nl,
-                          hargaSewa(X, Sewa),
-                          hargaBeli(X, Beli),
-                          tingkatan_property(X, Level),
-                          format('Current rent price   : ~d\n', Sewa),
-                          format('Acquisition price    : ~d\n', Beli),
-                          format('Property Level       : ~d\n', Level), !;
+        is_property(X) -> checkPropertyDetail(X);
         X = cc -> write('Can\'t get you Felix Felicis, but in return, You have *chances* to get one of these cards   : \n'),
                           forall(card_info(_,Y),  write(Y)), !;
         !

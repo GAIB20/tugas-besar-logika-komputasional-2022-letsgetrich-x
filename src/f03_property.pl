@@ -273,7 +273,7 @@ checkPropertyDetail(X):-
 buy(_Loc, Tingkatan):- currentPlayer(X), cashPlayer(X, Cash),hargaAmbil(_Loc,Tingkatan, Harga),tingkatan(_Loc, Temp),(
                     (
                         Tingkatan == 4 ->(Temp\=3->write('Can\'t build Castle\n'),propertyMechanism ;( hargaBeli(_Loc, Tingkatan, HargaLM),
-                                          HargaLM=<Cash -> retractall(kepemilikan(_Loc,_)),
+                                          HargaLM=<Cash -> (retractall(kepemilikan(_Loc,_)),
                                                                   kepemilikan(_Loc, X),
                                                                   retractall(tingkatan(_Loc,_)),
                                                                   assertz(tingkatan(_Loc, Tingkatan)),
@@ -282,12 +282,12 @@ buy(_Loc, Tingkatan):- currentPlayer(X), cashPlayer(X, Cash),hargaAmbil(_Loc,Tin
                                                                   assertz(cashPlayer(NewCash)),
                                                                   retractall(tingkatan(_Loc,_)),
                                                                   asserta(tingkatan(_Loc,Tingkatan)),
-                                                                  write('Congrats! Castle have been build!\n')
+                                                                  write('Congrats! Castle have been build!\n'));write('Sorry you don\'t have enough cash\n')
                                           );
                                           write('Can\'t build Castle\n') 
                                          );
                         Temp == -1 ->(
-                            Harga=<Cash -> retractall(kepemilikan(_Loc,_)),
+                            Harga=<Cash -> (retractall(kepemilikan(_Loc,_)),
                                                     assertz(kepemilikan(_Loc, X)),
                                                     retractall(tingkatan(_Loc,_)),
                                                     assertz(tingkatan(_Loc, Tingkatan)),
@@ -304,7 +304,7 @@ buy(_Loc, Tingkatan):- currentPlayer(X), cashPlayer(X, Cash),hargaAmbil(_Loc,Tin
                                                     length(NewList,Len),
                                                     write('\nProperties List:\n'),
                                                     displayProp(NewList, Len),
-                                                    checkColorset
+                                                    checkColorset);write('Sorry you don\'t have enough cash\n')
                         );
                         Temp \= 4 -> (
                             Tingkatan > Temp -> (
@@ -322,7 +322,7 @@ buy(_Loc, Tingkatan):- currentPlayer(X), cashPlayer(X, Cash),hargaAmbil(_Loc,Tin
                         )
                         ;!
                     );
-                    write('Sorry you don\'t have enough cash\n'), propertyMechanism
+                    !
                     ), !.
 
 /*Menjual properti

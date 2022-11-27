@@ -48,7 +48,6 @@ cardMechanism('Tax'):-
 /* kurangin duit 3000 */
 cardMechanism('Improper Use'):-
     currentPlayer(X),
-    write('masuk?'),
     decCash(3000, X),
     !.
 

@@ -16,8 +16,9 @@ move(Player, Steps) :-
                               write(' moved '),
                               write(Steps),
                               write(' steps'),nl,
-                              write('You are currently in '),
-                              write(Currloc), nl,
+                              write('*** You have arrived at '),
+                              write(Currloc),
+                              write('***'),nl,
                               (
                                 Currloc = fp -> parkirGratisMechanism;
                                 Currloc = jl -> visitJail;

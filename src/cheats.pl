@@ -32,6 +32,7 @@ cheatAddMoney(Player, Increment) :-
 cheatJail:-
     retractall(playerDouble(1,_)),
     asserta(playerDouble(1, 3)),
+    cardMechanism('Get Out From Azkaban'),
     jailMechanism.
 
 cheatChanceCard :-

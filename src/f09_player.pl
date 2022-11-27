@@ -17,7 +17,6 @@
 /* is Player */
 is_player(1).
 is_player(2).
-
 /* Rule inisiasi player */
 initPlayer :-
     P1 is 1,

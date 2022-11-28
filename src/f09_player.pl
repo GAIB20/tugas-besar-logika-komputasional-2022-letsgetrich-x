@@ -6,6 +6,7 @@
 :- dynamic(cardPlayer/2).
 :- dynamic(currentPlayer/1).
 :- dynamic(playerName/2).
+:- dynamic(roundPlayer/2).
 /* locPlayer(no player, location) */
 /* currentPlayer(no player) */
 /* playerName(no player, name) */
@@ -36,8 +37,8 @@ initPlayer :-
     write('Insert Player B name : '),
     read(Player2Name),
 
-    assertz(playerName(1, Player1Name)),
-    assertz(playerName(2, Player2Name)),
+    assertz(playerName(P1, Player1Name)),
+    assertz(playerName(P2, Player2Name)),
 
     /* Set lokasi awal */
     assertz(locPlayer(P1, 0)),
@@ -50,7 +51,10 @@ initPlayer :-
     assertz(listPropPlayer(P2, [])),
     /* Set daftar card */ 
     assertz(cardPlayer(P1, [])),
-    assertz(cardPlayer(P2, [])).
+    assertz(cardPlayer(P2, [])),
+    /* Set round player */
+    assertz(roundPlayer(P1, 0)),
+    assertz(roundPlayer(P2, 0)).
 
 /* Hitung nilai Prop lokasi X hingga tingkatan Y dan disimpan di Z */
 nilaiProp(_X, -1, 0) :- !.
@@ -83,7 +87,11 @@ totalAssets(X, Y) :-
 /* Rule menambah cash setiap melewati go, X jumlah steps player Y */
 addCashGO(X, Y) :- 
     (
-        X > 31 -> incCash(3000, Y);
+        X > 31 -> incCash(3000, Y),
+                    roundPlayer(Y, Round),
+                    Newround is Round + 1,
+                    retractall(roundPlayer(Y,Round)),
+                    asserta(roundPlayer(Y, Newround));
         !
     ).
 
@@ -124,7 +132,7 @@ checkPlayerDetail(ID) :-
                         countProp(ListProp, Length, Prop),
                         write('Property value   : '), write(Prop),nl,
                         Aset is Cash + Prop,
-                        write('Asset value      : '), write(Aset),nl,
+                        write('Asset value      : '), write(Aset),nl,nl,
                         write('Properties owned : '), nl,
                         (
                             Length > 0 -> displayProp(ListProp, 1),nl;
@@ -136,7 +144,8 @@ checkPlayerDetail(ID) :-
                         (
                             LengthCard > 0 -> displayPlayerCard(X),nl, !;
                             write('You don\'t have any chance card yet ...\n'), !
-                        )
+                        );
+        write('Please input a or b as the parameter for checkPlayerDetail!'), !
     ),
     !.
 
@@ -147,7 +156,7 @@ incCash(X, Player) :-
     Cashnew is Cash + X,
     retractall(cashPlayer(Player, Cash)),
     asserta(cashPlayer(Player, Cashnew)),
-    playerName(Player,PlayerName),
+    playerName(Player,PlayerName), nl,
     write('Yay! '),
     write(PlayerName),
     write('\'s cash is increased by '), write(X), write('!'), nl,
@@ -161,7 +170,7 @@ decCash(X, Player) :-
     Cashnew is Cash - X,
     retractall(cashPlayer(Player, Cash)),
     asserta(cashPlayer(Player, Cashnew)),
-    playerName(Player,PlayerName),
+    playerName(Player,PlayerName), nl,
     write(PlayerName),
     write('\'s cash is decreased by '), write(X), write('!'), nl,
     write(PlayerName),

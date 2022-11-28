@@ -33,6 +33,7 @@ buildMechanism(Loc) :-
     write('2. Medium Cottage\n'),
     write('3. Large Cottage\n'),
     write('4. Castle\n'),
+    write('Type : '),
     read(Tingkatan),
     (
         buy(Loc,Tingkatan)
@@ -47,13 +48,14 @@ buildGoMechanism:-
         Length \= 0 -> write('You\'ve got a chance to build your property! Do you want to use this chance?\n'),
                         write('0. Pass\n'),
                         write('1. Build\n'),
+                        write('Choice : '),
                         read(Choice),
                         (
                             Choice == 0 -> write('You\'re going to regret this ...\n'), !;
                             Choice == 1 -> write('Choose the location you\'re going to upgrade \n'),
                                             listUpgradeableProp(ListProp, _ListUp),
                                             displayUpgradeableProp(ListProp, 1),
-                                            write('Input the location code\n'),
+                                            write('Input the location code : '),
                                             read(Loc), buildMechanism(Loc), !
                         )
     ).

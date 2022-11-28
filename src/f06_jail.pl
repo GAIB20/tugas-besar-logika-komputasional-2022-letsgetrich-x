@@ -44,6 +44,7 @@ jailMechanism:-
                   write('0. No, i\'ll try to fight off the Dementors by throwing dice..\n'),
                   write('1. Pay 1000\n'),
                   write('2. Use Escape Azkaban Card\n'),
+                  write('Choice : '),
                   read(Choice),
                   (
                     Choice == 1 -> (cashPlayer(X, Cash),

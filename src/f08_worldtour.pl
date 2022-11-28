@@ -2,7 +2,7 @@
 
 apparateMechanism :-
     currentPlayer(X),
-    write('Choose your apparate destination \n'),
+    write('Choose your apparate destination : '),
     read(Dest),
     (
         Dest \= wt -> (tile(NoDest, Dest),
@@ -39,6 +39,7 @@ worldTourMechanism :-
     write('Do you want to use this chance? \n'),
     write('0. No, maybe next time \n'),
     write('1. Yes, I will pay 500 to try this spell \n'),
+    write('Choice : '),
     read(Choice),
     (
         Choice == 0 -> write('You\'re going to regret this ... \n');

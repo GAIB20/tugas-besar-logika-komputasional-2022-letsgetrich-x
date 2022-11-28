@@ -11,7 +11,7 @@ card_chance('Get Out From Azkaban', 3).
 card_chance('Quidditch Game', 1).
 card_chance('Knight Bus', 2). 
 card_chance('Gift', 3).
-card_chance('Angel', 4).
+card_chance('Cloak of Invisibility', 4).
 
 
 card_info('Go To Azkaban', '__| |____________________________________________| |__\n(__   ____________________________________________   __)\n   | |                GO TO AZKABAN               | |\n   | |                                            | |\n   | |       You used an unforgiveable curse,     | |\n   | |          I hope you enjoy your time        | |\n   | |        with the Dementors in Azkaban..     | |\n __| |____________________________________________| |__\n(__   ____________________________________________   __)\n   | |                                            | | \n \n').

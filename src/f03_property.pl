@@ -364,6 +364,7 @@ propertyMechanism:-
         Milik == 0 -> (write('No one has bought any property here.\n'),
                       write('0. Pass \n'),
                       write('1. Buy\n'),
+                      write('Choice : '),
                       read(Choice),
                         (
                             Choice == 0 -> write('Pass an opportunity? What a shame\n');
@@ -373,6 +374,7 @@ propertyMechanism:-
                                             write('2. Medium Cottage\n'),
                                             write('3. Large Cottage\n'),
                                             write('4. Castle\n'),
+                                            write('Type : '),
                                             read(Tingkatan),
                                             (
                                                 buy(CurrLoc1,Tingkatan)
@@ -385,6 +387,7 @@ propertyMechanism:-
                         write('You arrive at your own property\n'),
                         write('0. Pass \n'),
                         write('1. Upgrade\n'),
+                        write('Choice : '),
                         read(Choice),
                         (
                             Choice == 0 -> write('Pass an opportunity? What a shame\n');
@@ -393,6 +396,7 @@ propertyMechanism:-
                                             write('2. Medium Cottage\n'),
                                             write('3. Large Cottage\n'),
                                             write('4. Castle\n'),
+                                            write('Type : '),
                                             read(Tingkatan),
                                             (
                                                 buy(CurrLoc1,Tingkatan)
@@ -414,6 +418,7 @@ propertyMechanism:-
                 write('Do you want to use Invisible Cloak?\n'),
                 write('0. No thanks, I have enough Galleon..\n'),
                 write('1. Use Cloak of Invisibility for free rent\n'),
+                write('Choice : '),
                 read(Input),(
                 Input == 0 -> ( write('So you\'re rich enough hm, or not...\n'),nl,
                               hargaSewa(CurrLoc1, Stat, HargaSewa),
@@ -437,6 +442,7 @@ propertyMechanism:-
                                         write('Do you want to take over?\n'),
                                         write('0. Pass \n'),
                                         write('1. Take Over\n'),
+                                        write('Choice : '),
                                         read(Choice),(
                                             Choice == 0 -> write('Pass an opportunity? What a shame\n');
                                             Choice == 1 -> (nl,

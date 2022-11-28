@@ -110,18 +110,6 @@ closestTax(CurrLoc, [Head|Tail], ClosestTax):-
     ),
     !.
 
-useChanceCard:-
-    chance_cards(List),
-    length(List, Length),
-    (
-        Length > 0 ->   write('These are your cards.'),
-                        displayCards(List),
-                        write('Which are you choosing, Wizard?'),
-                        read(Choice),
-                        cardMechanism(Choice);
-        write('You don\'t have any Chance Card yet.. :( \n')                
-    ),!.
-
 drawChanceCard:-
     write('Welcome to Chance Card! Testing your luck without Felix Felicis eh?\n'),
     chance_cards(X),

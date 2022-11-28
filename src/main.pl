@@ -52,7 +52,7 @@ startGame:-
     write('Skip tutorial?'),nl,
     write('0. No'),nl,
     write('1. Yes'),nl,
-
+    write('Choice : '),
     read(SkipTutorial),
     (
         SkipTutorial = 0 -> help;

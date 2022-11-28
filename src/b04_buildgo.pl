@@ -71,6 +71,7 @@ buildGoMechanism:-
         Length \= 0 -> nl, write('You\'ve got a chance to build your property! Do you want to use this chance?\n'),
                         write('0. Pass\n'),
                         write('1. Build\n'),
+                        write('Choice : '),
                         read(Choice),
                         (
                             Choice == 0 -> write('You\'re going to regret this ...\n'), !;

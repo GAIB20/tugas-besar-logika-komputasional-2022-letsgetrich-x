@@ -53,6 +53,7 @@ buildGoMechanism:-
                             Choice == 1 -> write('Choose the location you\'re going to upgrade \n'),
                                             listUpgradeableProp(ListProp, _ListUp),
                                             displayUpgradeableProp(ListProp, 1),
+                                            write('Input the location code\n'),
                                             read(Loc), buildMechanism(Loc), !
                         )
     ).

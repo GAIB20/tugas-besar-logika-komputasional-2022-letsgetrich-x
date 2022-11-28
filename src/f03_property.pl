@@ -247,17 +247,17 @@ checkPropertyDetail(X):-
                           Level = 3 -> write('Large Cottage'),nl;
                           Level = 4 -> write('Castle'),nl;
                           Level = -1 -> write('-'),nl),
-                          hargaBeli(X, 0, HargaTanah), 
-                          hargaBeli(X, 1, HargaBg1),
-                          hargaBeli(X, 2, HargaBg2),
-                          hargaBeli(X, 3, HargaBg3),
+                          hargaAmbil(X, 0, HargaTanah), 
+                          hargaAmbil(X, 1, HargaBg1),
+                          hargaAmbil(X, 2, HargaBg2),
+                          hargaAmbil(X, 3, HargaBg3),
                           hargaBeli(X, 4, HargaLm),
                           write('------ Property Price List ------\n'),
                           write(' Land                  : '), write(HargaTanah),nl,
                           write(' Small Cottage         : '), write(HargaBg1),nl,
                           write(' Medium Cottage        : '), write(HargaBg2),nl,
                           write(' Large Cottage         : '), write(HargaBg3),nl,
-                          write(' Castle                : '), write(HargaLm),nl,
+                          write(' Castle (Upgrade Price): '), write(HargaLm),nl,
                           nl,
                           hargaSewa(X, 0, HargaTanah1),
                           hargaSewa(X, 1, HargaBg11),
@@ -281,7 +281,6 @@ buy(Loc, Tingkatan):- currentPlayer(X), cashPlayer(X, Cash),hargaAmbil(Loc,Tingk
                         Tingkatan == 4 ->(
                             Temp==3->
                             ( hargaBeli(Loc, Tingkatan, HargaLM),
-                            write(HargaLM),nl,write(Cash),
                               HargaLM=<Cash -> (
                                                 retractall(kepemilikan(Loc,_)),
                                                 assertz(kepemilikan(Loc, X)),
@@ -394,7 +393,8 @@ propertyMechanism:-
                                             !);
                             !
                         );(
-                            write('You arrive at your own Castle\n')
+                            write('You arrive at your own Castle\n'),hargaAmbil(CurrLoc1, Stat, HargaProperti), Refund is HargaProperti//4,
+                            write('You get '),write(Refund), write(' galleon from your castle\n'), nl, incCash(Refund,X)
                         )
                       );
         (
@@ -408,7 +408,7 @@ propertyMechanism:-
                 write('0. No thanks, I have enough Galleon..\n'),
                 write('1. Use Cloak of Invisibility for free rent\n'),
                 read(Input),(
-                Input == 0 -> ( write('So you\'re rich enough hm, or not...\n'),
+                Input == 0 -> ( write('So you\'re rich enough hm, or not...\n'),nl,
                               hargaSewa(CurrLoc1, Stat, HargaSewa),
                               totalAssets(X, AssetsPlayer),
                               decCash(HargaSewa,X),
@@ -432,7 +432,7 @@ propertyMechanism:-
                                         write('1. Take Over\n'),
                                         read(Choice),(
                                             Choice == 0 -> write('Pass an opportunity? What a shame\n');
-                                            Choice == 1 -> (
+                                            Choice == 1 -> (nl,
                                                             decCash(HargaAmbil,X),
                                                            retractall(kepemilikan(CurrLoc1,_)),
                                                            assertz(kepemilikan(CurrLoc1, X)),

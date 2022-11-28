@@ -16,7 +16,7 @@ apparateMechanism :-
                     write(Name),
                     write(' has arrived in '),
                     nama_lokasi(Dest, LocName),
-                    write(LocName),
+                    write(LocName),nl,
                     (
                         Dest = fp -> parkirGratisMechanism;
                         Dest = jl -> visitJail;

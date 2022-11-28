@@ -411,7 +411,7 @@ propertyMechanism:-
                               getIndex(Cards,'Cloak of Invisibility', Idx),
                                       (
                                         Idx == 0 -> write('You don\'t have Cloak of Invisibility\n'), hargaSewa(CurrLoc1, Stat, HargaSewa),
-                                                    totalAssets(X, AssetsPlayer)), decCash(HargaSewa,X);
+                                                    totalAssets(X, AssetsPlayer)), decCash(HargaSewa,X),otherPlayer(Other), incCash(HargaSewa,Other);
                                         write('You can visit this place without paying anything because you are invisible, enjoy your time~\n'),                
                                         deleteAtList(Idx, Cards, _UpdatedCards), retractall(cardPlayer(X, _)), asserta(cardPlayer(X, _NewCards))
                                       )
@@ -428,7 +428,8 @@ propertyMechanism:-
                                         write('1. Take Over\n'),
                                         read(Choice),(
                                             Choice == 0 -> write('Pass an opportunity? What a shame\n');
-                                            Choice == 1 -> (decCash(HargaAmbil,X),
+                                            Choice == 1 -> (
+                                                            decCash(HargaAmbil,X),
                                                            retractall(kepemilikan(CurrLoc1,_)),
                                                            assertz(kepemilikan(CurrLoc1, X)),
                                                            otherPlayer(Other),

@@ -1,5 +1,6 @@
 # Tugas-Besar-Logika-Komputasional-2022
-> Harry Potter Themed Monopoly Games using prolog language
+Harry Potter Themed Monopoly Game 
+> built using GNU Prolog programming language.
 
 ## Table of Contents
 
@@ -10,7 +11,27 @@
 
 ## General Information
 
-With this program, you can play monopoly games from your PC/Laptop for free! 
+```
+   ___  \ /  ___         ,'\_           | .-. \        /|
+   \ /  | |,'__ \  ,'\_  |   \          | | | |      ,' |_   /|
+ _ | |  | |\/  \ \ |   \ | |\_|    _    | |_| |   _ '-. .-',' |_   _
+// | |  | |____| | | |\_|| |__    //    |     | ,'_`. | | '-. .-',' `. ,'\_
+\\_| |_,' .-, _  | | |   | |\ \  //    .| |\_/ | / \ || |   | | / |\  \|   \
+ `-. .-'| |/ / | | | |   | | \ \//     |  |    | | | || |   | | | |_\ || |\_|
+   | |  | || \_| | | |   /_\  \ /      | |`    | | | || |   | | | .---'| |
+   | |  | |\___,_\ /_\ _      //       | |     | \_/ || |   | | | |  /\| |
+   /_\  | |           //_____//       .||`      `._,' | |   | | \ `-' /| |
+        /_\           `------'        \ |              `.\  | |  `._,' /_\
+                                       \|                    `.\
+
+
+  __  __  ___  _   _  ___  ____   ___  _  __   __   ____    _    __  __ _____ 
+ |  \/  |/ _ \| \ | |/ _ \|  _ \ / _ \| | \ \ / /  / ___|  / \  |  \/  | ____|
+ | |\/| | | | |  \| | | | | |_) | | | | |  \ V /  | |  _  / _ \ | |\/| |  _| 
+ | |  | | |_| | |\  | |_| |  __/| |_| | |___| |   | |_| |/ ___ \| |  | | |___ 
+ |_|  |_|\___/|_| \_|\___/|_|    \___/|_____|_|    \____/_/   \_\_|  |_|_____|
+```
+Play a 2-Player Harry Potter themed Monopoly game with this program.
 
 ## Team Members
 
@@ -24,14 +45,18 @@ With this program, you can play monopoly games from your PC/Laptop for free!
 
 ## How to Run
 
-1. Clone this repository by running this command in your computer
+1. Download and install GNU Prolog Console.
+
+2. Clone this repository by running this git command.
 ```
 $ git clone https://github.com/GAIB20/tugas-besar-logika-komputasional-2022-letsgetrich-x.git
 ```
 
-2. navigate to `src` folder and run `main.pl` file
+3. Open GNU Prolog Console and change working directory using `change_directory('directory').` or using console GUI. Navigate to `src` folder.
 
-3. Run main.pl with the argument below
+4. Consult `main.pl` file using `consult('main.pl').` in GNU Prolog Console.
+
+5. Run main.pl with the argument below
 
 ```
 $ startGame.
@@ -52,6 +77,7 @@ $ startGame.
 └───src
     |
     └───b01_colorset.pl
+        b02_worldcup.pl
         b04_buildgo.pl
         b05_coinflip.pl
         f01_board.pl

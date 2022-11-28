@@ -13,11 +13,11 @@ apparateMechanism :-
                     retract(locPlayer(X, _)),
                     asserta(locPlayer(X, NoDest)),
                     playerName(X, Name),
-                    write('*** ')
+                    write('*** '),
                     write(Name),
                     write(' has arrived at '),
                     nama_lokasi(Dest, LocName),
-                    write(LocName),write(' ***')nl,
+                    write(LocName),write(' ***'),nl,
                     (
                         Dest = fp -> parkirGratisMechanism;
                         Dest = jl -> visitJail;

@@ -28,7 +28,7 @@ buildMechanism(Loc) :-
     hargaBeli(Loc, 1, HargaBg1Asli),
     hargaBeli(Loc, 2, HargaBg2Asli),
     hargaBeli(Loc, 3, HargaBg3Asli),
-    hargaBeli(Loc, 4, HargaLm),
+    hargaBeli(Loc, 4, HargaLm), nl,
     write('------ Upgrade Price List ------\n'),
     write(' Small Cottage         : '), write(HargaBg1Asli),nl,
     write(' Medium Cottage        : '), write(HargaBg2Asli),nl,
@@ -47,6 +47,7 @@ buildMechanism(Loc) :-
         !
     ),
     tingkatan(Loc, Temp),
+    write('Type : '),
     read(Tingkatan),
     (
         currentPlayer(X), cashPlayer(X, Cash),
@@ -78,9 +79,9 @@ buildGoMechanism:-
                             Choice == 1 -> listUpgradeableProp(ListProp, ListUp),
                                             length(ListUp, LengthUp),
                                             (
-                                                LengthUp \= 0 -> write('Choose the location you\'re going to upgrade \n'),
+                                                LengthUp \= 0 -> nl, write('Choose the location you\'re going to upgrade \n'),
                                                                 displayUpgradeableProp(ListUp, 1),
-                                                                write('Input the location code\n'),
+                                                                write('Location code : '),
                                                                 read(Loc), buildMechanism(Loc), !;
                                                 write('Hey, all of your property is already a castle! You can\'t build again!\n'), !
                                             )

@@ -136,6 +136,7 @@ hargaBeli(h2, 4, 4500).
 hargaSewa(_Loc, _Tingkatan, Harga):- 
     _Tingkatan == 0 ->
     hargaBeli(_Loc, _Tingkatan, X),
+    isIn
     Harga is X//2.
 hargaSewa(_Loc, _Tingkatan, Harga):- 
     _Tingkatan == 1 ->
@@ -420,7 +421,7 @@ propertyMechanism:-
             (
                 Idx == 0 -> hargaSewa(CurrLoc1, Stat, HargaSewaTemp),
                 (
-                    isWorldCup(X) -> HargaSewa is HargaSewaTemp*2;
+                    isWorldCup(CurrLoc1) -> HargaSewa is HargaSewaTemp*2;
                     HargaSewa is HargaSewaTemp
                 ),
                 totalAssets(X, AssetsPlayer), decCash(HargaSewa,X),otherPlayer(Other), incCash(HargaSewa,Other)

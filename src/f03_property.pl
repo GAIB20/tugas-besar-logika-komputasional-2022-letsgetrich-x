@@ -283,11 +283,12 @@ checkPropertyDetail(X):-
 /*Membeli properti
   buy(Loc, Tingkatan)*/
 /*Player hanya bisa beli landmark jika sampai di properti sendiri dan bangunannya sudah tingkat 3*/
-buy(Loc, Tingkatan):- currentPlayer(X), cashPlayer(X, Cash),hargaAmbil(Loc,Tingkatan, Harga),tingkatan(Loc, Temp),(
+buy(Loc, Tingkatan):- currentPlayer(X), cashPlayer(X, Cash),hargaAmbil(Loc,Tingkatan, Harga),tingkatan(Loc, Temp),roundPlayer(X, Round),(
                     (
                         Tingkatan == 4 ->(
                             Temp==3->
-                            ( hargaBeli(Loc, Tingkatan, HargaLM),
+                            ( Round==0 -> write('Can\'t upgrade castle, you haven\'t finish 1 round\n');
+                              hargaBeli(Loc, Tingkatan, HargaLM),
                               HargaLM=<Cash -> (
                                                 retractall(kepemilikan(Loc,_)),
                                                 assertz(kepemilikan(Loc, X)),
@@ -343,7 +344,8 @@ sell(Loc):-
     currentPlayer(X), 
     tingkatan(Loc,Tingkatan), 
     hargaAmbil(Loc, Tingkatan, Harga), 
-    incCash(Harga,X), 
+    NewHarga is 80 * Harga // 100,
+    incCash(NewHarga,X), 
     retractall(tingkatan(Loc,_)), 
     assertz(tingkatan(Loc, -1)),
     retractall(kepemilikan(Loc,_)),
@@ -413,7 +415,7 @@ propertyMechanism:-
             cardPlayer(X, Cards), getIndex(Cards,'Cloak of Invisibility', Idx),
             (
                 Idx == 0 -> hargaSewa(CurrLoc1, Stat, HargaSewa),
-                totalAssets(X, AssetsPlayer), decCash(HargaSewa,X),otherPlayer(Other), incCash(HargaSewa,Other)
+                decCash(HargaSewa,X),otherPlayer(Other), incCash(HargaSewa,Other)
                 ;
                 write('Do you want to use Invisible Cloak?\n'),
                 write('0. No thanks, I have enough Galleon..\n'),
@@ -422,7 +424,6 @@ propertyMechanism:-
                 read(Input),(
                 Input == 0 -> ( write('So you\'re rich enough hm, or not...\n'),nl,
                               hargaSewa(CurrLoc1, Stat, HargaSewa),
-                              totalAssets(X, AssetsPlayer),
                               decCash(HargaSewa,X),
                               otherPlayer(Other),
                               incCash(HargaSewa,Other)

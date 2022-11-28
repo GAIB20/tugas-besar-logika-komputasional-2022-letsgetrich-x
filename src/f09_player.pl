@@ -151,7 +151,8 @@ incCash(X, Player) :-
     write('Yay! '),
     write(PlayerName),
     write('\'s cash is increased by '), write(X), write('!'), nl,
-    write('Your money right now is '), write(Cashnew), nl.
+    write(PlayerName),
+    write('\'s money right now is '), write(Cashnew), nl.
 
 /* decrementCash Player by X */
 decCash(X, Player) :- 
@@ -163,4 +164,5 @@ decCash(X, Player) :-
     playerName(Player,PlayerName),
     write(PlayerName),
     write('\'s cash is decreased by '), write(X), write('!'), nl,
-    write('Your money right now is '), write(Cashnew), nl.
+    write(PlayerName),
+    write('\'s money right now is '), write(Cashnew), nl.

@@ -237,16 +237,17 @@ checkPropertyDetail(X):-
     write('Description                 : '),
     desc_lokasi(X, Desc),
     write(Desc), nl,
-    write('Property Level              : '),
-    tingkatan(X,Level),
-    (Level = 0 -> write('Land'),nl;
-    Level = 1 -> write('Small Cottage'),nl;
-    Level = 2 -> write('Medium Cottage'),nl;
-    Level = 3 -> write('Large Cottage'),nl;
-    Level = 4 -> write('Castle'),nl;
-    Level = -1 -> write('-'),nl),
+   
     (
-        is_property(X) -> hargaBeli(X, 0, HargaTanah), 
+        is_property(X) ->  write('Property Level              : '),
+                          tingkatan(X,Level),
+                          (Level = 0 -> write('Land'),nl;
+                          Level = 1 -> write('Small Cottage'),nl;
+                          Level = 2 -> write('Medium Cottage'),nl;
+                          Level = 3 -> write('Large Cottage'),nl;
+                          Level = 4 -> write('Castle'),nl;
+                          Level = -1 -> write('-'),nl),
+                          hargaBeli(X, 0, HargaTanah), 
                           hargaBeli(X, 1, HargaBg1),
                           hargaBeli(X, 2, HargaBg2),
                           hargaBeli(X, 3, HargaBg3),
@@ -398,23 +399,26 @@ propertyMechanism:-
                       );
         (
             write('You arrive at other player property, you have to pay the rent fee\n'),
-            write('Do you want to use Invisible Cloak?\n'),
-            write('0. No thanks, I have enough Galleon..\n'),
-            write('1. Use Cloak of Invisibility for free rent\n'),
-            read(Input),(
-                Input == 0 -> (hargaSewa(CurrLoc1, Stat, HargaSewa),
-                              totalAssets(X, AssetsPlayer)),
+            cardPlayer(X, Cards), getIndex(Cards,'Cloak of Invisibility', Idx),
+            (
+                Idx == 0 -> hargaSewa(CurrLoc1, Stat, HargaSewa),
+                totalAssets(X, AssetsPlayer), decCash(HargaSewa,X),otherPlayer(Other), incCash(HargaSewa,Other)
+                ;
+                write('Do you want to use Invisible Cloak?\n'),
+                write('0. No thanks, I have enough Galleon..\n'),
+                write('1. Use Cloak of Invisibility for free rent\n'),
+                read(Input),(
+                Input == 0 -> ( write('So you\'re rich enough hm, or not...\n'),
+                              hargaSewa(CurrLoc1, Stat, HargaSewa),
+                              totalAssets(X, AssetsPlayer),
                               decCash(HargaSewa,X),
                               otherPlayer(Other),
-                              incCash(HargaSewa,Other);
-                Input == 1 -> cardPlayer(X, Cards),
-                              getIndex(Cards,'Cloak of Invisibility', Idx),
-                                      (
-                                        Idx == 0 -> write('You don\'t have Cloak of Invisibility\n'), hargaSewa(CurrLoc1, Stat, HargaSewa),
-                                                    totalAssets(X, AssetsPlayer)), decCash(HargaSewa,X),otherPlayer(Other), incCash(HargaSewa,Other);
-                                        write('You can visit this place without paying anything because you are invisible, enjoy your time~\n'),                
-                                        deleteAtList(Idx, Cards, _UpdatedCards), retractall(cardPlayer(X, _)), asserta(cardPlayer(X, _NewCards))
-                                      )
+                              incCash(HargaSewa,Other)
+                              );
+                Input == 1 -> write('You can visit this place without paying anything because you are invisible, enjoy your time~\n'),                
+                              deleteAtList(Idx, Cards, _UpdatedCards), retractall(cardPlayer(X, _)), asserta(cardPlayer(X, _NewCards))
+                                      
+                )
             ),
             /*hanya bisa ambil alih menggunakan uang cash*/
             tingkatan(CurrLoc1, Stat1),
@@ -444,12 +448,11 @@ propertyMechanism:-
                                                             insertLast(CurrLoc1,ListPropPlayerX, NewListPropPlayerX),
                                                             asserta(listPropPlayer(X,NewListPropPlayerX)),
                                                             checkColorset,
-
                                                            write('Congratulations!! The Property is now yours\n'),
                                                            propertyMechanism, modifyTileInfo(CurrLoc1)
                                             );!
                                         )
-                                    
+                                    );write('You don\'t have enough money to take over')
                                 );
             write('Can\'t take over property');!
         )

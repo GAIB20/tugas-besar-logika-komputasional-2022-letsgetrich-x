@@ -80,6 +80,7 @@ cardMechanism('Quidditch Game'):-
 cardMechanism('Knight Bus'):-
     currentPlayer(X),
     retractall(locPlayer(X,_)),
+    incCash(3000, X),
     tile(Go, go),
     asserta(locPlayer(X, Go)),
     buildGoMechanism,

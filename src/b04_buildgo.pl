@@ -76,7 +76,6 @@ buildGoMechanism:-
                         read(Choice),
                         (
                             Choice == 0 -> write('You\'re going to regret this ...\n'), !;
-<<<<<<< HEAD
                             Choice == 1 -> listUpgradeableProp(ListProp, ListUp),
                                             length(ListUp, LengthUp),
                                             (
@@ -90,12 +89,3 @@ buildGoMechanism:-
                         );
         write('Sorry, you can\'t build anything, you don\'t have any property yet!\n')
     ).
-=======
-                            Choice == 1 -> write('Choose the location you\'re going to upgrade \n'),
-                                            listUpgradeableProp(ListProp, _ListUp),
-                                            displayUpgradeableProp(ListProp, 1),
-                                            write('Input the location code : '),
-                                            read(Loc), buildMechanism(Loc), !
-                        )
-    ).
->>>>>>> feat/worldcup

@@ -275,6 +275,11 @@ map :-
     write(' '), writeCols(10, 0), write(' '), nl,
 
     writePlayerInfo,
+    (
+        isWorldCup(Host) -> write('    '),
+                            write(Host),
+                            write(' is hosting Triwizard Tournament!'),nl,!;!
+    ),
     !.
 
 /* change tile_info */

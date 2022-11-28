@@ -61,7 +61,7 @@ incPlayerDouble :-
 switchPlayer :-
     currentPlayer(X),
     playerName(X, PlayerName),
-
+    checkWorldCup,
     (\+firstTurn -> 
         (   nl,write(PlayerName), 
             write('\'s turn is over...'),nl,

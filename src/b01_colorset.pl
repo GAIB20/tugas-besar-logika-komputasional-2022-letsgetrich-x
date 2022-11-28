@@ -2,12 +2,14 @@
 
 /* dynamic predicate */
 :-dynamic(list_colorset/1).
+:-dynamic(color_in_colorset/1).
 :-dynamic(colorsets/1).
 :-dynamic(temp_list/1).
 
 /* initialize dynamic predicates */
 list_colorset([]).
 colorsets([]).
+color_in_colorset([]).
 temp_list([]).
 
 /* deklarasi colorset */
@@ -19,6 +21,30 @@ colorset(e, [e1,e2,e3]).
 colorset(f, [f1,f2,f3]).
 colorset(g, [g1,g2,g3]).
 colorset(h, [h1,h2]).
+
+color(a,a1).
+color(a,a2).
+color(a,a3).
+color(b,b1).
+color(b,b2).
+color(b,b3).
+color(c,c1).
+color(c,c2).
+color(c,c3).
+color(d,d1).
+color(d,d2).
+color(d,d3).
+color(e,e1).
+color(e,e2).
+color(e,e3).
+color(f,f1).
+color(f,f2).
+color(f,f3).
+color(g,g1).
+color(g,g2).
+color(g,g3).
+color(h,h1).
+color(h,h2).
 
 checkColorset :-
     listPropPlayer(1,PropPlayer1),
@@ -49,7 +75,8 @@ checkColorset :-
                 retractall(list_colorset(_)),
                 insertLast(Color, ListColorset, NewListColorsetTrue),
                 assertz(list_colorset(NewListColorsetTrue)),
-                upgradePrice(Color),
+                /*upgradePrice(Color),*/
+                updateListOfColor,
                 write('\nColorset '),
                 write(Color),
                 write(' price has been upgraded'),nl
@@ -64,7 +91,8 @@ checkColorset :-
                 Index \= 0 -> (
                     deleteAtList(Index, ListColorset, NewListColorsetFalse),
                     assertz(list_colorset(NewListColorsetFalse)),
-                    downgradePrice(Color),
+                    /*downgradePrice(Color),*/
+                    updateListOfColor,
                     write('\nColorset '),
                     write(Color),
                     write(' price has been downgraded'),nl
@@ -121,3 +149,25 @@ downgradePrice(Colorset) :-
         asserta(temp_list(Tail)),
 
     Tail == [],!.
+
+updateListColor([]) :- !.
+updateListColor([Head|Tail]) :-
+    colorset(Head,ListColorset),
+    color_in_colorset(ColorInColorset),
+    retractall(color_in_colorset(_)),
+    append(ListColorset,ColorInColorset,NewList),
+    asserta(color_in_colorset(NewList)),
+    updateListColor(Tail).
+
+updateListOfColor :-
+    list_colorset(ListColor),
+    retractall(color_in_colorset(_)),
+    asserta(color_in_colorset([])),
+    updateListColor(ListColor).
+
+/*
+list_colorset(ListColor),
+retractall(color_in_colorset(_)),
+asserta(color_in_colorset([])),
+updateListColor(ListColor),
+*/

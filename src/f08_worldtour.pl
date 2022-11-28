@@ -13,10 +13,11 @@ apparateMechanism :-
                     retract(locPlayer(X, _)),
                     asserta(locPlayer(X, NoDest)),
                     playerName(X, Name),
+                    write('*** ')
                     write(Name),
-                    write(' has arrived in '),
+                    write(' has arrived at '),
                     nama_lokasi(Dest, LocName),
-                    write(LocName),nl,
+                    write(LocName),write(' ***')nl,
                     (
                         Dest = fp -> parkirGratisMechanism;
                         Dest = jl -> visitJail;
@@ -25,6 +26,7 @@ apparateMechanism :-
                         Dest = cf -> playCoinFlip;
                         Dest = tx -> payTax(X);
                         Dest = go -> buildGoMechanism;
+                        Dest = wc -> worldCupMechanism;
                         is_property(Dest) -> propertyMechanism, !; 
                         !
                     )

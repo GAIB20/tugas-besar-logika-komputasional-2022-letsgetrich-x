@@ -9,8 +9,9 @@ help:-
     write('       2. map: to print the map and player information\n'),
     write('       3. checkLocationDetail(X): to check detail of location X\n'),
     write('       4. checkPropertyDetail(X): to check detail of property X\n'),
-    write('       5. help: read tutorial'),nl,
-    write('       6. surrender: to surrender and give up all your chances\n         to be a Wizard\n'),nl,
+    write('       5. checkPlayerDetail(X): to check detail of player X (a or b)\n'),
+    write('       6. help: read tutorial'),nl,
+    write('       7. surrender: to surrender and give up all your chances\n         to be a Wizard\n'),nl,
     write('    ----------------------------------------------------------------    '),nl,nl,
     write('Press any key to start the game'),nl,
     read(_),nl,nl.

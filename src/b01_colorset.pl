@@ -75,8 +75,7 @@ checkColorset :-
                 retractall(list_colorset(_)),
                 insertLast(Color, ListColorset, NewListColorsetTrue),
                 assertz(list_colorset(NewListColorsetTrue)),
-                /*upgradePrice(Color),*/
-                updateListOfColor,
+                upgradePrice(Color),
                 write('\nColorset '),
                 write(Color),
                 write(' price has been upgraded'),nl
@@ -91,8 +90,7 @@ checkColorset :-
                 Index \= 0 -> (
                     deleteAtList(Index, ListColorset, NewListColorsetFalse),
                     assertz(list_colorset(NewListColorsetFalse)),
-                    /*downgradePrice(Color),*/
-                    updateListOfColor,
+                    downgradePrice(Color),
                     write('\nColorset '),
                     write(Color),
                     write(' price has been downgraded'),nl

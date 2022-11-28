@@ -136,7 +136,6 @@ hargaBeli(h2, 4, 4500).
 hargaSewa(_Loc, _Tingkatan, Harga):- 
     _Tingkatan == 0 ->
     hargaBeli(_Loc, _Tingkatan, X),
-    isIn
     Harga is X//2.
 hargaSewa(_Loc, _Tingkatan, Harga):- 
     _Tingkatan == 1 ->

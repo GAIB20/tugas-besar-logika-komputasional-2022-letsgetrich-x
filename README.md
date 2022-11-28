@@ -72,7 +72,7 @@ $ startGame.
 └───doc
 |   └───MileStone 1.pdf
 |       Milestone 2.pdf
-|
+|       Laporan_G06.pdf
 |
 └───src
     |

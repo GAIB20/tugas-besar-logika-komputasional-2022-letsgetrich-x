@@ -54,7 +54,6 @@ $ startGame.
     └───b01_colorset.pl
         b04_buildgo.pl
         b05_coinflip.pl
-        cheats.pl
         f01_board.pl
         f02_location.pl
         f03_property.pl

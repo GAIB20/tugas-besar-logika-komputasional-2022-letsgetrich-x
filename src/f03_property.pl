@@ -418,7 +418,7 @@ propertyMechanism:-
             (
                 Idx == 0 -> hargaSewa(CurrLoc1, Stat, HargaSewaTemp),
                 (
-                    isWorldCup(X) -> HargaSewa is HargaSewaTemp*4;
+                    isWorldCup(X) -> HargaSewa is HargaSewaTemp*2;
                     HargaSewa is HargaSewaTemp
                 ),
                 totalAssets(X, AssetsPlayer), decCash(HargaSewa,X),otherPlayer(Other), incCash(HargaSewa,Other)

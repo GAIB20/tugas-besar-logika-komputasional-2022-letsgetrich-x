@@ -18,6 +18,7 @@ startGame:-
     ['move.pl'],
     ['help.pl'],
     ['b01_colorset.pl'],
+    ['b02_worldcup.pl'],
     ['b04_buildgo.pl'],
     ['b05_coinflip.pl'],
     write('        ___                             | \'  \\'),nl,

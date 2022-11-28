@@ -9,7 +9,7 @@ coin_side(head, 0).
 coin_side(tail, 1).
 
 /* RULE */
-guessFlip(Success) :-
+guessFlip(Success, Iter) :-
     currentPlayer(PP),
     cashPlayer(P, Money),
     PP == P,
@@ -22,10 +22,8 @@ guessFlip(Success) :-
 
     (Guess == Face -> 
         (
-            write('You guessed correctly! 2000 has been awarded to you!'), nl,
-            retractall(cashPlayer(P, Money)),
-            NMoney is Money + 2000,
-            asserta(cashPlayer(P, NMoney)), 
+            NMoney is 2000 * (3-Iter + 1),
+            incCash(NMoney, PP),
             Success is 1
         ) ;
         (
@@ -38,14 +36,15 @@ guessFlip(Success) :-
 loopGuess(Iter, Success) :-
     (Iter =< 0; Success=:=0), write('Coin flip game is over!'), !.
 loopGuess(Iter, Success) :-
-    Iter > 0, Success=:=1, guessFlip(Success1),
+    Iter > 0, Success=:=1, guessFlip(Success1, Iter),
     Iter1 is Iter-1, loopGuess(Iter1, Success1).
 
 playCoinFlip :-
     currentPlayer(X), locPlayer(X, 29),
     write('Flip a coin up to three times!'), nl,
-    write('Guess right (\'head\' or \'tail\') to win 100 and flip again.'), nl,
-    write('Guess wrong and your turn is over'), nl, nl,
+    write('Guess right (\'head\' or \'tail\') to earn money and flip again.'), nl,
+    write('Reward: 2000, 4000, 6000 per correct answer.'), nl,
+    write('Guess wrong and your turn is over.'), nl, nl,
     loopGuess(3, 1),
     !.
 playCoinFlip :- !.

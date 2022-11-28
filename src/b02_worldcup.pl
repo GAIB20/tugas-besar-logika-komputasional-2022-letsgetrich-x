@@ -12,7 +12,7 @@ worldCupMechanism:-
     length(ListProp, ListPropLength),
     (
         ListPropLength \= 0 -> write('\nList of your property: \n'),
-                              displayProp(ListProp, X), nl,
+                              displayProp(ListProp, 1), nl,
                               write('Pick a property to become the host of Triwizard Tournament: '),
                               read(Choice),nl,
                               getItemAtIdx(ListProp ,Choice, ChosenHost),
@@ -28,6 +28,7 @@ checkWorldCup:-
     turnsAfterWorldCup(3),
     retractall(isWorldCup(_)),
     retractall(turnsAfterWorldCup(_)),
+    asserta(turnsAfterWorldCup(0)),
     write('The Triwizard Tournament hosted in '),
     nama_lokasi(Host, HostName),
     write(HostName),

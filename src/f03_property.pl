@@ -272,7 +272,7 @@ checkPropertyDetail(X):-
                           hargaSewa(X, 3, HargaBg31Temp),
                           hargaSewa(X, 4, HargaLm1Temp),
                           (
-                            isWorldCup(_) -> HargaTanah1 is HargaTanah1Temp * 4, HargaBg11 is HargaBg11Temp * 4, HargaBg21 is 4 * HargaBg21Temp, HargaBg31 is 4 * HargaBg31Temp, HargaLm1 is 4 * HargaLm1Temp;
+                            isWorldCup(X) -> HargaTanah1 is HargaTanah1Temp * 2, HargaBg11 is HargaBg11Temp * 2, HargaBg21 is 2 * HargaBg21Temp, HargaBg31 is 2 * HargaBg31Temp, HargaLm1 is 2 * HargaLm1Temp;
                             HargaTanah1 is HargaTanah1Temp, HargaBg11 is HargaBg11Temp, HargaBg21 is HargaBg21Temp, HargaBg31 is HargaBg31Temp, HargaLm1 is HargaLm1Temp
                           ),
                           write('------- Rent Price List -------\n'),
@@ -418,7 +418,7 @@ propertyMechanism:-
             (
                 Idx == 0 -> hargaSewa(CurrLoc1, Stat, HargaSewaTemp),
                 (
-                    isWorldCup(_) -> HargaSewa is HargaSewaTemp*4;
+                    isWorldCup(X) -> HargaSewa is HargaSewaTemp*4;
                     HargaSewa is HargaSewaTemp
                 ),
                 totalAssets(X, AssetsPlayer), decCash(HargaSewa,X),otherPlayer(Other), incCash(HargaSewa,Other)

@@ -91,3 +91,9 @@ cheatTax:-
     retractall(locPlayer(X,_)),
     asserta(locPlayer(X,28)),
     payTax(X).
+
+cheatWorldCup:-
+    currentPlayer(X),
+    retractall(locPlayer(X,_)),
+    asserta(locPlayer(X,20)),
+    worldCupMechanism.

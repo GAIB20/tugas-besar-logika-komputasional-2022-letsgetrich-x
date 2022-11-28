@@ -16,7 +16,7 @@ tile(8, jl).
 tile(9, c1).
 tile(10, c2).
 tile(11, c3).
-tile(12, tx).
+tile(12, wc).
 tile(13, d1).
 tile(14, d2).
 tile(15, d3).
@@ -135,7 +135,7 @@ grid(4, 9, ' G3 | ').
 grid(4, 10, '  ').
 
 grid(5, 0, '  ').
-grid(5, 1, ' | TX |').
+grid(5, 1, ' | WC |').
 grid(5, 2, '     ').
 grid(5, 3, '     ').
 grid(5, 4, 'M O N').
@@ -276,8 +276,9 @@ map :-
 
     writePlayerInfo,
     (
-        isWorldCup(Host) -> write('    '),
-                            write(Host),
+        isWorldCup(Host) -> write('       '),
+                            nama_lokasi(Host, HostName),
+                            write(HostName),
                             write(' is hosting Triwizard Tournament!'),nl,!;!
     ),
     !.

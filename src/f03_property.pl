@@ -266,11 +266,15 @@ checkPropertyDetail(X):-
                           write(' Small Cottage         : '), write(HargaBg1Asli),nl,
                           write(' Medium Cottage        : '), write(HargaBg2Asli),nl,
                           write(' Large Cottage         : '), write(HargaBg3Asli),nl,nl,
-                          hargaSewa(X, 0, HargaTanah1),
-                          hargaSewa(X, 1, HargaBg11),
-                          hargaSewa(X, 2, HargaBg21),
-                          hargaSewa(X, 3, HargaBg31),
-                          hargaSewa(X, 4, HargaLm1),
+                          hargaSewa(X, 0, HargaTanah1Temp),
+                          hargaSewa(X, 1, HargaBg11Temp),
+                          hargaSewa(X, 2, HargaBg21Temp),
+                          hargaSewa(X, 3, HargaBg31Temp),
+                          hargaSewa(X, 4, HargaLm1Temp),
+                          (
+                            isWorldCup(_) -> HargaTanah1 is HargaTanah1Temp * 4, HargaBg11 is HargaBg11Temp * 4, HargaBg21 is 4 * HargaBg21Temp, HargaBg31 is 4 * HargaBg31Temp, HargaLm1 is 4 * HargaLm1Temp;
+                            HargaTanah1 is HargaTanah1Temp, HargaBg11 is HargaBg11Temp, HargaBg21 is HargaBg21Temp, HargaBg31 is HargaBg31Temp, HargaLm1 is HargaLm1Temp
+                          ),
                           write('------- Rent Price List -------\n'),
                           write(' Land                  : '), write(HargaTanah1),nl,
                           write(' Small Cottage         : '), write(HargaBg11),nl,
@@ -412,7 +416,11 @@ propertyMechanism:-
             write('You arrive at other player property, you have to pay the rent fee\n'),
             cardPlayer(X, Cards), getIndex(Cards,'Cloak of Invisibility', Idx),
             (
-                Idx == 0 -> hargaSewa(CurrLoc1, Stat, HargaSewa),
+                Idx == 0 -> hargaSewa(CurrLoc1, Stat, HargaSewaTemp),
+                (
+                    isWorldCup(_) -> HargaSewa is HargaSewaTemp*4;
+                    HargaSewa is HargaSewaTemp
+                ),
                 totalAssets(X, AssetsPlayer), decCash(HargaSewa,X),otherPlayer(Other), incCash(HargaSewa,Other)
                 ;
                 write('Do you want to use Invisible Cloak?\n'),

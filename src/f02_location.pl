@@ -57,6 +57,8 @@ nama_lokasi(g3, 'Hogsmeade').
 nama_lokasi(cc, 'Chance Card').
 nama_lokasi(h1, 'Daily Prophet').
 nama_lokasi(h2, 'Forest of Dean').
+nama_lokasi(wc, 'TriWizard Tournament').
+nama_lokasi(cf, 'Galleon Flip Mini-Games').
 
 /* DESKRIPSI LOKASI */
 desc_lokasi(a1, 'The Hometown of Great Wizard Families, The Weasleys, The Lovegoods, and The Diggorys' ).
@@ -87,6 +89,8 @@ desc_lokasi(g3, 'All-Wizarding Village in Britain').
 desc_lokasi(cc, 'Chance Card').
 desc_lokasi(h1, 'The Office to The Wizarding Newspaper in Britain').
 desc_lokasi(h2, 'A Forest in England').
+desc_lokasi(cf, 'Guess and Test your Luck!').
+desc_lokasi(wc, 'Win in a magical contest, and double your property rent fee!').
 
 
 /* Kepemilikan */
